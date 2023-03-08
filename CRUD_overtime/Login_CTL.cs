@@ -29,7 +29,7 @@ namespace CRUD_overtime
             }
         }
 
-        public LogedUser_ViewModel Login(string EmployeeID, int LoginCode ,string ActualUser, string AppName)
+        public LogedUser_ViewModel Login( int LoginCode ,string ActualUser, string AppName)
         {
             LogedUser_ViewModel LogedUser = new LogedUser_ViewModel();
 
@@ -41,7 +41,7 @@ namespace CRUD_overtime
 
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.Login(ActualUser, EmployeeID,LoginCode, Loged_ApiKey,Loged_EmpoloyeeName,Loged_EmployeeID ,AppName, ReturnInt, ReturnText);
+                baza.Login(ActualUser,LoginCode, Loged_ApiKey,Loged_EmpoloyeeName,Loged_EmployeeID ,AppName, ReturnInt, ReturnText);
 
                 LogedUser.ReturnInt = (int)ReturnInt.Value;
                 LogedUser.ReturnText = ReturnText.Value.ToString();

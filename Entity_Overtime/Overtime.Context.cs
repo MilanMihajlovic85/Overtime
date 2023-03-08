@@ -100,15 +100,11 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerateMessage_To_Employee", requestIDParameter, returnInt, returnText);
         }
     
-        public virtual int Login(string actualUser, string employeeID, Nullable<int> loginCode, ObjectParameter loged_ApiKey, ObjectParameter loged_EmployeeName, ObjectParameter loged_EmployeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int Login(string actualUser, Nullable<int> loginCode, ObjectParameter loged_ApiKey, ObjectParameter loged_EmployeeName, ObjectParameter loged_EmployeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
         {
             var actualUserParameter = actualUser != null ?
                 new ObjectParameter("ActualUser", actualUser) :
                 new ObjectParameter("ActualUser", typeof(string));
-    
-            var employeeIDParameter = employeeID != null ?
-                new ObjectParameter("EmployeeID", employeeID) :
-                new ObjectParameter("EmployeeID", typeof(string));
     
             var loginCodeParameter = loginCode.HasValue ?
                 new ObjectParameter("LoginCode", loginCode) :
@@ -118,7 +114,7 @@ namespace Entity_Overtime
                 new ObjectParameter("ApplicationName", applicationName) :
                 new ObjectParameter("ApplicationName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Login", actualUserParameter, employeeIDParameter, loginCodeParameter, loged_ApiKey, loged_EmployeeName, loged_EmployeeID, applicationNameParameter, returnInt, returnText);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Login", actualUserParameter, loginCodeParameter, loged_ApiKey, loged_EmployeeName, loged_EmployeeID, applicationNameParameter, returnInt, returnText);
         }
     
         public virtual int PreLogin(string actualUser, string employeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)

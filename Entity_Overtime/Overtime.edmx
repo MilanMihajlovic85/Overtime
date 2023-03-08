@@ -262,7 +262,6 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
         <Function Name="GetAllSessions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM" />
         <Function Name="Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
           <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
-          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="LoginCode" Type="int" Mode="In" />
           <Parameter Name="Loged_ApiKey" Type="nvarchar" Mode="InOut" />
           <Parameter Name="Loged_EmployeeName" Type="nvarchar" Mode="InOut" />
@@ -710,7 +709,6 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           </FunctionImport>
           <FunctionImport Name="Login">
             <Parameter Name="ActualUser" Mode="In" Type="String" />
-            <Parameter Name="EmployeeID" Mode="In" Type="String" />
             <Parameter Name="LoginCode" Mode="In" Type="Int32" />
             <Parameter Name="Loged_ApiKey" Mode="InOut" Type="String" />
             <Parameter Name="Loged_EmployeeName" Mode="InOut" Type="String" />

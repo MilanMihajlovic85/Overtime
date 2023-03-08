@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using WebApi_Overtime.HelperClasses;
 
 namespace WebApi_Overtime
 {
@@ -19,6 +20,7 @@ namespace WebApi_Overtime
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Filters.Add(new SecurityHelper());
         }
     }
 }

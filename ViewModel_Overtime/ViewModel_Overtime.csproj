@@ -55,6 +55,7 @@
     <Compile Include="LogedUser_ViewModel.cs" />
     <Compile Include="Login_ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionUser_ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

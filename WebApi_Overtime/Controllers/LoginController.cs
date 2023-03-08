@@ -7,9 +7,11 @@ using System.Web.Http;
 using ViewModel_Overtime;
 using CRUD_overtime;
 using System.Threading;
+using WebApi_Overtime.HelperClasses;
 
 namespace WebApi_Overtime.Controllers
 {
+    [AllowAnonymous]
     [RoutePrefix("API")]
     public class LoginController : ApiController
     {
@@ -38,13 +40,19 @@ namespace WebApi_Overtime.Controllers
 
         }
 
-        [Route("Login")]
-        public HttpResponseMessage Login(Login_ViewModel LoginModel)
+        [Route("Login/{LoginCode}")]
+        public HttpResponseMessage Login(int LoginCode)
         {
+
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
 
-            LogedUser = LoginCTL.Login(LoginModel.EmployeeID, LoginModel.LoginCode, LoginModel.EmployeeID, AppName);
+
+            LogedUser = LoginCTL.Login( LoginCode,"Anonymous", AppName);
+
+            SessionState.RefreshSessions();
+
+            var x = SessionState.AllSessions;
 
             if(LogedUser.ReturnInt==0)
             {
@@ -61,6 +69,31 @@ namespace WebApi_Overtime.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, LogedUser.ReturnText);
             } 
 
+
+
+        }
+
+        [Route("Logout/{EmployeeID}")]
+        public HttpResponseMessage Logout(string EmployeeID)
+        {
+            string ActualUser = Thread.CurrentPrincipal.Identity.Name;
+            string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
+
+            DbResponse = LoginCTL.Logout(EmployeeID, ActualUser, AppName);
+
+            if (DbResponse.ReturnInt == 0)
+            {
+                SessionUser_ViewModel SessionUser = new SessionUser_ViewModel();
+
+                SessionUser = SessionState.AllSessions.Where(s => s.EmployeeID == EmployeeID).FirstOrDefault();
+
+                SessionState.AllSessions.Remove(SessionUser);
+                return Request.CreateResponse(HttpStatusCode.OK, DbResponse.ReturnText);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, DbResponse.ReturnText);
+            }
 
 
         }
