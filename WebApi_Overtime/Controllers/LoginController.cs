@@ -8,6 +8,7 @@ using ViewModel_Overtime;
 using CRUD_overtime;
 using System.Threading;
 using WebApi_Overtime.HelperClasses;
+using System.Web;
 
 namespace WebApi_Overtime.Controllers
 {
@@ -20,6 +21,7 @@ namespace WebApi_Overtime.Controllers
         Login_CTL LoginCTL = new Login_CTL();
         Login_ViewModel LoginModel = new Login_ViewModel();
 
+        [HttpGet]
         [Route("PreLogin/{EmployeeID}")]
         public HttpResponseMessage PreLogin(string EmployeeID)
         {
@@ -40,6 +42,7 @@ namespace WebApi_Overtime.Controllers
 
         }
 
+        [HttpGet]
         [Route("Login/{LoginCode}")]
         public HttpResponseMessage Login(int LoginCode)
         {
@@ -73,19 +76,32 @@ namespace WebApi_Overtime.Controllers
 
         }
 
-        [Route("Logout/{EmployeeID}")]
-        public HttpResponseMessage Logout(string EmployeeID)
+        [HttpGet]
+        [Route("Logout")]
+        public HttpResponseMessage Logout()
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
+            string ApiKey = string.Empty;
 
-            DbResponse = LoginCTL.Logout(EmployeeID, ActualUser, AppName);
+            IEnumerable<string> ApiKeyHeader =  HttpContext.Current.Request.Headers.GetValues("ApiKey");
+
+            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not proided");
+            }
+            else
+            {
+                ApiKey = ApiKeyHeader.FirstOrDefault();
+            }
+
+                DbResponse = LoginCTL.Logout(ApiKey, ActualUser, AppName);
 
             if (DbResponse.ReturnInt == 0)
             {
                 SessionUser_ViewModel SessionUser = new SessionUser_ViewModel();
 
-                SessionUser = SessionState.AllSessions.Where(s => s.EmployeeID == EmployeeID).FirstOrDefault();
+                SessionUser = SessionState.AllSessions.Where(s => s.ApiKey == ApiKey).FirstOrDefault();
 
                 SessionState.AllSessions.Remove(SessionUser);
                 return Request.CreateResponse(HttpStatusCode.OK, DbResponse.ReturnText);

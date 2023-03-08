@@ -272,7 +272,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
         </Function>
         <Function Name="Logout" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
           <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
-          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApiKey" Type="nvarchar" Mode="In" />
           <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
           <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
           <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
@@ -300,10 +300,10 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
         </Function>
         <Function Name="SendEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM" />
         <Function Name="PendingApprovalsForMyApprove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GET">
-          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApiKey" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PendingMyOvertimeRequests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GET">
-          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApiKey" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="ErrorLog_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HIS">
           <Parameter Name="ErrorText" Type="nvarchar" Mode="In" />
@@ -740,10 +740,10 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           </FunctionImport>
           <FunctionImport Name="SendEmail" />
           <FunctionImport Name="PendingApprovalsForMyApprove" ReturnType="Collection(OvertimeModel.PendingApprovalsForMyApprove_Result)">
-          <Parameter Name="EmployeeID" Mode="In" Type="String" />
+          <Parameter Name="ApiKey" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PendingMyOvertimeRequests" ReturnType="Collection(OvertimeModel.PendingMyOvertimeRequests_Result)">
-          <Parameter Name="EmployeeID" Mode="In" Type="String" />
+          <Parameter Name="ApiKey" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ErrorLog_Insert">
             <Parameter Name="ErrorText" Mode="In" Type="String" />
@@ -801,7 +801,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <FunctionImport Name="GetAllSessions" ReturnType="Collection(OvertimeModel.GetAllSessions_Result)" />
           <FunctionImport Name="Logout">
             <Parameter Name="ActualUser" Mode="In" Type="String" />
-            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="ApiKey" Mode="In" Type="String" />
             <Parameter Name="ApplicationName" Mode="In" Type="String" />
             <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
             <Parameter Name="ReturnText" Mode="InOut" Type="String" />
@@ -820,7 +820,9 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="Minutes" Nullable="true" />
-          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="PendingMyOvertimeRequests_Result">
           <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
@@ -835,7 +837,9 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="Minutes" Nullable="true" />
-          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="DepartmentAprrovalsFromHistory_Result">
           <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
@@ -1200,6 +1204,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
                 <ScalarProperty Name="End_Time" ColumnName="End_Time" />
                 <ScalarProperty Name="Minutes" ColumnName="Minutes" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1219,6 +1225,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
                 <ScalarProperty Name="End_Time" ColumnName="End_Time" />
                 <ScalarProperty Name="Minutes" ColumnName="Minutes" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

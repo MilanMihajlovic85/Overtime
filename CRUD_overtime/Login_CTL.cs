@@ -54,11 +54,11 @@ namespace CRUD_overtime
             }
         }
 
-        public DBResponse_ViewModel Logout(string EmployeeID, string ActualUser, string AppName)
+        public DBResponse_ViewModel Logout(string ApiKey, string ActualUser, string AppName)
         {
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.Logout(ActualUser, EmployeeID, AppName, ReturnInt, ReturnText);
+                baza.Logout(ActualUser,ApiKey, AppName, ReturnInt, ReturnText);
 
                 DbResponse.ReturnInt = (int)ReturnInt.Value;
                 DbResponse.ReturnText = ReturnText.Value.ToString();

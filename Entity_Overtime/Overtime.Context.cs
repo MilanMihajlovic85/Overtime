@@ -173,22 +173,22 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SendEmail");
         }
     
-        public virtual ObjectResult<PendingApprovalsForMyApprove_Result> PendingApprovalsForMyApprove(string employeeID)
+        public virtual ObjectResult<PendingApprovalsForMyApprove_Result> PendingApprovalsForMyApprove(string apiKey)
         {
-            var employeeIDParameter = employeeID != null ?
-                new ObjectParameter("EmployeeID", employeeID) :
-                new ObjectParameter("EmployeeID", typeof(string));
+            var apiKeyParameter = apiKey != null ?
+                new ObjectParameter("ApiKey", apiKey) :
+                new ObjectParameter("ApiKey", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingApprovalsForMyApprove_Result>("PendingApprovalsForMyApprove", employeeIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingApprovalsForMyApprove_Result>("PendingApprovalsForMyApprove", apiKeyParameter);
         }
     
-        public virtual ObjectResult<PendingMyOvertimeRequests_Result> PendingMyOvertimeRequests(string employeeID)
+        public virtual ObjectResult<PendingMyOvertimeRequests_Result> PendingMyOvertimeRequests(string apiKey)
         {
-            var employeeIDParameter = employeeID != null ?
-                new ObjectParameter("EmployeeID", employeeID) :
-                new ObjectParameter("EmployeeID", typeof(string));
+            var apiKeyParameter = apiKey != null ?
+                new ObjectParameter("ApiKey", apiKey) :
+                new ObjectParameter("ApiKey", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingMyOvertimeRequests_Result>("PendingMyOvertimeRequests", employeeIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingMyOvertimeRequests_Result>("PendingMyOvertimeRequests", apiKeyParameter);
         }
     
         public virtual int ErrorLog_Insert(string errorText, string errorProcedure, Nullable<int> errorScript, string errorUser, string errorNode, string applicationName)
@@ -381,21 +381,21 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllSessions_Result>("GetAllSessions");
         }
     
-        public virtual int Logout(string actualUser, string employeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int Logout(string actualUser, string apiKey, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
         {
             var actualUserParameter = actualUser != null ?
                 new ObjectParameter("ActualUser", actualUser) :
                 new ObjectParameter("ActualUser", typeof(string));
     
-            var employeeIDParameter = employeeID != null ?
-                new ObjectParameter("EmployeeID", employeeID) :
-                new ObjectParameter("EmployeeID", typeof(string));
+            var apiKeyParameter = apiKey != null ?
+                new ObjectParameter("ApiKey", apiKey) :
+                new ObjectParameter("ApiKey", typeof(string));
     
             var applicationNameParameter = applicationName != null ?
                 new ObjectParameter("ApplicationName", applicationName) :
                 new ObjectParameter("ApplicationName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Logout", actualUserParameter, employeeIDParameter, applicationNameParameter, returnInt, returnText);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Logout", actualUserParameter, apiKeyParameter, applicationNameParameter, returnInt, returnText);
         }
     }
 }
