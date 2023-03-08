@@ -1,0 +1,1394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OvertimeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EmployeesMaster">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmployeeFullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmployeeMobile" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmployeeEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="DirectManager" Type="nvarchar" MaxLength="20" />
+          <Property Name="WorkingOrganization" Type="nvarchar" MaxLength="50" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" />
+          <Property Name="NotificationID" Type="int" />
+          <Property Name="Login" Type="bit" />
+          <Property Name="ReportViewRole" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WorkingTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Requestor_ID" Type="nvarchar" MaxLength="20" />
+          <Property Name="Requestor_WO" Type="nvarchar" MaxLength="100" />
+          <Property Name="Requestor_FullName" Type="nchar" MaxLength="100" />
+          <Property Name="Requestor_WO_Manager" Type="nvarchar" MaxLength="20" />
+          <Property Name="Requestor_Manager" Type="nvarchar" MaxLength="20" />
+          <Property Name="Requestor_Department" Type="nvarchar" MaxLength="100" />
+          <Property Name="Requestor_For_WO" Type="nvarchar" MaxLength="100" />
+          <Property Name="Requestor_For_Project" Type="nvarchar" MaxLength="100" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="200" />
+          <Property Name="Start_Time" Type="datetime" />
+          <Property Name="End_Time" Type="datetime" />
+          <Property Name="Minutes" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ResponseDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AuthenticationCode">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmployeeMobile" Type="nvarchar" MaxLength="100" />
+          <Property Name="LoginCode" Type="int" />
+          <Property Name="LoginCodeActivityStart" Type="datetime" />
+          <Property Name="LoginCodeActivityEnd" Type="datetime" />
+          <Property Name="LoginCodeUsed" Type="bit" />
+          <Property Name="ApiKey" Type="nvarchar" MaxLength="100" />
+          <Property Name="UpdateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DatabaseSettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Coniguration" Type="nvarchar" MaxLength="50" />
+          <Property Name="intVal_1" Type="int" />
+          <Property Name="strVal_1" Type="nvarchar" MaxLength="50" />
+          <Property Name="intVal_2" Type="int" />
+          <Property Name="strVal_2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Enabled" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Overtime.CFG.Notification' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Overtime.CFG.OvertimeReason' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="OvertimeReason">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
+          <Property Name="WO_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ReportViewRoles">
+          <Key>
+            <PropertyRef Name="ReportViewRole" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportViewRole" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RequestStatus">
+          <Key>
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WorkOrganizations">
+          <Key>
+            <PropertyRef Name="WO_Name" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WO_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="WO_Manager_UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="WO_Manager_FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="WO_Location" Type="nvarchar" MaxLength="100" />
+          <Property Name="WO_Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExternComunicationHandler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Handler" Type="varchar" MaxLength="100" />
+          <Property Name="str_Value" Type="varchar" MaxLength="100" />
+          <Property Name="int_Value" Type="int" />
+          <Property Name="Enabled" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Overtime.COM.Messaging' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Messaging">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestID" Type="int" />
+          <Property Name="Reciever" Type="nvarchar" MaxLength="100" />
+          <Property Name="MessageText" Type="nvarchar" MaxLength="300" />
+          <Property Name="MessageSubject" Type="nvarchar" MaxLength="100" />
+          <Property Name="DeliveryType" Type="nvarchar" MaxLength="10" />
+          <Property Name="DeliveryTypeDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="Delivered" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ErrorText" Type="nvarchar" MaxLength="300" />
+          <Property Name="ErrorProcedure" Type="nvarchar" MaxLength="100" />
+          <Property Name="ErrorScript" Type="int" />
+          <Property Name="ErrorUser" Type="nvarchar" MaxLength="100" />
+          <Property Name="ErrorNode" Type="nvarchar" MaxLength="100" />
+          <Property Name="ApplicationName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventText" Type="nvarchar" MaxLength="300" />
+          <Property Name="EventProcedure" Type="nvarchar" MaxLength="100" />
+          <Property Name="EventScript" Type="int" />
+          <Property Name="EventUser" Type="nvarchar" MaxLength="100" />
+          <Property Name="EventNode" Type="nvarchar" MaxLength="100" />
+          <Property Name="ApplicationName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Overtime.HIS.Messaging' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Messaging1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestID" Type="int" />
+          <Property Name="Reciever" Type="nvarchar" MaxLength="100" />
+          <Property Name="MessageText" Type="nvarchar" MaxLength="300" />
+          <Property Name="MessageSubject" Type="nvarchar" MaxLength="100" />
+          <Property Name="DeliveryType" Type="nvarchar" MaxLength="10" />
+          <Property Name="DeliveryTypeDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="Delivered" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WorkingTable1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Requestor_ID" Type="nvarchar" MaxLength="20" />
+          <Property Name="Requestor_WO" Type="nvarchar" MaxLength="100" />
+          <Property Name="Requestor_FullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Requestor_WO_Manager" Type="nvarchar" MaxLength="20" />
+          <Property Name="Requestor_Manager" Type="nvarchar" MaxLength="20" />
+          <Property Name="Requestor_Department" Type="nvarchar" MaxLength="100" />
+          <Property Name="Requestor_For_WO" Type="nvarchar" MaxLength="100" />
+          <Property Name="Requestor_For_Project" Type="nvarchar" MaxLength="100" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="200" />
+          <Property Name="Start_Time" Type="datetime" />
+          <Property Name="End_Time" Type="datetime" />
+          <Property Name="Minutes" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ResponseDate" Type="datetime" />
+          <Property Name="ShortCreateDate" Type="date" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <Association Name="fK_WorkOrganization">
+          <End Role="WorkOrganizations" Type="Self.WorkOrganizations" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkOrganizations">
+              <PropertyRef Name="WO_Name" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="WO_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ChangeRequestStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="RequestID" Type="int" Mode="In" />
+          <Parameter Name="RequestStatus" Type="int" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="CreateOverTimeRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="Requestor_EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Requestor_Reason" Type="nvarchar" Mode="In" />
+          <Parameter Name="Requestor_For_WO_Project_ID" Type="int" Mode="In" />
+          <Parameter Name="Requestor_StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="Requestor_EndTime" Type="datetime" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="GenerateMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="RequestID" Type="int" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="GenerateMessage_To_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="RequestID" Type="int" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="GetAllSessions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM" />
+        <Function Name="Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="LoginCode" Type="int" Mode="In" />
+          <Parameter Name="Loged_ApiKey" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="Loged_EmployeeName" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="Loged_EmployeeID" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="Logout" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="PreLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="Send_EMAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="RequestID" Type="int" Mode="In" />
+          <Parameter Name="Reciever" Type="nvarchar" Mode="In" />
+          <Parameter Name="MessageText" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="Send_SMS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="RequestID" Type="int" Mode="In" />
+          <Parameter Name="Reciever" Type="nvarchar" Mode="In" />
+          <Parameter Name="MessageText" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="SendEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM" />
+        <Function Name="PendingApprovalsForMyApprove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GET">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PendingMyOvertimeRequests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GET">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ErrorLog_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HIS">
+          <Parameter Name="ErrorText" Type="nvarchar" Mode="In" />
+          <Parameter Name="ErrorProcedure" Type="nvarchar" Mode="In" />
+          <Parameter Name="ErrorScript" Type="int" Mode="In" />
+          <Parameter Name="ErrorUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="ErrorNode" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="EventLog_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HIS">
+          <Parameter Name="EventText" Type="nvarchar" Mode="In" />
+          <Parameter Name="EventProcedure" Type="nvarchar" Mode="In" />
+          <Parameter Name="EventScript" Type="int" Mode="In" />
+          <Parameter Name="EventUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="EventNode" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DepartmentAprrovalsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="DepartmentAprrovalsFromHistory_ALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="MyOvertimesRequestsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ProjectAprrovalsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Project" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ProjectAprrovalsFromHistory_ALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Project" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="WOAprrovalsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="WOAprrovalsFromHistory_ALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="OvertimeModelStoreContainer">
+          <EntitySet Name="EmployeesMaster" EntityType="Self.EmployeesMaster" Schema="BAS" store:Type="Tables" />
+          <EntitySet Name="WorkingTable" EntityType="Self.WorkingTable" Schema="BAS" store:Type="Tables" />
+          <EntitySet Name="AuthenticationCode" EntityType="Self.AuthenticationCode" Schema="CFG" store:Type="Tables" />
+          <EntitySet Name="DatabaseSettings" EntityType="Self.DatabaseSettings" Schema="CFG" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="CFG" store:Type="Tables" />
+          <EntitySet Name="ReportViewRoles" EntityType="Self.ReportViewRoles" Schema="CFG" store:Type="Tables" />
+          <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="CFG" store:Type="Tables" />
+          <EntitySet Name="WorkOrganizations" EntityType="Self.WorkOrganizations" Schema="CFG" store:Type="Tables" />
+          <EntitySet Name="ExternComunicationHandler" EntityType="Self.ExternComunicationHandler" Schema="COM" store:Type="Tables" />
+          <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="HIS" store:Type="Tables" />
+          <EntitySet Name="EventLog" EntityType="Self.EventLog" Schema="HIS" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" store:Type="Tables" store:Schema="CFG">
+            <DefiningQuery>SELECT 
+    [Notification].[ID] AS [ID], 
+    [Notification].[NotificationDesc] AS [NotificationDesc], 
+    [Notification].[CreateDate] AS [CreateDate]
+    FROM [CFG].[Notification] AS [Notification]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OvertimeReason" EntityType="Self.OvertimeReason" store:Type="Tables" store:Schema="CFG">
+            <DefiningQuery>SELECT 
+    [OvertimeReason].[ID] AS [ID], 
+    [OvertimeReason].[Reason] AS [Reason], 
+    [OvertimeReason].[CreateDate] AS [CreateDate]
+    FROM [CFG].[OvertimeReason] AS [OvertimeReason]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Messaging" EntityType="Self.Messaging" store:Type="Tables" store:Schema="COM">
+            <DefiningQuery>SELECT 
+    [Messaging].[ID] AS [ID], 
+    [Messaging].[RequestID] AS [RequestID], 
+    [Messaging].[Reciever] AS [Reciever], 
+    [Messaging].[MessageText] AS [MessageText], 
+    [Messaging].[MessageSubject] AS [MessageSubject], 
+    [Messaging].[DeliveryType] AS [DeliveryType], 
+    [Messaging].[DeliveryTypeDesc] AS [DeliveryTypeDesc], 
+    [Messaging].[Delivered] AS [Delivered], 
+    [Messaging].[CreateDate] AS [CreateDate]
+    FROM [COM].[Messaging] AS [Messaging]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Messaging1" EntityType="Self.Messaging1" store:Type="Tables" store:Schema="HIS" store:Name="Messaging">
+            <DefiningQuery>SELECT 
+    [Messaging1].[ID] AS [ID], 
+    [Messaging1].[RequestID] AS [RequestID], 
+    [Messaging1].[Reciever] AS [Reciever], 
+    [Messaging1].[MessageText] AS [MessageText], 
+    [Messaging1].[MessageSubject] AS [MessageSubject], 
+    [Messaging1].[DeliveryType] AS [DeliveryType], 
+    [Messaging1].[DeliveryTypeDesc] AS [DeliveryTypeDesc], 
+    [Messaging1].[Delivered] AS [Delivered], 
+    [Messaging1].[CreateDate] AS [CreateDate]
+    FROM [HIS].[Messaging] AS [Messaging1]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="WorkingTable1" EntityType="Self.WorkingTable1" store:Type="Tables" store:Schema="HIS" store:Name="WorkingTable">
+            <DefiningQuery>SELECT 
+    [WorkingTable1].[ID] AS [ID], 
+    [WorkingTable1].[Requestor_ID] AS [Requestor_ID], 
+    [WorkingTable1].[Requestor_WO] AS [Requestor_WO], 
+    [WorkingTable1].[Requestor_FullName] AS [Requestor_FullName], 
+    [WorkingTable1].[Requestor_WO_Manager] AS [Requestor_WO_Manager], 
+    [WorkingTable1].[Requestor_Manager] AS [Requestor_Manager], 
+    [WorkingTable1].[Requestor_Department] AS [Requestor_Department], 
+    [WorkingTable1].[Requestor_For_WO] AS [Requestor_For_WO], 
+    [WorkingTable1].[Requestor_For_Project] AS [Requestor_For_Project], 
+    [WorkingTable1].[Reason] AS [Reason], 
+    [WorkingTable1].[Start_Time] AS [Start_Time], 
+    [WorkingTable1].[End_Time] AS [End_Time], 
+    [WorkingTable1].[Minutes] AS [Minutes], 
+    [WorkingTable1].[Status] AS [Status], 
+    [WorkingTable1].[ResponseDate] AS [ResponseDate], 
+    [WorkingTable1].[ShortCreateDate] AS [ShortCreateDate], 
+    [WorkingTable1].[CreateDate] AS [CreateDate]
+    FROM [HIS].[WorkingTable] AS [WorkingTable1]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="fK_WorkOrganization" Association="Self.fK_WorkOrganization">
+            <End Role="WorkOrganizations" EntitySet="WorkOrganizations" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OvertimeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EmployeesMaster">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeFullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeMobile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DirectManager" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="WorkingOrganization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationID" Type="Int32" />
+          <Property Name="Login" Type="Boolean" />
+          <Property Name="ReportViewRole" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WorkingTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Requestor_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_WO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_FullName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Requestor_WO_Manager" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_Manager" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_Department" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_For_WO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_For_Project" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Reason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Start_Time" Type="DateTime" Precision="3" />
+          <Property Name="End_Time" Type="DateTime" Precision="3" />
+          <Property Name="Minutes" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ResponseDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AuthenticationCode">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeMobile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LoginCode" Type="Int32" />
+          <Property Name="LoginCodeActivityStart" Type="DateTime" Precision="3" />
+          <Property Name="LoginCodeActivityEnd" Type="DateTime" Precision="3" />
+          <Property Name="LoginCodeUsed" Type="Boolean" />
+          <Property Name="ApiKey" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DatabaseSetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Coniguration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="intVal_1" Type="Int32" />
+          <Property Name="strVal_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="intVal_2" Type="Int32" />
+          <Property Name="strVal_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Enabled" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WO_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WorkOrganization" Relationship="Self.fK_WorkOrganization" FromRole="Projects" ToRole="WorkOrganizations" />
+        </EntityType>
+        <EntityType Name="ReportViewRole">
+          <Key>
+            <PropertyRef Name="ReportViewRole1" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportViewRole1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="RequestStatu">
+          <Key>
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WorkOrganization">
+          <Key>
+            <PropertyRef Name="WO_Name" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WO_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WO_Manager_UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WO_Manager_FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WO_Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WO_Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Projects" Relationship="Self.fK_WorkOrganization" FromRole="WorkOrganizations" ToRole="Projects" />
+        </EntityType>
+        <EntityType Name="ExternComunicationHandler">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Handler" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="str_Value" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="int_Value" Type="Int32" />
+          <Property Name="Enabled" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorText" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ErrorProcedure" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ErrorScript" Type="Int32" />
+          <Property Name="ErrorUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ErrorNode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventText" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="EventProcedure" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EventScript" Type="Int32" />
+          <Property Name="EventUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EventNode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OvertimeReason">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Messaging">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestID" Type="Int32" />
+          <Property Name="Reciever" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MessageText" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="MessageSubject" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryTypeDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Delivered" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Messaging1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestID" Type="Int32" />
+          <Property Name="Reciever" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MessageText" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="MessageSubject" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryTypeDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Delivered" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WorkingTable1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Requestor_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_WO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_WO_Manager" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_Manager" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_Department" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_For_WO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Requestor_For_Project" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Reason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Start_Time" Type="DateTime" Precision="3" />
+          <Property Name="End_Time" Type="DateTime" Precision="3" />
+          <Property Name="Minutes" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ResponseDate" Type="DateTime" Precision="3" />
+          <Property Name="ShortCreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="fK_WorkOrganization">
+          <End Role="WorkOrganizations" Type="Self.WorkOrganization" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkOrganizations">
+              <PropertyRef Name="WO_Name" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="WO_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OvertimeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EmployeesMasters" EntityType="Self.EmployeesMaster" />
+          <EntitySet Name="WorkingTables" EntityType="Self.WorkingTable" />
+          <EntitySet Name="AuthenticationCodes" EntityType="Self.AuthenticationCode" />
+          <EntitySet Name="DatabaseSettings" EntityType="Self.DatabaseSetting" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="ReportViewRoles" EntityType="Self.ReportViewRole" />
+          <EntitySet Name="RequestStatus" EntityType="Self.RequestStatu" />
+          <EntitySet Name="WorkOrganizations" EntityType="Self.WorkOrganization" />
+          <EntitySet Name="ExternComunicationHandlers" EntityType="Self.ExternComunicationHandler" />
+          <EntitySet Name="ErrorLogs" EntityType="Self.ErrorLog" />
+          <EntitySet Name="EventLogs" EntityType="Self.EventLog" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="OvertimeReasons" EntityType="Self.OvertimeReason" />
+          <EntitySet Name="Messagings" EntityType="Self.Messaging" />
+          <EntitySet Name="Messaging1" EntityType="Self.Messaging1" />
+          <EntitySet Name="WorkingTable1" EntityType="Self.WorkingTable1" />
+          <AssociationSet Name="fK_WorkOrganization" Association="Self.fK_WorkOrganization">
+            <End Role="WorkOrganizations" EntitySet="WorkOrganizations" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <FunctionImport Name="ChangeRequestStatus">
+            <Parameter Name="RequestID" Mode="In" Type="Int32" />
+            <Parameter Name="RequestStatus" Mode="In" Type="Int32" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateOverTimeRequest">
+            <Parameter Name="Requestor_EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="Requestor_Reason" Mode="In" Type="String" />
+            <Parameter Name="Requestor_For_WO_Project_ID" Mode="In" Type="Int32" />
+            <Parameter Name="Requestor_StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="Requestor_EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GenerateMessage">
+            <Parameter Name="RequestID" Mode="In" Type="Int32" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GenerateMessage_To_Employee">
+            <Parameter Name="RequestID" Mode="In" Type="Int32" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Login">
+            <Parameter Name="ActualUser" Mode="In" Type="String" />
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="LoginCode" Mode="In" Type="Int32" />
+            <Parameter Name="Loged_ApiKey" Mode="InOut" Type="String" />
+            <Parameter Name="Loged_EmployeeName" Mode="InOut" Type="String" />
+            <Parameter Name="Loged_EmployeeID" Mode="InOut" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PreLogin">
+            <Parameter Name="ActualUser" Mode="In" Type="String" />
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Send_EMAIL">
+            <Parameter Name="RequestID" Mode="In" Type="Int32" />
+            <Parameter Name="Reciever" Mode="In" Type="String" />
+            <Parameter Name="MessageText" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Send_SMS">
+            <Parameter Name="RequestID" Mode="In" Type="Int32" />
+            <Parameter Name="Reciever" Mode="In" Type="String" />
+            <Parameter Name="MessageText" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SendEmail" />
+          <FunctionImport Name="PendingApprovalsForMyApprove" ReturnType="Collection(OvertimeModel.PendingApprovalsForMyApprove_Result)">
+          <Parameter Name="EmployeeID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PendingMyOvertimeRequests" ReturnType="Collection(OvertimeModel.PendingMyOvertimeRequests_Result)">
+          <Parameter Name="EmployeeID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ErrorLog_Insert">
+            <Parameter Name="ErrorText" Mode="In" Type="String" />
+            <Parameter Name="ErrorProcedure" Mode="In" Type="String" />
+            <Parameter Name="ErrorScript" Mode="In" Type="Int32" />
+            <Parameter Name="ErrorUser" Mode="In" Type="String" />
+            <Parameter Name="ErrorNode" Mode="In" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EventLog_Insert">
+            <Parameter Name="EventText" Mode="In" Type="String" />
+            <Parameter Name="EventProcedure" Mode="In" Type="String" />
+            <Parameter Name="EventScript" Mode="In" Type="Int32" />
+            <Parameter Name="EventUser" Mode="In" Type="String" />
+            <Parameter Name="EventNode" Mode="In" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DepartmentAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.DepartmentAprrovalsFromHistory_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DepartmentAprrovalsFromHistory_ALL" ReturnType="Collection(OvertimeModel.DepartmentAprrovalsFromHistory_ALL_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="MyOvertimesRequestsFromHistory" ReturnType="Collection(OvertimeModel.MyOvertimesRequestsFromHistory_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ProjectAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.ProjectAprrovalsFromHistory_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="Project" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ProjectAprrovalsFromHistory_ALL" ReturnType="Collection(OvertimeModel.ProjectAprrovalsFromHistory_ALL_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="Project" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="WOAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.WOAprrovalsFromHistory_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="WOAprrovalsFromHistory_ALL" ReturnType="Collection(OvertimeModel.WOAprrovalsFromHistory_ALL_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllSessions" ReturnType="Collection(OvertimeModel.GetAllSessions_Result)" />
+          <FunctionImport Name="Logout">
+            <Parameter Name="ActualUser" Mode="In" Type="String" />
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="PendingApprovalsForMyApprove_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="PendingMyOvertimeRequests_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DepartmentAprrovalsFromHistory_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DepartmentAprrovalsFromHistory_ALL_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="MyOvertimesRequestsFromHistory_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ProjectAprrovalsFromHistory_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ProjectAprrovalsFromHistory_ALL_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="WOAprrovalsFromHistory_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="WOAprrovalsFromHistory_ALL_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllSessions_Result">
+          <Property Type="String" Name="EmployeeID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApiKey" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OvertimeModelStoreContainer" CdmEntityContainer="OvertimeEntities">
+          <EntitySetMapping Name="EmployeesMasters">
+            <EntityTypeMapping TypeName="OvertimeModel.EmployeesMaster">
+              <MappingFragment StoreEntitySet="EmployeesMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EmployeeFullName" ColumnName="EmployeeFullName" />
+                <ScalarProperty Name="EmployeeMobile" ColumnName="EmployeeMobile" />
+                <ScalarProperty Name="EmployeeEmail" ColumnName="EmployeeEmail" />
+                <ScalarProperty Name="DirectManager" ColumnName="DirectManager" />
+                <ScalarProperty Name="WorkingOrganization" ColumnName="WorkingOrganization" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="NotificationID" ColumnName="NotificationID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ReportViewRole" ColumnName="ReportViewRole" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkingTables">
+            <EntityTypeMapping TypeName="OvertimeModel.WorkingTable">
+              <MappingFragment StoreEntitySet="WorkingTable">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ResponseDate" ColumnName="ResponseDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthenticationCodes">
+            <EntityTypeMapping TypeName="OvertimeModel.AuthenticationCode">
+              <MappingFragment StoreEntitySet="AuthenticationCode">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeMobile" ColumnName="EmployeeMobile" />
+                <ScalarProperty Name="LoginCode" ColumnName="LoginCode" />
+                <ScalarProperty Name="LoginCodeActivityStart" ColumnName="LoginCodeActivityStart" />
+                <ScalarProperty Name="LoginCodeActivityEnd" ColumnName="LoginCodeActivityEnd" />
+                <ScalarProperty Name="LoginCodeUsed" ColumnName="LoginCodeUsed" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DatabaseSettings">
+            <EntityTypeMapping TypeName="OvertimeModel.DatabaseSetting">
+              <MappingFragment StoreEntitySet="DatabaseSettings">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Coniguration" ColumnName="Coniguration" />
+                <ScalarProperty Name="intVal_1" ColumnName="intVal_1" />
+                <ScalarProperty Name="strVal_1" ColumnName="strVal_1" />
+                <ScalarProperty Name="intVal_2" ColumnName="intVal_2" />
+                <ScalarProperty Name="strVal_2" ColumnName="strVal_2" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="OvertimeModel.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="WO_Name" ColumnName="WO_Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportViewRoles">
+            <EntityTypeMapping TypeName="OvertimeModel.ReportViewRole">
+              <MappingFragment StoreEntitySet="ReportViewRoles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ReportViewRole1" ColumnName="ReportViewRole" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestStatus">
+            <EntityTypeMapping TypeName="OvertimeModel.RequestStatu">
+              <MappingFragment StoreEntitySet="RequestStatus">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkOrganizations">
+            <EntityTypeMapping TypeName="OvertimeModel.WorkOrganization">
+              <MappingFragment StoreEntitySet="WorkOrganizations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WO_Name" ColumnName="WO_Name" />
+                <ScalarProperty Name="WO_Manager_UserName" ColumnName="WO_Manager_UserName" />
+                <ScalarProperty Name="WO_Manager_FullName" ColumnName="WO_Manager_FullName" />
+                <ScalarProperty Name="WO_Location" ColumnName="WO_Location" />
+                <ScalarProperty Name="WO_Description" ColumnName="WO_Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExternComunicationHandlers">
+            <EntityTypeMapping TypeName="OvertimeModel.ExternComunicationHandler">
+              <MappingFragment StoreEntitySet="ExternComunicationHandler">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Handler" ColumnName="Handler" />
+                <ScalarProperty Name="str_Value" ColumnName="str_Value" />
+                <ScalarProperty Name="int_Value" ColumnName="int_Value" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="OvertimeModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
+                <ScalarProperty Name="ErrorProcedure" ColumnName="ErrorProcedure" />
+                <ScalarProperty Name="ErrorScript" ColumnName="ErrorScript" />
+                <ScalarProperty Name="ErrorUser" ColumnName="ErrorUser" />
+                <ScalarProperty Name="ErrorNode" ColumnName="ErrorNode" />
+                <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventLogs">
+            <EntityTypeMapping TypeName="OvertimeModel.EventLog">
+              <MappingFragment StoreEntitySet="EventLog">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EventText" ColumnName="EventText" />
+                <ScalarProperty Name="EventProcedure" ColumnName="EventProcedure" />
+                <ScalarProperty Name="EventScript" ColumnName="EventScript" />
+                <ScalarProperty Name="EventUser" ColumnName="EventUser" />
+                <ScalarProperty Name="EventNode" ColumnName="EventNode" />
+                <ScalarProperty Name="ApplicationName" ColumnName="ApplicationName" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="OvertimeModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NotificationDesc" ColumnName="NotificationDesc" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OvertimeReasons">
+            <EntityTypeMapping TypeName="OvertimeModel.OvertimeReason">
+              <MappingFragment StoreEntitySet="OvertimeReason">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messagings">
+            <EntityTypeMapping TypeName="OvertimeModel.Messaging">
+              <MappingFragment StoreEntitySet="Messaging">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="Reciever" ColumnName="Reciever" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="MessageSubject" ColumnName="MessageSubject" />
+                <ScalarProperty Name="DeliveryType" ColumnName="DeliveryType" />
+                <ScalarProperty Name="DeliveryTypeDesc" ColumnName="DeliveryTypeDesc" />
+                <ScalarProperty Name="Delivered" ColumnName="Delivered" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messaging1">
+            <EntityTypeMapping TypeName="OvertimeModel.Messaging1">
+              <MappingFragment StoreEntitySet="Messaging1">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="Reciever" ColumnName="Reciever" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="MessageSubject" ColumnName="MessageSubject" />
+                <ScalarProperty Name="DeliveryType" ColumnName="DeliveryType" />
+                <ScalarProperty Name="DeliveryTypeDesc" ColumnName="DeliveryTypeDesc" />
+                <ScalarProperty Name="Delivered" ColumnName="Delivered" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkingTable1">
+            <EntityTypeMapping TypeName="OvertimeModel.WorkingTable1">
+              <MappingFragment StoreEntitySet="WorkingTable1">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ResponseDate" ColumnName="ResponseDate" />
+                <ScalarProperty Name="ShortCreateDate" ColumnName="ShortCreateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ChangeRequestStatus" FunctionName="OvertimeModel.Store.ChangeRequestStatus" />
+          <FunctionImportMapping FunctionImportName="CreateOverTimeRequest" FunctionName="OvertimeModel.Store.CreateOverTimeRequest" />
+          <FunctionImportMapping FunctionImportName="GenerateMessage" FunctionName="OvertimeModel.Store.GenerateMessage" />
+          <FunctionImportMapping FunctionImportName="GenerateMessage_To_Employee" FunctionName="OvertimeModel.Store.GenerateMessage_To_Employee" />
+          <FunctionImportMapping FunctionImportName="Login" FunctionName="OvertimeModel.Store.Login" />
+          <FunctionImportMapping FunctionImportName="PreLogin" FunctionName="OvertimeModel.Store.PreLogin" />
+          <FunctionImportMapping FunctionImportName="Send_EMAIL" FunctionName="OvertimeModel.Store.Send_EMAIL" />
+          <FunctionImportMapping FunctionImportName="Send_SMS" FunctionName="OvertimeModel.Store.Send_SMS" />
+          <FunctionImportMapping FunctionImportName="SendEmail" FunctionName="OvertimeModel.Store.SendEmail" />
+          <FunctionImportMapping FunctionImportName="PendingApprovalsForMyApprove" FunctionName="OvertimeModel.Store.PendingApprovalsForMyApprove">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.PendingApprovalsForMyApprove_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PendingMyOvertimeRequests" FunctionName="OvertimeModel.Store.PendingMyOvertimeRequests">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.PendingMyOvertimeRequests_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ErrorLog_Insert" FunctionName="OvertimeModel.Store.ErrorLog_Insert" />
+          <FunctionImportMapping FunctionImportName="EventLog_Insert" FunctionName="OvertimeModel.Store.EventLog_Insert" />
+          <FunctionImportMapping FunctionImportName="DepartmentAprrovalsFromHistory" FunctionName="OvertimeModel.Store.DepartmentAprrovalsFromHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.DepartmentAprrovalsFromHistory_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DepartmentAprrovalsFromHistory_ALL" FunctionName="OvertimeModel.Store.DepartmentAprrovalsFromHistory_ALL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.DepartmentAprrovalsFromHistory_ALL_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MyOvertimesRequestsFromHistory" FunctionName="OvertimeModel.Store.MyOvertimesRequestsFromHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.MyOvertimesRequestsFromHistory_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProjectAprrovalsFromHistory" FunctionName="OvertimeModel.Store.ProjectAprrovalsFromHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.ProjectAprrovalsFromHistory_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProjectAprrovalsFromHistory_ALL" FunctionName="OvertimeModel.Store.ProjectAprrovalsFromHistory_ALL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.ProjectAprrovalsFromHistory_ALL_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="WOAprrovalsFromHistory" FunctionName="OvertimeModel.Store.WOAprrovalsFromHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.WOAprrovalsFromHistory_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="WOAprrovalsFromHistory_ALL" FunctionName="OvertimeModel.Store.WOAprrovalsFromHistory_ALL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.WOAprrovalsFromHistory_ALL_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllSessions" FunctionName="OvertimeModel.Store.GetAllSessions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.GetAllSessions_Result">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Logout" FunctionName="OvertimeModel.Store.Logout" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
