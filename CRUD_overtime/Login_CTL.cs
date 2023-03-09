@@ -20,6 +20,8 @@ namespace CRUD_overtime
         {
             using (OvertimeEntities baza = new OvertimeEntities())
             {
+                baza.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
+
                 baza.PreLogin(ActualUser, EmployeeID, AppName, ReturnInt, ReturnText);
 
                 DbResponse.ReturnInt = (int)ReturnInt.Value;

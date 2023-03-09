@@ -15,9 +15,10 @@ namespace WebApi_Overtime.Controllers
     public class EmployeeController : ApiController
     {
         Employee_CTL EmployeeCTL = new Employee_CTL();
+        DBResponse_ViewModel DbResponse = new DBResponse_ViewModel();
 
         [HttpGet]
-        [Route("Employee/MyRequests")]
+        [Route("Employee/GetMyRequests")]
         public HttpResponseMessage GetMyRequestedApprovals()
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
@@ -41,7 +42,7 @@ namespace WebApi_Overtime.Controllers
         }
 
         [HttpGet]
-        [Route("Employee/MyPendingApprovals")]
+        [Route("Employee/GetMyPendingApprovals")]
         public HttpResponseMessage GetMyPendingApprovals()
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
@@ -62,6 +63,22 @@ namespace WebApi_Overtime.Controllers
 
 
             return Request.CreateResponse(HttpStatusCode.OK, EmployeeCTL.GetApprovalsPendingOnMe(ApiKey));
+        }
+
+        [HttpPost]
+        [Route("Employee/UpdateRequestStatus/{RequestID:int}/{Status:int}")]
+        public HttpResponseMessage UpdateRequestStatus (int RequestID, int Status)
+        {
+           DbResponse= EmployeeCTL.ChangeRequestStatus(RequestID, Status);
+
+            if(DbResponse.ReturnInt==0)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, DbResponse.ReturnText);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, DbResponse.ReturnText);
+            }
         }
     }
 }

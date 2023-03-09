@@ -71,7 +71,19 @@ namespace CRUD_overtime
             }
         }
 
+        public DBResponse_ViewModel ChangeRequestStatus(int RequestID, int Status)
+        {
+            using (OvertimeEntities baza = new OvertimeEntities())
+            {
+                baza.ChangeRequestStatus(RequestID, Status, ReturnInt, ReturnText);
 
+                DbResponse.ReturnText = ReturnText.Value.ToString();
+                DbResponse.ReturnInt = (int)ReturnInt.Value;
+
+                return DbResponse;
+                    
+            }
+        }
 
 
     }
