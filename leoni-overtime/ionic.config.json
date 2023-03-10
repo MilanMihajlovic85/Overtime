@@ -1,0 +1,7 @@
+{
+  "name": "Leoni - Overtime",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

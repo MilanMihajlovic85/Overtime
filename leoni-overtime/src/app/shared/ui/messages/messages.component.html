@@ -1,0 +1,14 @@
+<ng-container *ngIf="(errors$ | async) as errors">
+  <div class="message-container" *ngIf="showMessages">
+    <div class="message">
+      <ion-item *ngFor="let error of errors" lines="none">
+        <ion-label>{{ error }}</ion-label>
+      </ion-item>
+      <!-- <ul>
+        <li *ngFor="let error of errors">{{ error }}</li>
+      </ul> -->
+    </div>
+    <!-- <mat-icon class="close" (click)="onClose() ">close</mat-icon> -->
+    <ion-icon class="close" (click)="onClose()" name="close-outline"></ion-icon>
+  </div>
+</ng-container>

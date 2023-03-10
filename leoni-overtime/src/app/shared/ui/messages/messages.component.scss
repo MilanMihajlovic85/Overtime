@@ -1,0 +1,23 @@
+.message-container {
+  display: flex;
+  color: #a94442;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 10px;
+  // font-family: Roboto;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+ion-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+ion-item::part(native) {
+  background-color: #f2dede;
+  color: #a94442;
+
+}
