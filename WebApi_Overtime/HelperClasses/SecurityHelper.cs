@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Web;
@@ -32,13 +33,20 @@ namespace WebApi_Overtime.HelperClasses
 
                 if (SessionState.AllSessions.Where(s => s.ApiKey == Key).Count() > 0)
                 {
-                    string EmployeeID = SessionState.AllSessions.Where(s => s.ApiKey == Key).FirstOrDefault().ToString();
+                    string EmployeeID = SessionState.AllSessions.Where(s => s.ApiKey == Key).Select(u=>u.EmployeeID).FirstOrDefault().ToString();
 
                     if (EmployeeID != null && EmployeeID.Length > 0)
                     {
-                        var User = new GenericPrincipal(new GenericIdentity(EmployeeID), new string[] { });
-                        Thread.CurrentPrincipal = User;
-                        HttpContext.Current.User = User;
+                        List<Claim> Claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.Name, EmployeeID)
+                        };
+
+                        ClaimsIdentity id = new ClaimsIdentity(Claims, "WEB");
+                        ClaimsPrincipal CP = new ClaimsPrincipal(id);
+
+                        Thread.CurrentPrincipal = CP;
+                        HttpContext.Current.User = CP;
 
                         return true;
                     }
