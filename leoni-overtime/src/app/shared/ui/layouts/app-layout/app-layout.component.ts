@@ -8,6 +8,8 @@ import { isPlatform } from '@ionic/angular';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
+import { I18nService } from 'src/app/shared/services/i18n/i18n.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-app-layout',
@@ -45,9 +47,12 @@ export class AppLayoutComponent  implements OnInit {
     private router: Router,
     private idle: Idle,
     private keepalive: Keepalive,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private translate: TranslateService,
+    private i18n: I18nService
   ) {
     this.setIdleTimer();
+    i18n.language().subscribe(language => translate.use(language));
    }
 
   ngOnInit() { }

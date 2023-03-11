@@ -11,9 +11,12 @@ import { LoginLayoutComponent } from './shared/ui/layouts/login-layout/login-lay
 import { MessagesModule } from './shared/ui/messages/messages.module';
 import { LoadingModule } from './shared/ui/loading/loading.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessagesService } from './shared/services/messages/messages.service';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { ApiKeyHttpInterceptorProvider } from './shared/interceptors/api-key.interceptor';
+import { DatePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -24,14 +27,17 @@ import { ApiKeyHttpInterceptorProvider } from './shared/interceptors/api-key.int
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     LoadingModule,
     MessagesModule,
-    NgIdleKeepaliveModule.forRoot()
+    NgIdleKeepaliveModule.forRoot(),
+    TranslateModule.forRoot()
   ],
   providers: [
+    DatePipe,
     ApiKeyHttpInterceptorProvider,
     MessagesService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

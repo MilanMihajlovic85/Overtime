@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 
 import { ApprovalsPage } from './approvals.page';
 import { RouterModule } from '@angular/router';
+import { ListModule } from '../shared/ui/list/list.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([{ path: '', component: ApprovalsPage }]),
     FormsModule,
-    IonicModule
+    IonicModule,
+    ListModule
   ],
   declarations: [ApprovalsPage]
 })

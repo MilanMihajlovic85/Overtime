@@ -8,12 +8,15 @@ import { IonicModule } from '@ionic/angular';
 import { RequestsPage } from './requests.page';
 import { RouterModule } from '@angular/router';
 
+import { ListModule } from '../shared/ui/list/list.module';
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([{ path: '', component: RequestsPage }]),
     FormsModule,
-    IonicModule
+    IonicModule,
+    ListModule
   ],
   declarations: [RequestsPage]
 })

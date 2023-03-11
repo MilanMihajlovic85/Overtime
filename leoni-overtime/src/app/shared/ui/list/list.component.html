@@ -1,3 +1,71 @@
-<p>
-  list works!
-</p>
+<ng-container *ngIf="!activeElement; else details">
+
+  <ion-fab *ngIf="isCreateBtn" slot="fixed" horizontal="end" vertical="bottom" (click)="openModal('create', null)">
+    <ion-fab-button size="small">
+      <ion-icon [ios]="'add-outline'" [md]="'add-sharp'"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <mat-list *ngIf="data.length > 0">
+    <cdk-virtual-scroll-viewport #scroller itemSize="72" class="list-content">
+      <mat-form-field appearance="outline" class="list-search">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" #input [(ngModel)]="value">
+        <button class="pdf-save" *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- <button mat-stroked-button (click)="openPDF()">
+        <mat-icon>file_download</mat-icon>
+        pdf
+      </button> -->
+      <ng-container *cdkVirtualFor="let el of data; let i = index">
+        <ion-list>
+          <ion-item (click)="onSelectElement(el, true)" detail="true">
+            <!-- <ion-avatar slot="start">
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+              <ion-icon name="logo-ionic" color="primary"></ion-icon>
+            </ion-avatar> -->
+            <ion-label>
+              <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
+              <p>{{ el[schema['subtitle']] }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
+  </mat-list>
+
+</ng-container>
+
+<ng-template #details>
+
+  <div class="details">
+
+    <ion-button fill="clear" (click)="onBackToList()">
+      <ion-icon slot="start" name="caret-back-outline"></ion-icon>
+      Back To List
+    </ion-button>
+
+
+    <h1><span *ngFor="let title of schema['title']">{{ activeElement![title] }} </span></h1>
+
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="key">
+        <mat-header-cell *matCellDef="let element">{{ element.key }}</mat-header-cell>
+      </ng-container>
+      <ng-container matColumnDef="val">
+        <mat-cell *matCellDef="let element" style="text-align: center;">{{ element.val }}</mat-cell>
+      </ng-container>
+      <mat-row *matRowDef="let row; columns: ['key', 'val'];"></mat-row>
+    </mat-table>
+
+    <div *ngIf="btns.length > 0" class="buttons">
+      <ion-button *ngFor="let btn of btns" color="{{ btn['mobileColor'] }}" fill="solid" (click)="openModal(btn['modal'], activeElement)">
+        <ion-icon slot="icon-only" name="{{ btn['mobileIcon'] }}"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+</ng-template>
+

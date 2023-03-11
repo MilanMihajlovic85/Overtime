@@ -54,7 +54,7 @@ export class RequestService {
         endTime: new Date(data.End_Time),
         minutes: data.Minutes,
         status: data.Status,
-        responseDate: new Date(data.ResponseDate),
+        responseDate: data.ResponseDate ? new Date(data.ResponseDate) : null,
         createdAt: new Date(data.CreateDate)
         } as RequestModel))
       ),

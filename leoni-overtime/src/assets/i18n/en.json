@@ -1,0 +1,15 @@
+{
+  "requestorWO": "Organization",
+  "requestorFullName": "Full Name",
+  "requestorWOManager": "Manager",
+  "requestorDepartment": "Department",
+  "requestorForWO": "For WO",
+  "requestorForProject": "For Project",
+  "reason": "Reason",
+  "startTime": "Start",
+  "endTime": "End",
+  "minutes": "Minutes",
+  "status": "Status",
+  "responseDate": "Responded",
+  "createdAt": "Created"
+}

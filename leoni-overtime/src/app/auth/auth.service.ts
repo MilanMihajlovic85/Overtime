@@ -7,6 +7,8 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject, from, map, Observable, tap } from 'rxjs';
 import { AuthModel } from './auth.model';
 import { Preferences } from '@capacitor/preferences';
+import { NavController } from '@ionic/angular';
+
 
 export interface AuthResponseData {
   ApiKey: string,
@@ -26,7 +28,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private messageSrv: MessagesService
+    private messageSrv: MessagesService,
+    private navCtrl: NavController
   ) { }
 
 
@@ -94,12 +97,15 @@ export class AuthService {
 
   }
 
-  logout(): void {
+  logout() {
 
     this.http.get(`${environment.apiUrl}/Logout`).subscribe({
       next: () => {
+        this.user$.next(null);
+
         Preferences.remove({ key: AUTH_DATA });
         this.messageSrv.deleteErrors();
+
         this.router.navigateByUrl('/login');
       },
       error: () => {
