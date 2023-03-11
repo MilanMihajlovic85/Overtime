@@ -55,6 +55,7 @@
     <Compile Include="Employee_CTL.cs" />
     <Compile Include="Login_CTL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestData_CTL.cs" />
     <Compile Include="SessionHelper_CRUD.cs" />
   </ItemGroup>
   <ItemGroup>
