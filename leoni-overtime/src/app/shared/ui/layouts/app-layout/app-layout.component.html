@@ -14,20 +14,11 @@
       </ion-header>
 
       <ion-list id="inbox-list">
-        <!-- <ion-list-header>Leoni</ion-list-header>
-        <ion-note>hi@ionicframework.com</ion-note> -->
-
-        <!-- <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'home-outline'" [md]="'home-sharp'"></ion-icon>
-            <ion-label>Home</ion-label>
-          </ion-item>
-        </ion-menu-toggle> -->
 
         <ion-menu-toggle auto-hide="false">
           <ion-item routerDirection="root" [routerLink]="['/', 'requests']" lines="none" detail="false" routerLinkActive="selected">
             <ion-icon aria-hidden="true" slot="start" [ios]="'file-tray-full-outline'" [md]="'file-tray-full-sharp'"></ion-icon>
-            <ion-label>Requests</ion-label>
+            <ion-label>My Requests</ion-label>
           </ion-item>
         </ion-menu-toggle>
 
@@ -46,6 +37,15 @@
         </ion-menu-toggle>
 
       </ion-list>
+
+      <!-- <ion-list id="labels-list">
+        <ion-list-header>Labels</ion-list-header>
+
+        <ion-item *ngFor="let label of ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders']" lines="none">
+          <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+          <ion-label>{{ label }}</ion-label>
+        </ion-item>
+      </ion-list> -->
 
     </ion-content>
   </ion-menu>

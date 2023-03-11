@@ -1,0 +1,126 @@
+.mat-mdc-form-field {
+  width: 94%;
+  margin: 2rem auto 0;
+  display: block;
+}
+
+::ng-deep .content-wrapper .mat-mdc-form-field {
+  margin: 0 auto;
+}
+
+.mat-mdc-outlined-button.mat-mdc-button-base {
+  margin: 0 0 0.5rem 1rem;
+}
+
+.mat-mdc-form-field-input-control.mat-mdc-form-field-input-control {
+  font-size: large;
+}
+
+.mat-mdc-form-field-flex {
+  background-color: #F1F1E6;
+}
+
+.list-content {
+  height: calc(100vh - 96px);
+  // overflow-y: scroll;
+}
+
+.mat-mdc-list-item {
+  background-color: #F1F1E6;
+  border-radius: 5px;
+  width: 94%;
+  margin: 0 auto 0.25rem;
+}
+
+.mat-mdc-list-item .mdc-list-item__primary-text {
+  font-size: 1.3rem;
+}
+
+.mat-mdc-list-item-title {
+  color: #613E49;
+}
+
+.cdk-virtual-scroll-content-wrapper {
+  padding-top: 0.5rem;
+}
+
+
+.mdc-list-item.mdc-list-item--with-one-line {
+  height: fit-content;
+}
+
+
+.item-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.item-content {
+  width: 100%;
+}
+
+.mdc-list-item--with-two-lines .mdc-list-item__primary-text::before,
+.mdc-list-item--with-three-lines .mdc-list-item__primary-text::before {
+  display: none;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 1rem;
+  background-color: #f1f1e6;
+  padding: 2px 0;
+  margin-bottom: 0;
+  border-radius: 4px 4px 0 0;
+  font-size: 1.3rem;
+}
+
+.details {
+
+  height: calc(100vh - 56px);
+  padding: 0 0.6rem 3rem;
+  overflow: auto;
+
+  button {
+    margin-top: 1rem;
+  }
+
+  .mat-mdc-table {
+    margin-bottom: 3rem;
+  }
+
+  .mat-mdc-header-cell {
+    font-size: 1rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    flex: 0 0 40%;
+  }
+
+  .mat-mdc-cell {
+    font-size: 1rem;
+    // border: 1px solid #e0e0e0;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    display: grid;
+  }
+
+  .mat-mdc-row:last-child{
+    .mat-mdc-cell {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    position: fixed;
+    left: -3vw;
+    bottom: 0;
+    width: 103vw;
+    background-color: #f1f1e6;
+    // border-radius: 0.5rem;
+    height: 4rem;
+  }
+
+
+}

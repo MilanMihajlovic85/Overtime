@@ -8,5 +8,15 @@
 </ion-header>
 
 <ion-content>
+  <ng-container *ngIf="approvals$ | async">
 
+    <app-list
+      [data]="approvals"
+      [schema]="schema"
+      [buttons]="buttons"
+      (modalOpen)="openActions($event)"
+    >
+    </app-list>
+
+  </ng-container>
 </ion-content>
