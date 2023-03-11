@@ -253,11 +253,15 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EventLog_Insert", eventTextParameter, eventProcedureParameter, eventScriptParameter, eventUserParameter, eventNodeParameter, applicationNameParameter);
         }
     
-        public virtual ObjectResult<DepartmentAprrovalsFromHistory_Result> DepartmentAprrovalsFromHistory(string employeeID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<DepartmentAprrovalsFromHistory_Result> DepartmentAprrovalsFromHistory(string employeeID, string departmentName, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(string));
+    
+            var departmentNameParameter = departmentName != null ?
+                new ObjectParameter("DepartmentName", departmentName) :
+                new ObjectParameter("DepartmentName", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -267,7 +271,7 @@ namespace Entity_Overtime
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DepartmentAprrovalsFromHistory_Result>("DepartmentAprrovalsFromHistory", employeeIDParameter, startDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DepartmentAprrovalsFromHistory_Result>("DepartmentAprrovalsFromHistory", employeeIDParameter, departmentNameParameter, startDateParameter, endDateParameter);
         }
     
         public virtual ObjectResult<DepartmentAprrovalsFromHistory_ALL_Result> DepartmentAprrovalsFromHistory_ALL(string employeeID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
@@ -346,11 +350,15 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProjectAprrovalsFromHistory_ALL_Result>("ProjectAprrovalsFromHistory_ALL", employeeIDParameter, projectParameter, startDateParameter, endDateParameter);
         }
     
-        public virtual ObjectResult<WOAprrovalsFromHistory_Result> WOAprrovalsFromHistory(string employeeID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<WOAprrovalsFromHistory_Result> WOAprrovalsFromHistory(string employeeID, string wO_Name, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(string));
+    
+            var wO_NameParameter = wO_Name != null ?
+                new ObjectParameter("WO_Name", wO_Name) :
+                new ObjectParameter("WO_Name", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -360,7 +368,7 @@ namespace Entity_Overtime
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WOAprrovalsFromHistory_Result>("WOAprrovalsFromHistory", employeeIDParameter, startDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WOAprrovalsFromHistory_Result>("WOAprrovalsFromHistory", employeeIDParameter, wO_NameParameter, startDateParameter, endDateParameter);
         }
     
         public virtual ObjectResult<WOAprrovalsFromHistory_ALL_Result> WOAprrovalsFromHistory_ALL(string employeeID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
@@ -400,6 +408,88 @@ namespace Entity_Overtime
                 new ObjectParameter("ApplicationName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Logout", actualUserParameter, apiKeyParameter, applicationNameParameter, returnInt, returnText);
+        }
+    
+        public virtual int AssignUserToAppRole(string actualUser, string employeeID, string roleName, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AssignUserToAppRole", actualUserParameter, employeeIDParameter, roleNameParameter, returnInt, returnText);
+        }
+    
+        public virtual int AssignUserToReportRole(string actualUser, string employeeID, string roleName, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AssignUserToReportRole", actualUserParameter, employeeIDParameter, roleNameParameter, returnInt, returnText);
+        }
+    
+        public virtual int RemoveUserFromAppRole(string actualUser, string employeeID, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveUserFromAppRole", actualUserParameter, employeeIDParameter, returnInt, returnText);
+        }
+    
+        public virtual int RemoveUserFromReportRole(string actualUser, string employeeID, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveUserFromReportRole", actualUserParameter, employeeIDParameter, returnInt, returnText);
+        }
+    
+        public virtual int DeleteRequest(string actualUser, Nullable<int> requestID, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var requestIDParameter = requestID.HasValue ?
+                new ObjectParameter("RequestID", requestID) :
+                new ObjectParameter("RequestID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteRequest", actualUserParameter, requestIDParameter, returnInt, returnText);
+        }
+    
+        public virtual ObjectResult<GetLastCreatedRequestByEmployee_Result> GetLastCreatedRequestByEmployee(string actualUser)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLastCreatedRequestByEmployee_Result>("GetLastCreatedRequestByEmployee", actualUserParameter);
         }
     }
 }

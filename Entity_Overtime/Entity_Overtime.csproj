@@ -78,6 +78,9 @@
     <Compile Include="GetAllSessions_Result.cs">
       <DependentUpon>Overtime.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetLastCreatedRequestByEmployee_Result.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
     <Compile Include="Messaging.cs">
       <DependentUpon>Overtime.tt</DependentUpon>
     </Compile>
