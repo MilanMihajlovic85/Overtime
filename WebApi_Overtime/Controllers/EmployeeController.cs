@@ -123,6 +123,39 @@ namespace WebApi_Overtime.Controllers
 
             if (DbResponse.ReturnInt == 0)
             {
+                return Request.CreateResponse(HttpStatusCode.Created,EmployeeCTL.GetLastCreatedRequestyEmpployee(ActualUser));
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, DbResponse.ReturnText);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Employee/DeleteRequest/{RequestID}")]
+        public HttpResponseMessage DeleteRequest(int RequestID)
+        {
+            string ActualUser = Thread.CurrentPrincipal.Identity.Name;
+            string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
+            string ApiKey = string.Empty;
+
+            IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
+
+            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not provided");
+            }
+            else
+            {
+                ApiKey = ApiKeyHeader.FirstOrDefault();
+            }
+
+
+            DbResponse = EmployeeCTL.DeleteRequest(RequestID,ActualUser);
+
+
+            if (DbResponse.ReturnInt == 0)
+            {
                 return Request.CreateResponse(HttpStatusCode.OK, DbResponse.ReturnText);
             }
             else
@@ -130,7 +163,8 @@ namespace WebApi_Overtime.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, DbResponse.ReturnText);
             }
         }
-        }
+
+    }
 }
 
 

@@ -12,24 +12,20 @@ namespace Entity_Overtime
     using System;
     using System.Collections.Generic;
     
-    public partial class WorkOrganization
+    public partial class ReportUserRoles1
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public WorkOrganization()
+        public ReportUserRoles1()
         {
-            this.Projects = new HashSet<Project>();
+            this.ReportUserRoles = new HashSet<ReportUserRole>();
         }
     
         public int ID { get; set; }
-        public string WO_Name { get; set; }
-        public string WO_Manager_UserName { get; set; }
-        public string WO_Manager_FullName { get; set; }
-        public string WO_Location { get; set; }
-        public string WO_Description { get; set; }
+        public string RoleName { get; set; }
+        public string Description { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
-        public string WO_Manager_EmployeeID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<ReportUserRole> ReportUserRoles { get; set; }
     }
 }

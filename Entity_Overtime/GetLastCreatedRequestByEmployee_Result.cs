@@ -11,8 +11,9 @@ namespace Entity_Overtime
 {
     using System;
     
-    public partial class MyOvertimesRequestsFromHistory_Result
+    public partial class GetLastCreatedRequestByEmployee_Result
     {
+        public int ID { get; set; }
         public string Requestor_ID { get; set; }
         public string Requestor_WO { get; set; }
         public string Requestor_FullName { get; set; }
@@ -26,5 +27,7 @@ namespace Entity_Overtime
         public Nullable<System.DateTime> End_Time { get; set; }
         public Nullable<int> Minutes { get; set; }
         public string Status { get; set; }
+        public Nullable<System.DateTime> ResponseDate { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
     }
 }

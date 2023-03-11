@@ -8,6 +8,7 @@ namespace ViewModel_Overtime
 {
     public class ProjectWO_ViewModel
     {
+        public int Id { get; set; }
         public string WorkOrganization { get; set; }
         public string Project { get; set; }
 

@@ -18,12 +18,21 @@ namespace CRUD_overtime
             }
         }
 
+        public List<String> GetAllUniqueProjects()
+        {
+            using (OvertimeEntities baza = new OvertimeEntities())
+            {
+                return baza.Projects.Select(p => p.ProjectName).Distinct().ToList();
+            }
+        }
+
         public List<ProjectWO_ViewModel> GetAllProjectsWO()
         {
             using (OvertimeEntities baza = new OvertimeEntities())
             {
                 return baza.Projects.Select(p => new ProjectWO_ViewModel()
                 {
+                    Id=p.ID,
                     Project = p.ProjectName,
                     WorkOrganization = p.WO_Name,
                     Description = p.Description,
