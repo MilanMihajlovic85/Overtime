@@ -19,11 +19,11 @@ namespace CRUD_overtime
         ObjectParameter ReturnInt = new ObjectParameter("ReturnInt", typeof(int));
         ObjectParameter ReturnText = new ObjectParameter("ReturnText", typeof(string));
 
-        public List<WorkingTable_ViewModel> GetMyRequestedApprovals(string ApiKey)
+        public List<WorkingTable_ViewModel> GetMyRequestedApprovals(string EmployeeID)
         {
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-             return   baza.PendingMyOvertimeRequests(ApiKey).Select(w => new WorkingTable_ViewModel()
+             return   baza.PendingMyOvertimeRequests(EmployeeID).Select(w => new WorkingTable_ViewModel()
                 {
                     ID = w.ID,
                     CreateDate = w.CreateDate,
@@ -45,11 +45,11 @@ namespace CRUD_overtime
             }
         }
 
-        public List<WorkingTable_ViewModel> GetApprovalsPendingOnMe(string ApiKey)
+        public List<WorkingTable_ViewModel> GetApprovalsPendingOnMe(string EmployeeID)
         {
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                return baza.PendingApprovalsForMyApprove(ApiKey).Select(w => new WorkingTable_ViewModel()
+                return baza.PendingApprovalsForMyApprove(EmployeeID).Select(w => new WorkingTable_ViewModel()
                 {
                     ID = w.ID,
                     CreateDate = w.CreateDate,
@@ -71,17 +71,31 @@ namespace CRUD_overtime
             }
         }
 
-        public DBResponse_ViewModel ChangeRequestStatus(int RequestID, int Status)
+        public DBResponse_ViewModel ChangeRequestStatus(ChangeRequest_ViewModel Request, string EmpployeID)
         {
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.ChangeRequestStatus(RequestID, Status, ReturnInt, ReturnText);
+                baza.ChangeRequestStatus( Request.RequestID,Request.RequestStatus,EmpployeID, ReturnInt, ReturnText);
 
                 DbResponse.ReturnText = ReturnText.Value.ToString();
                 DbResponse.ReturnInt = (int)ReturnInt.Value;
 
                 return DbResponse;
                     
+            }
+        }
+
+        public DBResponse_ViewModel CreateRequest(string EmployeeID, OvertimeRequest_ViewModel Request)
+        {
+            using (OvertimeEntities baza = new OvertimeEntities())
+            {
+                baza.CreateOverTimeRequest(EmployeeID,Request.Reason,Request.Project_ID, Request.StartTime, Request.EndTime, ReturnInt,ReturnText);
+
+                DbResponse.ReturnText = ReturnText.Value.ToString();
+                DbResponse.ReturnInt = (int)ReturnInt.Value;
+
+                return DbResponse;
+
             }
         }
 

@@ -44,7 +44,7 @@ namespace Entity_Overtime
         public virtual DbSet<Messaging1> Messaging1 { get; set; }
         public virtual DbSet<WorkingTable1> WorkingTable1 { get; set; }
     
-        public virtual int ChangeRequestStatus(Nullable<int> requestID, Nullable<int> requestStatus, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int ChangeRequestStatus(Nullable<int> requestID, Nullable<int> requestStatus, string employeeID, ObjectParameter returnInt, ObjectParameter returnText)
         {
             var requestIDParameter = requestID.HasValue ?
                 new ObjectParameter("RequestID", requestID) :
@@ -54,7 +54,11 @@ namespace Entity_Overtime
                 new ObjectParameter("RequestStatus", requestStatus) :
                 new ObjectParameter("RequestStatus", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeRequestStatus", requestIDParameter, requestStatusParameter, returnInt, returnText);
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeRequestStatus", requestIDParameter, requestStatusParameter, employeeIDParameter, returnInt, returnText);
         }
     
         public virtual int CreateOverTimeRequest(string requestor_EmployeeID, string requestor_Reason, Nullable<int> requestor_For_WO_Project_ID, Nullable<System.DateTime> requestor_StartTime, Nullable<System.DateTime> requestor_EndTime, ObjectParameter returnInt, ObjectParameter returnText)
@@ -173,22 +177,22 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SendEmail");
         }
     
-        public virtual ObjectResult<PendingApprovalsForMyApprove_Result> PendingApprovalsForMyApprove(string apiKey)
+        public virtual ObjectResult<PendingApprovalsForMyApprove_Result> PendingApprovalsForMyApprove(string employeeID)
         {
-            var apiKeyParameter = apiKey != null ?
-                new ObjectParameter("ApiKey", apiKey) :
-                new ObjectParameter("ApiKey", typeof(string));
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingApprovalsForMyApprove_Result>("PendingApprovalsForMyApprove", apiKeyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingApprovalsForMyApprove_Result>("PendingApprovalsForMyApprove", employeeIDParameter);
         }
     
-        public virtual ObjectResult<PendingMyOvertimeRequests_Result> PendingMyOvertimeRequests(string apiKey)
+        public virtual ObjectResult<PendingMyOvertimeRequests_Result> PendingMyOvertimeRequests(string employeeID)
         {
-            var apiKeyParameter = apiKey != null ?
-                new ObjectParameter("ApiKey", apiKey) :
-                new ObjectParameter("ApiKey", typeof(string));
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingMyOvertimeRequests_Result>("PendingMyOvertimeRequests", apiKeyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingMyOvertimeRequests_Result>("PendingMyOvertimeRequests", employeeIDParameter);
         }
     
         public virtual int ErrorLog_Insert(string errorText, string errorProcedure, Nullable<int> errorScript, string errorUser, string errorNode, string applicationName)

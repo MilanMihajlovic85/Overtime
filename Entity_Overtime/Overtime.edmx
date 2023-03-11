@@ -237,6 +237,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
         <Function Name="ChangeRequestStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
           <Parameter Name="RequestID" Type="int" Mode="In" />
           <Parameter Name="RequestStatus" Type="int" Mode="In" />
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
           <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
         </Function>
@@ -300,10 +301,10 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
         </Function>
         <Function Name="SendEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM" />
         <Function Name="PendingApprovalsForMyApprove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GET">
-          <Parameter Name="ApiKey" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="PendingMyOvertimeRequests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="GET">
-          <Parameter Name="ApiKey" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="ErrorLog_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HIS">
           <Parameter Name="ErrorText" Type="nvarchar" Mode="In" />
@@ -685,6 +686,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <FunctionImport Name="ChangeRequestStatus">
             <Parameter Name="RequestID" Mode="In" Type="Int32" />
             <Parameter Name="RequestStatus" Mode="In" Type="Int32" />
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
             <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
             <Parameter Name="ReturnText" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -740,10 +742,10 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           </FunctionImport>
           <FunctionImport Name="SendEmail" />
           <FunctionImport Name="PendingApprovalsForMyApprove" ReturnType="Collection(OvertimeModel.PendingApprovalsForMyApprove_Result)">
-          <Parameter Name="ApiKey" Mode="In" Type="String" />
+          <Parameter Name="EmployeeID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PendingMyOvertimeRequests" ReturnType="Collection(OvertimeModel.PendingMyOvertimeRequests_Result)">
-          <Parameter Name="ApiKey" Mode="In" Type="String" />
+          <Parameter Name="EmployeeID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ErrorLog_Insert">
             <Parameter Name="ErrorText" Mode="In" Type="String" />

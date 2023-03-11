@@ -52,9 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizedUser.cs" />
+    <Compile Include="ChangeRequest_ViewModel.cs" />
     <Compile Include="DBResponse_ViewModel.cs" />
     <Compile Include="LogedUser_ViewModel.cs" />
     <Compile Include="Login_ViewModel.cs" />
+    <Compile Include="OvertimeRequest_ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionUser_ViewModel.cs" />
     <Compile Include="WorkingTable_ViewModel.cs" />
