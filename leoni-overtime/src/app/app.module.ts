@@ -17,6 +17,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { ApiKeyHttpInterceptorProvider } from './shared/interceptors/api-key.interceptor';
 import { DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { TranslateModule } from '@ngx-translate/core';
     DatePipe,
     ApiKeyHttpInterceptorProvider,
     MessagesService,
+    { provide: MAT_DATE_LOCALE, useValue: 'sr' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

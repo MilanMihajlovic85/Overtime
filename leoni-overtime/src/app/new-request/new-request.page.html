@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>New Request</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onFormSubmit()" [disabled]="!form.valid">
+        <ion-icon slot="icon-only" [ios]="'checkmark-outline'" [md]="'checkmark-sharp'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <app-loading></app-loading>
+        <app-messages></app-messages>
+
+        <form [formGroup]="form">
+
+          <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+            <mat-label>Project</mat-label>
+            <mat-select formControlName="projectId">
+              <mat-option *ngFor="let project of projects$ | async as projects" [value]="project.id">
+                {{ project.project }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('projectId')!.errors?.required">Project ID is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+            <mat-label>Reason</mat-label>
+            <textarea type="text" matInput formControlName="reason"></textarea>
+            <mat-error *ngIf="form.get('reason')!.errors?.required">Pleade insert reason for request</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+            <mat-label>Start</mat-label>
+            <input matInput [ngxMatDatetimePicker]="picker" formControlName="start">
+
+            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+
+            <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+
+            <mat-error *ngIf="form.get('start')!.errors?.required && !form.get('start')!.errors?.matDatetimePickerParse">
+              Start time is required
+            </mat-error>
+            <mat-error *ngIf="form.get('start')!.errors?.matDatetimePickerParse">Wrong time format</mat-error>
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+            <mat-label>End</mat-label>
+            <input matInput [ngxMatDatetimePicker]="picker2" formControlName="end">
+
+            <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+
+            <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
+
+            <mat-error *ngIf="form.get('end')!.errors?.required && !form.get('end')!.errors?.matDatetimePickerParse">
+              End time is required
+            </mat-error>
+            <mat-error *ngIf="form.get('end')!.errors?.matDatetimePickerParse">Wrong time format</mat-error>
+
+          </mat-form-field>
+
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

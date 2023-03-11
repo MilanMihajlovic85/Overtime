@@ -76,6 +76,7 @@ export class ListComponent  implements OnInit {
 
     if (this.activeElement) {
       this.activeElement = changes['data'].currentValue!.find((u: any) => u['id'] === this.activeElement!['id']);
+
       if (this.activeElement) {
         this.setDataSource();
       } else {

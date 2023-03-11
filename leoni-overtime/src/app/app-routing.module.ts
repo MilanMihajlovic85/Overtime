@@ -17,6 +17,12 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path: 'new-request',
+        loadChildren: () => import('./new-request/new-request.module').then( m => m.NewRequestPageModule),
+        title: 'New Request',
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'requests',
         loadChildren: () => import('./requests/requests.module').then( m => m.RequestsPageModule),
         title: 'Requests',
@@ -37,12 +43,11 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule),
-        title: 'Prijava',
+        title: 'Login-Leoni',
         canActivate: [LoginGuard]
       }
     ]
   }
-
 ];
 
 @NgModule({
