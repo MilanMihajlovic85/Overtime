@@ -33,7 +33,7 @@ namespace CRUD_overtime
                 return baza.Projects.Select(p => new ProjectWO_ViewModel()
                 {
                     Id=p.ID,
-                    Project = p.ProjectName,
+                    Project = "["+p.WO_Name+"] "+p.ProjectName,
                     WorkOrganization = p.WO_Name,
                     Description = p.Description,
                 }).ToList();
