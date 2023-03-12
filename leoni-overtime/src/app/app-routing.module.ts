@@ -34,6 +34,31 @@ const routes: Routes = [
         title: 'Approvals',
         canActivate: [AuthGuard],
       },
+      {
+        path: 'reports/my-requests',
+        loadChildren: () => import('./reports/my-requests/my-requests.module').then( m => m.MyRequestsPageModule),
+        title: 'Reports/My Requests',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'reports/departments',
+        loadChildren: () => import('./reports/departments/departments.module').then( m => m.DepartmentsPageModule),
+        title: 'Reports/Departments',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'reports/organizations',
+        loadChildren: () => import('./reports/organizations/organizations.module').then( m => m.OrganizationsPageModule),
+        title: 'Reports/Organizations',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'reports/projects',
+        loadChildren: () => import('./reports/projects/projects.module').then( m => m.ProjectsPageModule),
+        title: 'Reports/Projects',
+        canActivate: [AuthGuard],
+      }
+
     ]
   },
   {

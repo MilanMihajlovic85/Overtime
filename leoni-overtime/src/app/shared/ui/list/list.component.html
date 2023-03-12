@@ -19,7 +19,7 @@
         <mat-icon>file_download</mat-icon>
         pdf
       </button> -->
-      <ng-container *cdkVirtualFor="let el of data; let i = index">
+      <ng-container *cdkVirtualFor="let el of elements; let i = index">
         <ion-list>
           <ion-item (click)="onSelectElement(el, true)" detail="true">
             <!-- <ion-avatar slot="start">

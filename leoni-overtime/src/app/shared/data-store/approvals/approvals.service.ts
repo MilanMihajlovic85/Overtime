@@ -32,6 +32,7 @@ export class ApprovalsService {
   getMyApprovals() {
 
     return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyPendingApprovals`).pipe(
+      // tap(d => console.log(d)),
       map(resData => resData.map(data => ({
         id: data.ID,
         requestorId: data.Requestor_ID,

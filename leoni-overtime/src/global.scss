@@ -49,3 +49,15 @@ ion-toast.success-toast {
   }
 
 }
+
+// Filter form styles
+form.filter-form {
+
+  padding: 0 1rem;
+
+  margin-top: 2rem;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}

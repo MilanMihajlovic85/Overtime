@@ -68,6 +68,8 @@ export class ListComponent  implements OnInit {
       this.translatedSchema = schema;
     });
 
+    this.elements = this.data;
+
 
 
   }
@@ -165,14 +167,14 @@ export class ListComponent  implements OnInit {
 
           let val;
 
-          if (element === 'createdAt' || element === 'startTime' || element === 'endTime' || element === 'responseDate') {
+          if (element === 'createdAt') {
 
             if (this.activeElement![element]) {
               val = this.datePipe.transform(this.activeElement![element], 'dd/MM/yyyy');
             } else {
               val = this.activeElement![element];
             }
-          } else if (element === 'updatedAt') {
+          } else if ( element === 'startTime' || element === 'endTime' || element === 'responseDate') {
             val = this.datePipe.transform(this.activeElement![element], 'dd/MM/yyyy HH:ss');
           } else {
             val = this.activeElement![element];
