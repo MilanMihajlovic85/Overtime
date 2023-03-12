@@ -16,6 +16,13 @@
       <ion-list id="inbox-list">
 
         <ion-menu-toggle auto-hide="false">
+          <ion-item routerDirection="root" [routerLink]="['/', 'new-request']" lines="none" detail="false" routerLinkActive="selected">
+            <ion-icon aria-hidden="true" slot="start" [ios]="'add-circle-outline'" [md]="'add-circle-sharp'"></ion-icon>
+            <ion-label>New Request</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
           <ion-item routerDirection="root" [routerLink]="['/', 'requests']" lines="none" detail="false" routerLinkActive="selected">
             <ion-icon aria-hidden="true" slot="start" [ios]="'file-tray-full-outline'" [md]="'file-tray-full-sharp'"></ion-icon>
             <ion-label>My Requests</ion-label>
@@ -25,27 +32,33 @@
         <ion-menu-toggle auto-hide="false">
           <ion-item routerDirection="root" [routerLink]="['/', 'approvals']" lines="none" detail="false" routerLinkActive="selected">
             <ion-icon aria-hidden="true" slot="start" [ios]="'help-circle-outline'" [md]="'help-circle-sharp'"></ion-icon>
-            <ion-label>Approvals</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item class="logout-item" lines="none" (click)="onLogout()" detail="false">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
-            <ion-label>Logout</ion-label>
+            <ion-label>My Approvals</ion-label>
           </ion-item>
         </ion-menu-toggle>
 
       </ion-list>
 
-      <!-- <ion-list id="labels-list">
-        <ion-list-header>Labels</ion-list-header>
+      <ion-list id="labels-list">
+        <ion-list-header>Reports</ion-list-header>
 
-        <ion-item *ngFor="let label of ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders']" lines="none">
-          <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-          <ion-label>{{ label }}</ion-label>
+        <ion-item lines="none">
+          <ion-icon aria-hidden="true" slot="start" [ios]="'bag-check-outline'" [md]="'bag-check-sharp'"></ion-icon>
+          <ion-label>Requests</ion-label>
         </ion-item>
-      </ion-list> -->
+
+        <ion-item lines="none">
+          <ion-icon aria-hidden="true" slot="start" [ios]="'checkmark-done-outline'" [md]="'checkmark-done-sharp'"></ion-icon>
+          <ion-label>Approvals</ion-label>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-menu-toggle auto-hide="false">
+        <ion-item class="logout-item" lines="none" (click)="onLogout()" detail="false">
+          <ion-icon aria-hidden="true" slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
 
     </ion-content>
   </ion-menu>

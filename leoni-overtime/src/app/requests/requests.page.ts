@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { switchMap, tap } from 'rxjs';
 import { RequestModel } from '../shared/data-store/request/request.model';
 import { RequestService } from '../shared/data-store/request/request.service';
@@ -14,13 +15,13 @@ export class RequestsPage implements OnInit {
   requests!: RequestModel[];
 
   buttons: {[key: string]: any} = {
-    create: 'btn.createRequest'
+    delete: { modal: 'delete', icon: 'delete_outline', color: 'warn', mobileIcon: 'trash', mobileColor: 'danger', tooltip: 'tooltip.delete' }
   };
 
   schema = {
     properties: ['status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'responseDate', 'createdAt'],
-    title: ['requestorDepartment'],
-    subtitle: ['status']
+    title: ['requestorForProject'],
+    subtitle: ['requestorForWO']
   }
 
   requests$ = this.loadingSrv.showLoaderUntilCompleted(
@@ -35,30 +36,37 @@ export class RequestsPage implements OnInit {
 
   constructor(
     private requestSrv: RequestService,
-    private loadingSrv: LoadingService
+    private loadingSrv: LoadingService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {}
 
   openModal(event: {modal: string, data: {[key: string]: string}, mobile?: boolean}) {
 
-    console.log(event);
 
+    const msg = `Request for project ${event.data.requestorForProject} will be deleted. The deletion is permanent and this action cannot be revoked.`
 
-    // let component: ComponentType<any>;
-
-    // switch (event.modal) {
-    //   case 'delete':
-    //     if (event.data) this.deleteEmployee(event.data);
-    //     break;
-    //   default:
-    //     if (event.mobile) {
-    //       this.matDialogSrv.openModal(EmployeeFormComponent, event.data, event.mobile);
-    //     } else {
-    //       this.matDialogSrv.openModal(EmployeeFormComponent, event.data, undefined, '55rem');
-    //     }
-    //     break;
-    // }
+    this.alertController.create({
+      header: 'Warning',
+      message: msg,
+      cssClass: 'delete-alert',
+      buttons: [
+        {
+          text: 'Cancel',
+          cssClass: 'alert-button-cancel',
+        },
+        {
+          text: 'Delete',
+          cssClass: 'delete-alert-button-confirm',
+          handler: () => {
+            this.requestSrv.deleteRequest(+event.data.id).subscribe();
+          }
+        },
+      ],
+    }).then(alert => {
+      alert.present();
+    });
 
   }
 

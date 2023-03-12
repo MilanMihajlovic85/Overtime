@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { switchMap, tap } from 'rxjs';
 import { ApprovalsService } from '../shared/data-store/approvals/approvals.service';
 import { RequestModel } from '../shared/data-store/request/request.model';
@@ -24,6 +24,7 @@ export class ApprovalsPage implements OnInit {
     subtitle: ['status']
   }
 
+
   approvals$ = this.loadingSrv.showLoaderUntilCompleted(
     this.approvalSrv.getMyApprovals()
   ).pipe(
@@ -36,63 +37,56 @@ export class ApprovalsPage implements OnInit {
   constructor(
     private approvalSrv: ApprovalsService,
     private loadingSrv: LoadingService,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    private alertCtrl: AlertController
   ) { }
 
-  ngOnInit() {
-
-    this.approvals$.subscribe();
-
-  }
+  ngOnInit() {}
 
   openActions(event: {modal: string, data: {[key: string]: string}, mobile?: boolean}) {
 
-    this.presentActionSheet();
+    this.presentAlert(event.data);
 
   }
 
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
+  async presentAlert(request: { [key: string]: string }) {
+    const alert = await this.alertCtrl.create({
       header: 'Change Request Status',
-      buttons: [
+      buttons: ['Save'],
+      inputs: [
         {
-          text: 'Status1',
-          data: {
-            action: 'Status1',
-          },
+          label: 'Approved',
+          type: 'radio',
+          value: 2,
         },
         {
-          text: 'Status2',
-          data: {
-            action: 'Status2',
-          },
-        },
-        {
-          text: 'Status3',
-          data: {
-            action: 'Status3',
-          },
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          data: {
-            action: 'cancel',
-          },
+          label: 'Declined',
+          type: 'radio',
+          value: 3,
         },
       ],
     });
 
-    await actionSheet.present();
+    await alert.present();
 
-    const result = await actionSheet.onDidDismiss();
+    const result = await alert.onDidDismiss();
 
-    if (result.data) {
-      console.log(result.data.action ?? null);
+    let status!: number;
+    switch (request.status) {
+      case 'Approved':
+        status = 2;
+        break;
+      default:
+        status = 3;
+        break;
     }
 
+    if (result.data && result.data.values) {
+      // console.log(result.data.values ?? null);
+      this.approvalSrv.updateStatus(request, status, result.data.values).subscribe();
+    }
 
-    // this.result = JSON.stringify(result, null, 2);
   }
+
 
 }

@@ -3,14 +3,19 @@ ion-menu ion-content {
 }
 
 ion-menu.md ion-content {
-  --padding-start: 8px;
-  --padding-end: 8px;
-  --padding-top: 20px;
+  // --padding-start: 8px;
+  // --padding-end: 8px;
+  // --padding-top: 20px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
   --padding-bottom: 20px;
 }
 
 ion-menu.md ion-list {
-  padding: 20px 0;
+  // padding: 20px 0;
+  padding: 20px 8px;
+
 }
 
 ion-menu.md ion-note {
@@ -143,4 +148,5 @@ ion-header {
 
 .logout-item {
   margin-top: 3rem;
+  padding: 0 12px;
 }

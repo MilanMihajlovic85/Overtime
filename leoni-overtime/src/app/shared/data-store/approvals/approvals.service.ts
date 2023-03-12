@@ -6,6 +6,11 @@ import { MessagesService } from '../../services/messages/messages.service';
 import { RequestModel } from '../request/request.model';
 import { RequestApiData } from '../request/request.service';
 
+interface StatusApiData {
+  Status: number,
+  Description: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,10 +19,15 @@ export class ApprovalsService {
   private approvals$ = new BehaviorSubject<RequestModel[]>([]);
   approvals = this.approvals$.asObservable();
 
+  private statuses$ = new BehaviorSubject<{status: number, description: string}[]>([]);
+  statuses = this.statuses$.asObservable();
+
   constructor(
     private http: HttpClient,
     private messagesSrv: MessagesService
-  ) { }
+  ) {
+    this.getStatuses().subscribe();
+  }
 
   getMyApprovals() {
 
@@ -66,5 +76,61 @@ export class ApprovalsService {
     );
   }
 
+  updateStatus(request: { [key: string]: string | number }, oldStatus: number, newStatus: number) {
+
+    const approvals = this.approvals$.getValue();
+    const newApprovals = approvals.filter(a => a.id !== request.id);
+
+    this.approvals$.next(newApprovals);
+
+    return this.http.post(`${environment.apiUrl}/Employee/UpdateRequestStatus/${request.id}/${oldStatus}`, {
+      RequestID: request.id,
+      RequestStatus: newStatus
+    }).pipe(
+      catchError(err => {
+
+        if (err.status && err.statusText) {
+          const message = err.status + ' ' + err.statusText;
+          this.messagesSrv.showErrors(message);
+        } else {
+          this.messagesSrv.showErrors(err.message);
+        }
+
+        this.approvals$.next(approvals);
+
+        return throwError(() => err);
+      }),
+      map(() => newApprovals)
+
+    );
+
+  }
+
+  getStatuses() {
+
+    return this.http.get<StatusApiData[]>(`${environment.apiUrl}/RequestData/GetAllRequestStatuses`).pipe(
+      catchError(err => {
+
+        if (err.status && err.statusText) {
+          const message = err.status + ' ' + err.statusText;
+          this.messagesSrv.showErrors(message);
+        } else {
+          this.messagesSrv.showErrors(err.message);
+        }
+
+        return throwError(() => err);
+      }),
+      map(resData => {
+
+        return resData.map(data => (({
+          status: data.Status,
+          description: data.Description
+        })))
+      }),
+      tap(statuses => {
+        this.statuses$.next(statuses);
+      })
+    );
+  }
 
 }
