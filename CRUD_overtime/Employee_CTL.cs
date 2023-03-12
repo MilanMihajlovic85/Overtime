@@ -139,6 +139,21 @@ namespace CRUD_overtime
             }
         }
 
+        public WaitingApprovals_ViewModel GetAllWaitings(string EmployeeID)
+        {
+            ObjectParameter Approvals = new ObjectParameter("Approvals", typeof(int));
+            ObjectParameter Requests = new ObjectParameter("Requests", typeof(int));
+            WaitingApprovals_ViewModel Response = new WaitingApprovals_ViewModel();
+
+            using (OvertimeEntities baza = new OvertimeEntities())
+            {
+                 baza.CountAllPendingRequests(EmployeeID, Approvals, Requests);
+                Response.NumberOfApprovals =(int) Approvals.Value;
+                Response.NumberOfRequests = (int)Requests.Value;
+
+                return Response;
+            }
+        }
 
     }
 }

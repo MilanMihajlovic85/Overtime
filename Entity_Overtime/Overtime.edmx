@@ -38,6 +38,7 @@
           <Property Name="Reason" Type="nvarchar" MaxLength="200" />
           <Property Name="Start_Time" Type="datetime" />
           <Property Name="End_Time" Type="datetime" />
+          <Property Name="CW" Type="int" />
           <Property Name="Minutes" Type="int" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="ResponseDate" Type="datetime" />
@@ -80,8 +81,6 @@ warning 6002: The table/view 'Overtime.CFG.Notification' does not have a primary
           <Property Name="NotificationDesc" Type="nvarchar" MaxLength="100" />
           <Property Name="CreateDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Overtime.CFG.OvertimeReason' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="OvertimeReason">
           <Key>
             <PropertyRef Name="ID" />
@@ -205,7 +204,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
           <Property Name="Requestor_ID" Type="nvarchar" MaxLength="20" />
           <Property Name="Requestor_WO" Type="nvarchar" MaxLength="100" />
           <Property Name="Requestor_FullName" Type="nvarchar" MaxLength="100" />
@@ -217,6 +216,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Name="Reason" Type="nvarchar" MaxLength="200" />
           <Property Name="Start_Time" Type="datetime" />
           <Property Name="End_Time" Type="datetime" />
+          <Property Name="CW" Type="int" />
           <Property Name="Minutes" Type="int" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="ResponseDate" Type="datetime" />
@@ -267,6 +267,11 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
           <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="CountAllPendingRequests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Approvals" Type="int" Mode="InOut" />
+          <Parameter Name="Requests" Type="int" Mode="InOut" />
         </Function>
         <Function Name="CreateOverTimeRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
           <Parameter Name="Requestor_EmployeeID" Type="nvarchar" Mode="In" />
@@ -361,23 +366,42 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
         <Function Name="DepartmentAprrovalsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
           <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="DepartmentName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Rows" Type="int" Mode="In" />
           <Parameter Name="StartDate" Type="date" Mode="In" />
           <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
         <Function Name="MyOvertimesRequestsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
           <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="Rows" Type="int" Mode="In" />
           <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
-        <Function Name="ProjectAprrovalsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
+        <Function Name="ProjectsAprrovalsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
           <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="Project" Type="nvarchar" Mode="In" />
+          <Parameter Name="Rows" Type="int" Mode="In" />
           <Parameter Name="StartDate" Type="date" Mode="In" />
           <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
         <Function Name="WOAprrovalsFromHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="REPORT">
           <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Rows" Type="int" Mode="In" />
           <Parameter Name="WO_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="CumulativeOvertimeForDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="STAT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="CumulativeOvertimeForWO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="STAT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Top50Overtime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="STAT">
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="StartDate" Type="date" Mode="In" />
           <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
@@ -386,6 +410,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <EntitySet Name="WorkingTable" EntityType="Self.WorkingTable" Schema="BAS" store:Type="Tables" />
           <EntitySet Name="AuthenticationCode" EntityType="Self.AuthenticationCode" Schema="CFG" store:Type="Tables" />
           <EntitySet Name="DatabaseSettings" EntityType="Self.DatabaseSettings" Schema="CFG" store:Type="Tables" />
+          <EntitySet Name="OvertimeReason" EntityType="Self.OvertimeReason" Schema="CFG" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="CFG" store:Type="Tables" />
           <EntitySet Name="ReportViewRoles" EntityType="Self.ReportViewRoles" Schema="CFG" store:Type="Tables" />
           <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="CFG" store:Type="Tables" />
@@ -399,13 +424,6 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
     [Notification].[NotificationDesc] AS [NotificationDesc], 
     [Notification].[CreateDate] AS [CreateDate]
     FROM [CFG].[Notification] AS [Notification]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="OvertimeReason" EntityType="Self.OvertimeReason" store:Type="Tables" store:Schema="CFG">
-            <DefiningQuery>SELECT 
-    [OvertimeReason].[ID] AS [ID], 
-    [OvertimeReason].[Reason] AS [Reason], 
-    [OvertimeReason].[CreateDate] AS [CreateDate]
-    FROM [CFG].[OvertimeReason] AS [OvertimeReason]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Messaging" EntityType="Self.Messaging" store:Type="Tables" store:Schema="COM">
             <DefiningQuery>SELECT 
@@ -447,6 +465,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
     [WorkingTable1].[Reason] AS [Reason], 
     [WorkingTable1].[Start_Time] AS [Start_Time], 
     [WorkingTable1].[End_Time] AS [End_Time], 
+    [WorkingTable1].[CW] AS [CW], 
     [WorkingTable1].[Minutes] AS [Minutes], 
     [WorkingTable1].[Status] AS [Status], 
     [WorkingTable1].[ResponseDate] AS [ResponseDate], 
@@ -500,6 +519,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Name="Status" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="ResponseDate" Type="DateTime" Precision="3" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CW" Type="Int32" />
         </EntityType>
         <EntityType Name="AuthenticationCode">
           <Key>
@@ -668,10 +688,11 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Name="Start_Time" Type="DateTime" Precision="3" />
           <Property Name="End_Time" Type="DateTime" Precision="3" />
           <Property Name="Minutes" Type="Int32" />
-          <Property Name="Status" Type="String" />
+          <Property Name="Status" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="ResponseDate" Type="DateTime" Precision="3" />
           <Property Name="ShortCreateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CW" Type="Int32" />
         </EntityType>
         <Association Name="fK_WorkOrganization">
           <End Role="WorkOrganizations" Type="Self.WorkOrganization" Multiplicity="0..1" />
@@ -786,42 +807,23 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
             <Parameter Name="EventNode" Mode="In" Type="String" />
             <Parameter Name="ApplicationName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="DepartmentAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.DepartmentAprrovalsFromHistory_Result)">
+          <FunctionImport Name="DepartmentAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.DepartmentAprrovalsFromHistory_Result1)">
             <Parameter Name="EmployeeID" Mode="In" Type="String" />
             <Parameter Name="DepartmentName" Mode="In" Type="String" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="DepartmentAprrovalsFromHistory_ALL" ReturnType="Collection(OvertimeModel.DepartmentAprrovalsFromHistory_ALL_Result)">
-            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="Rows" Mode="In" Type="Int32" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="MyOvertimesRequestsFromHistory" ReturnType="Collection(OvertimeModel.MyOvertimesRequestsFromHistory_Result)">
             <Parameter Name="EmployeeID" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="ProjectAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.ProjectAprrovalsFromHistory_Result)">
-            <Parameter Name="EmployeeID" Mode="In" Type="String" />
-            <Parameter Name="Project" Mode="In" Type="String" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="ProjectAprrovalsFromHistory_ALL" ReturnType="Collection(OvertimeModel.ProjectAprrovalsFromHistory_ALL_Result)">
-            <Parameter Name="EmployeeID" Mode="In" Type="String" />
-            <Parameter Name="Project" Mode="In" Type="String" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Rows" Mode="In" Type="Int32" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="WOAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.WOAprrovalsFromHistory_Result)">
             <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="Rows" Mode="In" Type="Int32" />
             <Parameter Name="WO_Name" Mode="In" Type="String" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="WOAprrovalsFromHistory_ALL" ReturnType="Collection(OvertimeModel.WOAprrovalsFromHistory_ALL_Result)">
-            <Parameter Name="EmployeeID" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -867,6 +869,33 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           </FunctionImport>
           <FunctionImport Name="GetLastCreatedRequestByEmployee" ReturnType="Collection(OvertimeModel.GetLastCreatedRequestByEmployee_Result)">
           <Parameter Name="ActualUser" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CountAllPendingRequests">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="Approvals" Mode="InOut" Type="Int32" />
+            <Parameter Name="Requests" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CumulativeOvertimeForDepartment" ReturnType="Collection(OvertimeModel.CumulativeOvertimeForDepartment_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="CumulativeOvertimeForWO" ReturnType="Collection(OvertimeModel.CumulativeOvertimeForWO_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Top50Overtime" ReturnType="Collection(OvertimeModel.Top50Overtime_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ProjectsAprrovalsFromHistory" ReturnType="Collection(OvertimeModel.ProjectsAprrovalsFromHistory_Result)">
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="Project" Mode="In" Type="String" />
+            <Parameter Name="Rows" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="PendingApprovalsForMyApprove_Result">
@@ -1030,6 +1059,56 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Type="DateTime" Name="ResponseDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
         </ComplexType>
+        <ComplexType Name="Top50Overtime_Result">
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="NumberOfRequests" Nullable="true" />
+          <Property Type="Decimal" Name="RequestedHours" Nullable="true" Precision="38" Scale="6" />
+        </ComplexType>
+        <ComplexType Name="CumulativeOvertimeForWO_Result">
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="NumberOfRequests" Nullable="true" />
+          <Property Type="Decimal" Name="RequestedHours" Nullable="true" Precision="38" Scale="6" />
+        </ComplexType>
+        <ComplexType Name="CumulativeOvertimeForDepartment_Result">
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="NumberOfRequests" Nullable="true" />
+          <Property Type="Decimal" Name="RequestedHours" Nullable="true" Precision="38" Scale="6" />
+        </ComplexType>
+        <ComplexType Name="DepartmentAprrovalsFromHistory_Result1">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ProjectsAprrovalsFromHistory_Result">
+          <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_WO_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Manager" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_WO" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Requestor_For_Project" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Reason" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Start_Time" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="End_Time" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Minutes" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1057,6 +1136,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <EntitySetMapping Name="WorkingTables">
             <EntityTypeMapping TypeName="OvertimeModel.WorkingTable">
               <MappingFragment StoreEntitySet="WorkingTable">
+                <ScalarProperty Name="CW" ColumnName="CW" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
                 <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
@@ -1240,6 +1320,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <EntitySetMapping Name="WorkingTable1">
             <EntityTypeMapping TypeName="OvertimeModel.WorkingTable1">
               <MappingFragment StoreEntitySet="WorkingTable1">
+                <ScalarProperty Name="CW" ColumnName="CW" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
                 <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
@@ -1314,8 +1395,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <FunctionImportMapping FunctionImportName="ErrorLog_Insert" FunctionName="OvertimeModel.Store.ErrorLog_Insert" />
           <FunctionImportMapping FunctionImportName="EventLog_Insert" FunctionName="OvertimeModel.Store.EventLog_Insert" />
           <FunctionImportMapping FunctionImportName="DepartmentAprrovalsFromHistory" FunctionName="OvertimeModel.Store.DepartmentAprrovalsFromHistory">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OvertimeModel.DepartmentAprrovalsFromHistory_Result">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.DepartmentAprrovalsFromHistory_Result1">
                 <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
                 <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
                 <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
@@ -1335,25 +1416,6 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <FunctionImportMapping FunctionImportName="MyOvertimesRequestsFromHistory" FunctionName="OvertimeModel.Store.MyOvertimesRequestsFromHistory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="OvertimeModel.MyOvertimesRequestsFromHistory_Result">
-                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
-                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
-                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
-                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
-                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
-                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
-                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
-                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
-                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
-                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProjectAprrovalsFromHistory" FunctionName="OvertimeModel.Store.ProjectAprrovalsFromHistory">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OvertimeModel.ProjectAprrovalsFromHistory_Result">
                 <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
                 <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
                 <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
@@ -1422,6 +1484,58 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ResponseDate" ColumnName="ResponseDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CountAllPendingRequests" FunctionName="OvertimeModel.Store.CountAllPendingRequests" />
+          <FunctionImportMapping FunctionImportName="CumulativeOvertimeForDepartment" FunctionName="OvertimeModel.Store.CumulativeOvertimeForDepartment" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.CumulativeOvertimeForDepartment_Result">
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NumberOfRequests" ColumnName="NumberOfRequests" />
+                <ScalarProperty Name="RequestedHours" ColumnName="RequestedHours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CumulativeOvertimeForWO" FunctionName="OvertimeModel.Store.CumulativeOvertimeForWO" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.CumulativeOvertimeForWO_Result">
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NumberOfRequests" ColumnName="NumberOfRequests" />
+                <ScalarProperty Name="RequestedHours" ColumnName="RequestedHours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Top50Overtime" FunctionName="OvertimeModel.Store.Top50Overtime" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.Top50Overtime_Result">
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NumberOfRequests" ColumnName="NumberOfRequests" />
+                <ScalarProperty Name="RequestedHours" ColumnName="RequestedHours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProjectsAprrovalsFromHistory" FunctionName="OvertimeModel.Store.ProjectsAprrovalsFromHistory" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.ProjectsAprrovalsFromHistory_Result">
+                <ScalarProperty Name="Requestor_ID" ColumnName="Requestor_ID" />
+                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
+                <ScalarProperty Name="Requestor_FullName" ColumnName="Requestor_FullName" />
+                <ScalarProperty Name="Requestor_WO_Manager" ColumnName="Requestor_WO_Manager" />
+                <ScalarProperty Name="Requestor_Manager" ColumnName="Requestor_Manager" />
+                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
+                <ScalarProperty Name="Requestor_For_WO" ColumnName="Requestor_For_WO" />
+                <ScalarProperty Name="Requestor_For_Project" ColumnName="Requestor_For_Project" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

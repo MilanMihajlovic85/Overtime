@@ -30,5 +30,6 @@ namespace Entity_Overtime
         public string Status { get; set; }
         public Nullable<System.DateTime> ResponseDate { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<int> CW { get; set; }
     }
 }
