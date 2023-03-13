@@ -13,8 +13,14 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'requests',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+        title: 'Dashboard',
+        canActivate: [AuthGuard]
       },
       {
         path: 'new-request',
@@ -73,6 +79,7 @@ const routes: Routes = [
       }
     ]
   }
+
 ];
 
 @NgModule({

@@ -7,9 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-row>
     <ion-col>
+
+      <app-loading></app-loading>
+      <app-messages></app-messages>
+
       <form [formGroup]="form" class="filter-form">
 
         <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">

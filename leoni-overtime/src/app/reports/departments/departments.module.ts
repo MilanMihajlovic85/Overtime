@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MessagesModule } from 'src/app/shared/ui/messages/messages.module';
+import { LoadingModule } from 'src/app/shared/ui/loading/loading.module';
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatDatepickerModule,
     ReactiveFormsModule,
     TranslateModule,
-    MatSelectModule
+    MatSelectModule,
+    LoadingModule,
+    MessagesModule
   ],
   declarations: [DepartmentsPage]
 })

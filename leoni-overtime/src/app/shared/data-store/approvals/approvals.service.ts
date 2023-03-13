@@ -32,7 +32,6 @@ export class ApprovalsService {
   getMyApprovals() {
 
     return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyPendingApprovals`).pipe(
-      // tap(d => console.log(d)),
       map(resData => resData.map(data => ({
         id: data.ID,
         requestorId: data.Requestor_ID,
@@ -53,7 +52,9 @@ export class ApprovalsService {
       ),
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {
@@ -90,7 +91,9 @@ export class ApprovalsService {
     }).pipe(
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {
@@ -112,7 +115,9 @@ export class ApprovalsService {
     return this.http.get<StatusApiData[]>(`${environment.apiUrl}/RequestData/GetAllRequestStatuses`).pipe(
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {

@@ -1,10 +1,7 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { parseISO } from 'date-fns';
-import { format } from 'util';
 import { RequestService } from '../shared/data-store/request/request.service';
 import { LoadingService } from '../shared/services/loading/loading.service';
 
@@ -23,7 +20,6 @@ export class NewRequestPage implements OnInit {
     private requestSrv: RequestService,
     private formBuilder: FormBuilder,
     private translate: TranslateService,
-    private datePipe: DatePipe,
     private loadingSrv: LoadingService,
     private toastCtrl: ToastController
   ) {}
@@ -74,16 +70,13 @@ export class NewRequestPage implements OnInit {
       this.toastCtrl.create({
         message: 'Request successfuly created',
         duration: 1500,
-        position: 'bottom',
+        position: 'top',
         icon: 'checkmark',
         cssClass: 'success-toast'
       }).then(toast => toast.present());
 
-
     });
 
-
   }
-
 
 }

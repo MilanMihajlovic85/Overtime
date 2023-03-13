@@ -9,6 +9,7 @@ import { RequestsPage } from './requests.page';
 import { RouterModule } from '@angular/router';
 
 import { ListModule } from '../shared/ui/list/list.module';
+import { PaginatedListModule } from '../shared/ui/paginated-list/paginated-list.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ListModule } from '../shared/ui/list/list.module';
     RouterModule.forChild([{ path: '', component: RequestsPage }]),
     FormsModule,
     IonicModule,
-    ListModule
+    ListModule,
+    PaginatedListModule
   ],
   declarations: [RequestsPage]
 })

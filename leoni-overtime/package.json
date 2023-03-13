@@ -9,7 +9,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "filldata": "node ./server/filldata.js > ./server/data.json",
+    "server": "json-server --watch ./server/data.json"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +38,7 @@
     "@ng-idle/keepalive": "^11.0.3",
     "@ngx-translate/core": "^14.0.0",
     "date-fns": "^2.29.3",
+    "faker": "^5.5.3",
     "ionicons": "^6.0.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

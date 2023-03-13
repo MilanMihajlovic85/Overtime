@@ -16,6 +16,13 @@
       <ion-list id="inbox-list">
 
         <ion-menu-toggle auto-hide="false">
+          <ion-item routerDirection="root" [routerLink]="['/', 'dashboard']" lines="none" detail="false" routerLinkActive="selected">
+            <ion-icon aria-hidden="true" slot="start" [ios]="'grid-outline'" [md]="'grid-sharp'"></ion-icon>
+            <ion-label>Dashboard</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
           <ion-item routerDirection="root" [routerLink]="['/', 'new-request']" lines="none" detail="false" routerLinkActive="selected">
             <ion-icon aria-hidden="true" slot="start" [ios]="'add-circle-outline'" [md]="'add-circle-sharp'"></ion-icon>
             <ion-label>New Request</ion-label>
@@ -40,11 +47,6 @@
 
       <ion-list id="labels-list">
         <ion-list-header>Reports</ion-list-header>
-
-        <!-- <ion-item lines="none">
-          <ion-icon aria-hidden="true" slot="start" [ios]="'bag-check-outline'" [md]="'bag-check-sharp'"></ion-icon>
-          <ion-label>Requests</ion-label>
-        </ion-item> -->
 
         <ion-menu-toggle auto-hide="false">
           <ion-item routerDirection="root" [routerLink]="['/', 'reports', 'my-requests']" lines="none" detail="false" routerLinkActive="selected">

@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -34,7 +34,7 @@
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
             <mat-label>Reason</mat-label>
-            <textarea type="text" matInput formControlName="reason"></textarea>
+            <textarea type="text" matInput formControlName="reason" rows="5"></textarea>
             <mat-error *ngIf="form.get('reason')!.errors?.required">Pleade insert reason for request</mat-error>
           </mat-form-field>
 
@@ -69,6 +69,7 @@
           </mat-form-field>
 
         </form>
+
       </ion-col>
     </ion-row>
   </ion-grid>

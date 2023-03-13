@@ -7,10 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-row>
+
     <ion-col>
+
+      <app-loading></app-loading>
+      <app-messages></app-messages>
+
       <form [formGroup]="form" class="filter-form">
 
         <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
@@ -27,11 +31,10 @@
 
         </mat-form-field>
 
-        <!-- <button mat-stroked-button class="mat-primary" (click)="onFormSubmit()" [disabled]="!form.valid">{{ 'btnText.view' | translate }}</button> -->
-
         <ion-button expand="block" fill="outline" (click)="onFormSubmit()" [disabled]="!form.valid">Show</ion-button>
 
       </form>
+
     </ion-col>
 
   </ion-row>

@@ -49,7 +49,9 @@ export class ReportsService {
       ),
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {
@@ -100,7 +102,9 @@ export class ReportsService {
       ),
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {
@@ -151,7 +155,9 @@ export class ReportsService {
       ),
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {
@@ -202,7 +208,9 @@ export class ReportsService {
       ),
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {

@@ -1,0 +1,23 @@
+ion-badge {
+  position: absolute;
+  font-size: 8pt;
+  right: -16px;
+  top: -3px;
+}
+
+.requests-buttons {
+  text-align: center;
+  margin-top: 5rem;
+}
+
+ion-button {
+  margin: 5px auto 1rem;
+  width: 65%;
+  height: 40px;
+  position: relative;
+}
+
+/* Setting Overflow Visible */
+ion-button.dashboard-buttons::part(native) {
+  overflow: visible;
+}

@@ -7,9 +7,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
 
   <ng-container *ngIf="requests$ | async">
+
+    <!-- <app-paginated-list
+      *ngIf="requests.length > 0; else noData"
+      [data]="requests"
+      [schema]="schema"
+      [buttons]="buttons"
+      (modalOpen)="openModal($event)"
+    >
+    </app-paginated-list> -->
 
     <app-list
       *ngIf="requests.length > 0; else noData"

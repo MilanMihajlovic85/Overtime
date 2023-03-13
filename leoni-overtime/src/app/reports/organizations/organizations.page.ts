@@ -28,8 +28,14 @@ export class OrganizationsPage implements OnInit {
 
   organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/GetAllWorkOrganizations`).pipe(
     catchError(err => {
-      const message = err.name + ': ' + err.status + ' ' + err.statusText;
-      this.messagesSrv.showErrors(message);
+      if (err.error.Message) {
+        this.messagesSrv.showErrors(err.error.Message);
+      } else if (err.status && err.statusText) {
+        const message = err.status + ' ' + err.statusText;
+        this.messagesSrv.showErrors(message);
+      } else {
+        this.messagesSrv.showErrors(err.message);
+      }
       return throwError(() => err);
     })
   );
