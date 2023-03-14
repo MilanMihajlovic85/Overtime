@@ -17,8 +17,8 @@ namespace WebApi_Overtime.Controllers
         Statistics_CTL StatisticsCTL = new Statistics_CTL();
 
         [HttpGet]
-        [Route("GetCumulativeStatisticsForWO")]
-        public HttpResponseMessage GetCumulativeStatisticsForWO(DateTime StartDate, DateTime EndDate)
+        [Route("GetCumulativeStatisticsForWO/{WorkOrganization}/{StartDate}/{EndDate}")]
+        public HttpResponseMessage GetCumulativeStatisticsForWO(string WorOrganization,DateTime StartDate, DateTime EndDate)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
@@ -28,19 +28,19 @@ namespace WebApi_Overtime.Controllers
 
             if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not proided");
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not provided");
             }
             else
             {
                 ApiKey = ApiKeyHeader.FirstOrDefault();
             }
 
-           return Request.CreateResponse(HttpStatusCode.OK, StatisticsCTL.GetCumuativeStatisticsForWO(ActualUser, StartDate, EndDate));
+           return Request.CreateResponse(HttpStatusCode.OK, StatisticsCTL.GetCumuativeStatisticsForWO(ActualUser,WorOrganization, StartDate, EndDate));
         }
 
         [HttpGet]
-        [Route("GetCumulativeStatisticsForDepartment")]
-        public HttpResponseMessage GetCumulativeStatisticsForDepartment(DateTime StartDate, DateTime EndDate)
+        [Route("GetCumulativeStatisticsForDepartment/{DepartmentName}/{StartDate}/{EndDate}")]
+        public HttpResponseMessage GetCumulativeStatisticsForDepartment(string DepartmentName,DateTime StartDate, DateTime EndDate)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
@@ -50,14 +50,14 @@ namespace WebApi_Overtime.Controllers
 
             if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not proided");
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not provided");
             }
             else
             {
                 ApiKey = ApiKeyHeader.FirstOrDefault();
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, StatisticsCTL.GetCumuativeStatisticsForDept(ActualUser, StartDate, EndDate));
+            return Request.CreateResponse(HttpStatusCode.OK, StatisticsCTL.GetCumuativeStatisticsForDept(ActualUser,DepartmentName, StartDate, EndDate));
         }
     }
 }

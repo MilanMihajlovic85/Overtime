@@ -31,5 +31,6 @@ namespace Entity_Overtime
         public Nullable<System.DateTime> ResponseDate { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<int> CW { get; set; }
+        public Nullable<int> ProposedMinutes { get; set; }
     }
 }

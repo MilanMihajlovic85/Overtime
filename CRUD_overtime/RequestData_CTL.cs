@@ -74,5 +74,41 @@ namespace CRUD_overtime
                 }).ToList();
             }
         }
+
+        public List<DropDownList_ViewModel> DDLProject (string EmpployeeID)
+        {
+            using (OvertimeEntities baza = new OvertimeEntities())
+            {
+               return baza.DataDrivenProject(EmpployeeID).Select(e => new DropDownList_ViewModel()
+                {
+                    Value = e.ProjectName,
+                    Description = e.WOName
+                }).ToList();
+            }
+        }
+
+        public List<DropDownList_ViewModel> DDLWorkOrganization(string EmpployeeID)
+        {
+            using (OvertimeEntities baza = new OvertimeEntities())
+            {
+                return baza.DataDrivenWorkOrganization(EmpployeeID).Select(e => new DropDownList_ViewModel()
+                {
+                    Value = e.WOName,
+                    Description = e.WOLocation
+                }).ToList();
+            }
+        }
+
+        public List<DropDownList_ViewModel> DDLDepartment(string EmpployeeID)
+        {
+            using (OvertimeEntities baza = new OvertimeEntities())
+            {
+                return baza.DataDrivenDepartments(EmpployeeID).Select(e => new DropDownList_ViewModel()
+                {
+                    Value = e.DepartmentName,
+                    Description = e.Description
+                }).ToList();
+            }
+        }
     }
 }

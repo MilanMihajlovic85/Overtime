@@ -63,6 +63,15 @@
     <Compile Include="DatabaseSetting.cs">
       <DependentUpon>Overtime.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataDrivenDepartments_Result.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataDrivenProject_Result.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataDrivenWorkOrganization_Result.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
     <Compile Include="DepartmentAprrovalsFromHistory_ALL_Result.cs">
       <DependentUpon>Overtime.tt</DependentUpon>
     </Compile>
@@ -82,6 +91,9 @@
       <DependentUpon>Overtime.tt</DependentUpon>
     </Compile>
     <Compile Include="ExternComunicationHandler.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllOvertimeReasons_Result.cs">
       <DependentUpon>Overtime.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllSessions_Result.cs">

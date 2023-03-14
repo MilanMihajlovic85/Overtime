@@ -101,7 +101,7 @@ namespace CRUD_overtime
         {
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.ChangeRequestStatus( Request.RequestID,Request.RequestStatus,EmpployeID, ReturnInt, ReturnText);
+                baza.ChangeRequestStatus( Request.RequestID,Request.RequestStatus,Request.Minutes,EmpployeID, ReturnInt, ReturnText);
 
                 DbResponse.ReturnText = ReturnText.Value.ToString();
                 DbResponse.ReturnInt = (int)ReturnInt.Value;

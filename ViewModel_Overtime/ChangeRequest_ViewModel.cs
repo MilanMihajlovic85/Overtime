@@ -11,5 +11,7 @@ namespace ViewModel_Overtime
         public int RequestID { get; set; }
         public int RequestStatus { get; set; }
 
+        public int Minutes { get; set; }
+
     }
 }

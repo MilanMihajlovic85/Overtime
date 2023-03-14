@@ -26,5 +26,8 @@ namespace Entity_Overtime
         public Nullable<bool> Login { get; set; }
         public string ReportViewRole { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
+        public string EmployeeUserName { get; set; }
+        public string SubDepartment { get; set; }
+        public string JobTitle { get; set; }
     }
 }

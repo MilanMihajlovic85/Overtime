@@ -44,7 +44,7 @@ namespace Entity_Overtime
         public virtual DbSet<Messaging1> Messaging1 { get; set; }
         public virtual DbSet<WorkingTable1> WorkingTable1 { get; set; }
     
-        public virtual int ChangeRequestStatus(Nullable<int> requestID, Nullable<int> requestStatus, string employeeID, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int ChangeRequestStatus(Nullable<int> requestID, Nullable<int> requestStatus, Nullable<int> time, string employeeID, ObjectParameter returnInt, ObjectParameter returnText)
         {
             var requestIDParameter = requestID.HasValue ?
                 new ObjectParameter("RequestID", requestID) :
@@ -54,11 +54,15 @@ namespace Entity_Overtime
                 new ObjectParameter("RequestStatus", requestStatus) :
                 new ObjectParameter("RequestStatus", typeof(int));
     
+            var timeParameter = time.HasValue ?
+                new ObjectParameter("Time", time) :
+                new ObjectParameter("Time", typeof(int));
+    
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeRequestStatus", requestIDParameter, requestStatusParameter, employeeIDParameter, returnInt, returnText);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeRequestStatus", requestIDParameter, requestStatusParameter, timeParameter, employeeIDParameter, returnInt, returnText);
         }
     
         public virtual int CreateOverTimeRequest(string requestor_EmployeeID, string requestor_Reason, Nullable<int> requestor_For_WO_Project_ID, Nullable<System.DateTime> requestor_StartTime, Nullable<System.DateTime> requestor_EndTime, ObjectParameter returnInt, ObjectParameter returnText)
@@ -253,7 +257,7 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EventLog_Insert", eventTextParameter, eventProcedureParameter, eventScriptParameter, eventUserParameter, eventNodeParameter, applicationNameParameter);
         }
     
-        public virtual ObjectResult<DepartmentAprrovalsFromHistory_Result1> DepartmentAprrovalsFromHistory(string employeeID, string departmentName, Nullable<int> rows, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<DepartmentAprrovalsFromHistory_Result1> DepartmentAprrovalsFromHistory(string employeeID, string departmentName, Nullable<int> rows, Nullable<int> pages, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
@@ -267,6 +271,10 @@ namespace Entity_Overtime
                 new ObjectParameter("Rows", rows) :
                 new ObjectParameter("Rows", typeof(int));
     
+            var pagesParameter = pages.HasValue ?
+                new ObjectParameter("Pages", pages) :
+                new ObjectParameter("Pages", typeof(int));
+    
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
                 new ObjectParameter("StartDate", typeof(System.DateTime));
@@ -275,10 +283,10 @@ namespace Entity_Overtime
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DepartmentAprrovalsFromHistory_Result1>("DepartmentAprrovalsFromHistory", employeeIDParameter, departmentNameParameter, rowsParameter, startDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DepartmentAprrovalsFromHistory_Result1>("DepartmentAprrovalsFromHistory", employeeIDParameter, departmentNameParameter, rowsParameter, pagesParameter, startDateParameter, endDateParameter);
         }
     
-        public virtual ObjectResult<MyOvertimesRequestsFromHistory_Result> MyOvertimesRequestsFromHistory(string employeeID, Nullable<System.DateTime> startDate, Nullable<int> rows, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<MyOvertimesRequestsFromHistory_Result> MyOvertimesRequestsFromHistory(string employeeID, Nullable<System.DateTime> startDate, Nullable<int> rows, Nullable<int> pages, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
@@ -292,14 +300,18 @@ namespace Entity_Overtime
                 new ObjectParameter("Rows", rows) :
                 new ObjectParameter("Rows", typeof(int));
     
+            var pagesParameter = pages.HasValue ?
+                new ObjectParameter("pages", pages) :
+                new ObjectParameter("pages", typeof(int));
+    
             var endDateParameter = endDate.HasValue ?
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MyOvertimesRequestsFromHistory_Result>("MyOvertimesRequestsFromHistory", employeeIDParameter, startDateParameter, rowsParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MyOvertimesRequestsFromHistory_Result>("MyOvertimesRequestsFromHistory", employeeIDParameter, startDateParameter, rowsParameter, pagesParameter, endDateParameter);
         }
     
-        public virtual ObjectResult<WOAprrovalsFromHistory_Result> WOAprrovalsFromHistory(string employeeID, Nullable<int> rows, string wO_Name, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<WOAprrovalsFromHistory_Result> WOAprrovalsFromHistory(string employeeID, Nullable<int> rows, Nullable<int> pages, string wO_Name, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
@@ -308,6 +320,10 @@ namespace Entity_Overtime
             var rowsParameter = rows.HasValue ?
                 new ObjectParameter("Rows", rows) :
                 new ObjectParameter("Rows", typeof(int));
+    
+            var pagesParameter = pages.HasValue ?
+                new ObjectParameter("Pages", pages) :
+                new ObjectParameter("Pages", typeof(int));
     
             var wO_NameParameter = wO_Name != null ?
                 new ObjectParameter("WO_Name", wO_Name) :
@@ -321,7 +337,7 @@ namespace Entity_Overtime
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WOAprrovalsFromHistory_Result>("WOAprrovalsFromHistory", employeeIDParameter, rowsParameter, wO_NameParameter, startDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WOAprrovalsFromHistory_Result>("WOAprrovalsFromHistory", employeeIDParameter, rowsParameter, pagesParameter, wO_NameParameter, startDateParameter, endDateParameter);
         }
     
         public virtual ObjectResult<GetAllSessions_Result> GetAllSessions()
@@ -437,11 +453,15 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CountAllPendingRequests", employeeIDParameter, approvals, requests);
         }
     
-        public virtual ObjectResult<CumulativeOvertimeForDepartment_Result> CumulativeOvertimeForDepartment(string employeeID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<CumulativeOvertimeForDepartment_Result> CumulativeOvertimeForDepartment(string employeeID, string department, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(string));
+    
+            var departmentParameter = department != null ?
+                new ObjectParameter("Department", department) :
+                new ObjectParameter("Department", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -451,14 +471,18 @@ namespace Entity_Overtime
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CumulativeOvertimeForDepartment_Result>("CumulativeOvertimeForDepartment", employeeIDParameter, startDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CumulativeOvertimeForDepartment_Result>("CumulativeOvertimeForDepartment", employeeIDParameter, departmentParameter, startDateParameter, endDateParameter);
         }
     
-        public virtual ObjectResult<CumulativeOvertimeForWO_Result> CumulativeOvertimeForWO(string employeeID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<CumulativeOvertimeForWO_Result> CumulativeOvertimeForWO(string employeeID, string wOName, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(string));
+    
+            var wONameParameter = wOName != null ?
+                new ObjectParameter("WOName", wOName) :
+                new ObjectParameter("WOName", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -468,7 +492,7 @@ namespace Entity_Overtime
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CumulativeOvertimeForWO_Result>("CumulativeOvertimeForWO", employeeIDParameter, startDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CumulativeOvertimeForWO_Result>("CumulativeOvertimeForWO", employeeIDParameter, wONameParameter, startDateParameter, endDateParameter);
         }
     
         public virtual ObjectResult<Top50Overtime_Result> Top50Overtime(string employeeID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
@@ -488,7 +512,7 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Top50Overtime_Result>("Top50Overtime", employeeIDParameter, startDateParameter, endDateParameter);
         }
     
-        public virtual ObjectResult<ProjectsAprrovalsFromHistory_Result> ProjectsAprrovalsFromHistory(string employeeID, string project, Nullable<int> rows, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<ProjectsAprrovalsFromHistory_Result> ProjectsAprrovalsFromHistory(string employeeID, string project, Nullable<int> rows, Nullable<int> pages, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var employeeIDParameter = employeeID != null ?
                 new ObjectParameter("EmployeeID", employeeID) :
@@ -502,6 +526,10 @@ namespace Entity_Overtime
                 new ObjectParameter("Rows", rows) :
                 new ObjectParameter("Rows", typeof(int));
     
+            var pagesParameter = pages.HasValue ?
+                new ObjectParameter("Pages", pages) :
+                new ObjectParameter("Pages", typeof(int));
+    
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
                 new ObjectParameter("StartDate", typeof(System.DateTime));
@@ -510,7 +538,44 @@ namespace Entity_Overtime
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProjectsAprrovalsFromHistory_Result>("ProjectsAprrovalsFromHistory", employeeIDParameter, projectParameter, rowsParameter, startDateParameter, endDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProjectsAprrovalsFromHistory_Result>("ProjectsAprrovalsFromHistory", employeeIDParameter, projectParameter, rowsParameter, pagesParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<DataDrivenDepartments_Result> DataDrivenDepartments(string employeeID)
+        {
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DataDrivenDepartments_Result>("DataDrivenDepartments", employeeIDParameter);
+        }
+    
+        public virtual ObjectResult<DataDrivenProject_Result> DataDrivenProject(string employeeID)
+        {
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DataDrivenProject_Result>("DataDrivenProject", employeeIDParameter);
+        }
+    
+        public virtual ObjectResult<DataDrivenWorkOrganization_Result> DataDrivenWorkOrganization(string employeeID)
+        {
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DataDrivenWorkOrganization_Result>("DataDrivenWorkOrganization", employeeIDParameter);
+        }
+    
+        public virtual ObjectResult<GetAllOvertimeReasons_Result> GetAllOvertimeReasons()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOvertimeReasons_Result>("GetAllOvertimeReasons");
+        }
+    
+        public virtual ObjectResult<string> GetAllProjects()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllProjects");
         }
     }
 }
