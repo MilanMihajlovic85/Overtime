@@ -40,18 +40,16 @@ export class RequestService {
   private requests$ = new BehaviorSubject<RequestModel[]>([]);
   requests = this.requests$.asObservable();
 
-  // private statuses$ = new BehaviorSubject<RoleModel[]>([]);
-  // roles = this.roles$.asObservable();
-
   constructor(
     private http: HttpClient,
     private messagesSrv: MessagesService,
     private datePipe: DatePipe
   ) { }
 
-  getMyRequests() {
+  getMyRequestsPaginated(url: string) {
 
-    return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyRequests`).pipe(
+    return this.http.get<RequestApiData[]>(`http://localhost:3000/reports${url}`).pipe(
+    // return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyRequests`).pipe(
       map(resData => resData.map(data => ({
         id: data.ID,
         requestorId: data.Requestor_ID,
@@ -81,6 +79,56 @@ export class RequestService {
 
         return throwError(() => err);
       }),
+      // tap(requests => {
+      //   this.requests$.next(
+      //     requests.sort((a, b) => {
+      //       if (a.createdAt < b.createdAt)
+      //         return 1;
+      //       if (a.createdAt > b.createdAt)
+      //         return -1;
+      //       return 0;
+      //     })
+      //   );
+      // }),
+      shareReplay()
+    );
+  }
+
+
+  getMyRequests() {
+
+    return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyRequests`).pipe(
+      map(resData => resData.map(data => ({
+        id: data.ID,
+        requestorId: data.Requestor_ID,
+        requestorWO: data.Requestor_WO,
+        requestorFullName: data.Requestor_FullName,
+        requestorWOManager: data.Requestor_WO_Manager,
+        requestorDepartment: data.Requestor_Department,
+        requestorForWO: data.Requestor_For_WO,
+        requestorForProject: data.Requestor_For_Project,
+        reason: data.Reason,
+        startTime: new Date(data.Start_Time),
+        endTime: new Date(data.End_Time),
+        minutes: data.Minutes,
+        status: data.Status,
+        responseDate: data.ResponseDate ? new Date(data.ResponseDate) : null,
+        createdAt: new Date(data.CreateDate)
+        } as RequestModel))
+      ),
+      catchError(err => {
+
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
+          const message = err.status + ' ' + err.statusText;
+          this.messagesSrv.showErrors(message);
+        } else {
+          this.messagesSrv.showErrors(err.message);
+        }
+
+        return throwError(() => err);
+      }),
       tap(requests => {
         this.requests$.next(
           requests.sort((a, b) => {
@@ -96,23 +144,23 @@ export class RequestService {
     );
   }
 
-  createRequest(data: {[key: string]: string | Date}) {
+  createRequest(projectId: string, reason: string, start: Date, end: Date) {
 
     return this.http.post<RequestApiData>(`${environment.apiUrl}/Employee/CreateRequest`, {
-        Reason: data.reason,
-        Project_ID: data.projectId,
-        StartTime: this.datePipe.transform(data.start, 'yyyy-MM-dd HH:mm:ss'),
-        EndTime: this.datePipe.transform(data.end, 'yyyy-MM-dd HH:mm:ss')
+        Reason: reason,
+        Project_ID: projectId,
+        StartTime: this.datePipe.transform(start, 'yyyy-MM-dd HH:mm:ss'),
+        EndTime: this.datePipe.transform(end, 'yyyy-MM-dd HH:mm:ss')
     }).pipe(
       catchError(err => {
-
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {
           this.messagesSrv.showErrors(err.message);
         }
-
         return throwError(() => err);
       }),
       map(resData => {
@@ -152,7 +200,9 @@ export class RequestService {
 
         this.requests$.next(requests);
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {
@@ -171,7 +221,9 @@ export class RequestService {
     return this.http.get<ProjectApiData[]>(`${environment.apiUrl}/RequestData/GetAllProjectsForWO`).pipe(
       catchError(err => {
 
-        if (err.status && err.statusText) {
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
           const message = err.status + ' ' + err.statusText;
           this.messagesSrv.showErrors(message);
         } else {

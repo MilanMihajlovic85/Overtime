@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { switchMap, tap } from 'rxjs';
 import { ApprovalsService } from '../shared/data-store/approvals/approvals.service';
 import { RequestModel } from '../shared/data-store/request/request.model';
@@ -19,9 +19,9 @@ export class ApprovalsPage implements OnInit {
   };
 
   schema = {
-    properties: ['status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'responseDate', 'createdAt'],
-    title: ['requestorDepartment'],
-    subtitle: ['status']
+    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'responseDate', 'createdAt'],
+    title: ['requestorFullName'],
+    subtitle: ['requestorDepartment']
   }
 
 
@@ -37,7 +37,6 @@ export class ApprovalsPage implements OnInit {
   constructor(
     private approvalSrv: ApprovalsService,
     private loadingSrv: LoadingService,
-    private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController
   ) { }
 
@@ -82,7 +81,6 @@ export class ApprovalsPage implements OnInit {
     }
 
     if (result.data && result.data.values) {
-      // console.log(result.data.values ?? null);
       this.approvalSrv.updateStatus(request, status, result.data.values).subscribe();
     }
 

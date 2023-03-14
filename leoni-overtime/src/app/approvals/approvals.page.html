@@ -3,20 +3,26 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Approvals</ion-title>
+    <ion-title>My Approvals</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
   <ng-container *ngIf="approvals$ | async">
 
     <app-list
+      *ngIf="approvals.length > 0; else noData"
       [data]="approvals"
       [schema]="schema"
       [buttons]="buttons"
       (modalOpen)="openActions($event)"
     >
     </app-list>
+
+    <ng-template #noData>
+      <h1>No Data</h1>
+      <ion-icon name="alert-circle-outline"></ion-icon>
+    </ng-template>
 
   </ng-container>
 </ion-content>

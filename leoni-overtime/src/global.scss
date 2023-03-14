@@ -49,3 +49,38 @@ ion-toast.success-toast {
   }
 
 }
+
+// Filter form styles
+form.filter-form {
+
+  padding: 0 1rem;
+
+  margin-top: 2rem;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+// Datetime picker modal
+ion-modal.date-time {
+
+  --background: rgba(44, 39, 45, 0.2);
+
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+
+  ion-content {
+    --background: transparent;
+
+    --padding-top: 25vh;
+    --padding-start: 20px;
+    --padding-end: 20px;
+
+    ion-datetime {
+      border-radius: 8px;
+    }
+
+  }
+}

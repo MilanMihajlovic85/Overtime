@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AuthPage } from './auth.page';
+import { HomePage } from './home.page';
 import { RouterModule } from '@angular/router';
 import { MessagesModule } from '../shared/ui/messages/messages.module';
 import { LoadingModule } from '../shared/ui/loading/loading.module';
@@ -12,12 +12,12 @@ import { LoadingModule } from '../shared/ui/loading/loading.module';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild([{ path: '', component: AuthPage }]),
+    RouterModule.forChild([{ path: '', component: HomePage }]),
     FormsModule,
     IonicModule,
     LoadingModule,
     MessagesModule
   ],
-  declarations: [AuthPage]
+  declarations: [HomePage]
 })
-export class AuthPageModule {}
+export class HomePageModule {}

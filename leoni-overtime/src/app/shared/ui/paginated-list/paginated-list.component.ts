@@ -1,14 +1,15 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
+import { RequestService } from '../../data-store/request/request.service';
 import { I18nService } from '../../services/i18n/i18n.service';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  selector: 'app-paginated-list',
+  templateUrl: './paginated-list.component.html',
+  styleUrls: ['./paginated-list.component.scss'],
 })
-export class ListComponent  implements OnInit {
+export class PaginatedListComponent  implements OnInit {
 
   private _data!: {[key: string]: any}[];
 
@@ -26,16 +27,21 @@ export class ListComponent  implements OnInit {
   translatedSchema!: {[key: string]: any};
   activeElement!: {[key: string]: any} | undefined | null;
   selectedElement!: {[key: string]: any};
-  elements!: {[key: string]: any}[];
+  elements: {[key: string]: any}[] = [];
+
+  url!: string;
+  itemListData = [];
+  page_number = 1;
+  page_limit = 13;
 
 
   dataSource: {[key: string]: string | number}[] = [];
   value = '';
 
-
   constructor(
     private datePipe: DatePipe,
-    private i18n: I18nService
+    private i18n: I18nService,
+    private requestSrv: RequestService
   ) { }
 
   ngOnInit() {
@@ -68,23 +74,7 @@ export class ListComponent  implements OnInit {
       this.translatedSchema = schema;
     });
 
-    this.elements = this.data;
-
-
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-
-    if (this.activeElement) {
-      this.activeElement = changes['data'].currentValue!.find((u: any) => u['id'] === this.activeElement!['id']);
-
-      if (this.activeElement) {
-        this.setDataSource();
-      } else {
-        this.dataSource = [];
-      }
-    }
+    this.getElements(false, "");
 
   }
 
@@ -92,44 +82,31 @@ export class ListComponent  implements OnInit {
     return this._data;
   }
 
-  applyFilter(event: Event) {
+  getElements(isFirstLoad: boolean, event: any) {
 
-    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+    this.url = '?_page=' + this.page_number + '&_limit=' + this.page_limit;
 
-    this.elements = this.data.filter(element => {
+    this.requestSrv.getMyRequestsPaginated(this.url).pipe(
 
-        let retEl;
+    ).subscribe(resData => {
 
-        for (const [key, value] of Object.entries(element)) {
+      for (let i = 0; i < resData.length; i++) {
+        this.elements.push(resData[i]);
+      }
 
-          if (
-            key !== 'id' &&
-            key !== 'createdAt' &&
-            key !== 'startTime' &&
-            key !== 'endTime' &&
-            key !== 'responseDate' &&
-            value &&
-            typeof value === 'string' &&
-            value!.toLowerCase().includes(filterValue)) {
-              retEl = element;
-          }
-        }
-        return retEl;
+      if (isFirstLoad)
+        event.target!.complete();
 
-    });
+      this.page_number++;
+
+    })
 
   }
 
-  clearSearchInput() {
+  doInfinite(event: Event) {
 
-    this.value = '';
-    this.elements = this.data;
+    this.getElements(true, event);
 
-  }
-
-  openModal(modal: string, data: any) {
-
-    this.modalOpen.emit({modal, data, mobile: true});
 
   }
 
@@ -188,7 +165,6 @@ export class ListComponent  implements OnInit {
     }
 
   }
-
 
 
 }

@@ -17,7 +17,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { ApiKeyHttpInterceptorProvider } from './shared/interceptors/api-key.interceptor';
 import { DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 @NgModule({
@@ -35,7 +35,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     LoadingModule,
     MessagesModule,
     NgIdleKeepaliveModule.forRoot(),
-    TranslateModule.forRoot()
+    TranslateModule.forRoot(),
+    MatNativeDateModule
   ],
   providers: [
     DatePipe,

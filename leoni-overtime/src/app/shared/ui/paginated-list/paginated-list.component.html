@@ -1,0 +1,50 @@
+<ng-container *ngIf="!activeElement; else details">
+
+  <ion-list>
+
+    <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" detail="true">
+      <ion-label>
+        <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
+        <p>{{ el[schema['subtitle']] }}</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ng-container>
+
+<ng-template #details>
+
+  <div class="details">
+
+    <ion-button fill="clear" (click)="onBackToList()">
+      <ion-icon slot="start" name="caret-back-outline"></ion-icon>
+      Back To List
+    </ion-button>
+
+
+    <h1><span *ngFor="let title of schema['title']">{{ activeElement![title] }} </span></h1>
+
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="key">
+        <mat-header-cell *matCellDef="let element">{{ element.key }}</mat-header-cell>
+      </ng-container>
+      <ng-container matColumnDef="val">
+        <mat-cell *matCellDef="let element" style="text-align: center;">{{ element.val }}</mat-cell>
+      </ng-container>
+      <mat-row *matRowDef="let row; columns: ['key', 'val'];"></mat-row>
+    </mat-table>
+
+    <div *ngIf="btns.length > 0" class="buttons">
+      <ion-button *ngFor="let btn of btns" color="{{ btn['mobileColor'] }}" fill="solid">
+        <ion-icon slot="icon-only" name="{{ btn['mobileIcon'] }}"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+</ng-template>

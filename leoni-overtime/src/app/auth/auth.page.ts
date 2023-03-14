@@ -34,18 +34,19 @@ export class AuthPage implements OnInit {
       this.authService.preLogin(form.value.employeeId).pipe(
         catchError(err => {
 
-          console.log(err);
+          if (err.error.Message) {
+            if (err.error.Message.includes("no exists in database")) {
+              this.messagesSrv.showErrors('Wrong ID');
+            } else {
+              this.messagesSrv.showErrors(err.error.Message);
+            }
 
-
-          let message!: string;
-
-          if (err.error && err.error.Message && err.error.Message.includes("no exists in database")) {
-            message = 'Wrong ID';
-          } else if (err.name && err.status && err.statusText) {
-            message = err.status + ' ' + err.statusText;
+          } else if (err.status && err.statusText) {
+            const message = err.status + ' ' + err.statusText;
+            this.messagesSrv.showErrors(message);
+          } else {
+            this.messagesSrv.showErrors(err.message);
           }
-
-          this.messagesSrv.showErrors(message);
 
           return throwError(() => err);
         })
