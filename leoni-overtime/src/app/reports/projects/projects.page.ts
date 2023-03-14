@@ -26,7 +26,8 @@ export class ProjectsPage implements OnInit {
     subtitle: ['requestorFullName']
   }
 
-  projects$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/GetAllProjectsForWO`).pipe(
+  projects$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_Projects`).pipe(
+    tap(d => console.log(d)),
     catchError(err => {
       if (err.error.Message) {
         this.messagesSrv.showErrors(err.error.Message);

@@ -39,33 +39,21 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-            <mat-label>Start</mat-label>
-            <input matInput [ngxMatDatetimePicker]="picker" formControlName="start">
-
-            <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-
-            <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
-
+            <mat-label>Start Time</mat-label>
+            <input type="test" matInput id="start-time-modal" formControlName="start">
+            <mat-icon matSuffix>calendar_month</mat-icon>
             <mat-error *ngIf="form.get('start')!.errors?.required && !form.get('start')!.errors?.matDatetimePickerParse">
               Start time is required
             </mat-error>
-            <mat-error *ngIf="form.get('start')!.errors?.matDatetimePickerParse">Wrong time format</mat-error>
-
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-            <mat-label>End</mat-label>
-            <input matInput [ngxMatDatetimePicker]="picker2" formControlName="end">
-
-            <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
-
-            <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
-
+            <mat-label>End Time</mat-label>
+            <input type="test" matInput id="end-time-modal" formControlName="end">
+            <mat-icon matSuffix>calendar_month</mat-icon>
             <mat-error *ngIf="form.get('end')!.errors?.required && !form.get('end')!.errors?.matDatetimePickerParse">
               End time is required
             </mat-error>
-            <mat-error *ngIf="form.get('end')!.errors?.matDatetimePickerParse">Wrong time format</mat-error>
-
           </mat-form-field>
 
         </form>
@@ -74,3 +62,41 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-modal class="date-time" trigger="start-time-modal">
+  <ng-template>
+    <ion-content>
+      <ion-datetime
+        #startDatetime
+        presentation="time-date"
+        size="cover"
+        (ionChange)="startDateChanged(startDatetime.value)"
+        (ionCancel)="showStartTimePicker = false"
+      >
+        <ion-buttons slot="buttons">
+          <ion-button (click)="closeStartTime()">Cancel</ion-button>
+          <ion-button (click)="selectStartTime()">Select</ion-button>
+        </ion-buttons>
+      </ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal class="date-time" trigger="end-time-modal">
+  <ng-template>
+    <ion-content>
+      <ion-datetime
+        #endDatetime
+        presentation="time-date"
+        size="cover"
+        (ionChange)="endDateChanged(endDatetime.value)"
+        (ionCancel)="showEndTimePicker = false"
+      >
+        <ion-buttons slot="buttons">
+          <ion-button (click)="closeEndTime()">Cancel</ion-button>
+          <ion-button (click)="selectEndTime()">Select</ion-button>
+        </ion-buttons>
+      </ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-modal>

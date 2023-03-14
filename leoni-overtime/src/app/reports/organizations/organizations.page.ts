@@ -26,7 +26,8 @@ export class OrganizationsPage implements OnInit {
     subtitle: ['requestorFullName']
   }
 
-  organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/GetAllWorkOrganizations`).pipe(
+  organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_WorkOrganizations`).pipe(
+    tap(d => console.log(d)),
     catchError(err => {
       if (err.error.Message) {
         this.messagesSrv.showErrors(err.error.Message);

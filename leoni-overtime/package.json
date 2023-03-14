@@ -38,6 +38,7 @@
     "@ng-idle/keepalive": "^11.0.3",
     "@ngx-translate/core": "^14.0.0",
     "date-fns": "^2.29.3",
+    "date-fns-tz": "^2.0.0",
     "faker": "^5.5.3",
     "ionicons": "^6.0.3",
     "rxjs": "~7.5.0",

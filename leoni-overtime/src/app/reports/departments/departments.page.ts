@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, tap, throwError } from 'rxjs';
 import { ReportsService } from 'src/app/shared/data-store/reports/reports.service';
 import { RequestModel } from 'src/app/shared/data-store/request/request.model';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-departments',
@@ -23,6 +25,21 @@ export class DepartmentsPage implements OnInit {
     subtitle: ['requestorFullName']
   }
 
+  departments$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_Departments`).pipe(
+    tap(d => console.log(d)),
+    catchError(err => {
+      if (err.error.Message) {
+        this.messagesSrv.showErrors(err.error.Message);
+      } else if (err.status && err.statusText) {
+        const message = err.status + ' ' + err.statusText;
+        this.messagesSrv.showErrors(message);
+      } else {
+        this.messagesSrv.showErrors(err.message);
+      }
+      return throwError(() => err);
+    })
+  );
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -33,6 +50,8 @@ export class DepartmentsPage implements OnInit {
 
 
   ngOnInit() {
+
+    this.departments$.subscribe(console.log);
 
     this.form = this.formBuilder.group(
       {

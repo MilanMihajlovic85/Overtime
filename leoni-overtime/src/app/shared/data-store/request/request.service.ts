@@ -144,13 +144,13 @@ export class RequestService {
     );
   }
 
-  createRequest(data: {[key: string]: string | Date}) {
+  createRequest(projectId: string, reason: string, start: Date, end: Date) {
 
     return this.http.post<RequestApiData>(`${environment.apiUrl}/Employee/CreateRequest`, {
-        Reason: data.reason,
-        Project_ID: data.projectId,
-        StartTime: this.datePipe.transform(data.start, 'yyyy-MM-dd HH:mm:ss'),
-        EndTime: this.datePipe.transform(data.end, 'yyyy-MM-dd HH:mm:ss')
+        Reason: reason,
+        Project_ID: projectId,
+        StartTime: this.datePipe.transform(start, 'yyyy-MM-dd HH:mm:ss'),
+        EndTime: this.datePipe.transform(end, 'yyyy-MM-dd HH:mm:ss')
     }).pipe(
       catchError(err => {
         if (err.error.Message) {
