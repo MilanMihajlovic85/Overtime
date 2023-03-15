@@ -18,10 +18,10 @@
       <form [formGroup]="form" class="filter-form">
 
         <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-          <mat-label>Project</mat-label>
+          <mat-label>Organization</mat-label>
           <mat-select formControlName="organization">
-            <mat-option *ngFor="let o of organizations$ | async" [value]="o.WO_Name">
-              {{ o.WO_Name }}
+            <mat-option *ngFor="let org of organizations$ | async" [value]="org.Value">
+              {{ org.Description }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="form.get('organization')!.errors?.required">Please select organization</mat-error>
@@ -49,13 +49,14 @@
 
   <ion-row>
     <ion-col>
-      <app-list
-        *ngIf="reports"
-        [data]="reports"
+      <app-paginated-list
+        *ngIf="data"
+        [searchData]="data"
         [schema]="schema"
         [buttons]="{}"
+        [category]="'organizations'"
       >
-      </app-list>
+      </app-paginated-list>
     </ion-col>
 
   </ion-row>

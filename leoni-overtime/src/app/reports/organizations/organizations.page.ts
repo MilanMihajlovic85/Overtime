@@ -1,11 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, catchError, combineLatest, map, Subscription, tap, throwError } from 'rxjs';
-import { ReportsService } from 'src/app/shared/data-store/reports/reports.service';
+import { catchError, tap, throwError } from 'rxjs';
 
-import { RequestModel } from 'src/app/shared/data-store/request/request.model';
-import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
 import { environment } from 'src/environments/environment';
 
@@ -16,9 +13,9 @@ import { environment } from 'src/environments/environment';
 })
 export class OrganizationsPage implements OnInit {
 
-  reports!: RequestModel[];
-
   form!: FormGroup;
+
+  data!: {organization: string, startDate: Date, endDate: Date};
 
   schema = {
     properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'requestorForWO', 'requestorForProject'],
@@ -44,9 +41,7 @@ export class OrganizationsPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private messagesSrv: MessagesService,
-    private loadingSrv: LoadingService,
-    private reportSrv: ReportsService
+    private messagesSrv: MessagesService
   ) { }
 
 
@@ -78,12 +73,7 @@ export class OrganizationsPage implements OnInit {
 
     if (!this.form.valid) return;
 
-    this.loadingSrv.showLoaderUntilCompleted(
-      this.reportSrv.organizations(this.form.value.startDate, this.form.value.endDate, this.form.value.organization)).subscribe(resData => {
-
-        this.reports = resData;
-
-    });
+    this.data = this.form.value;
 
   }
 

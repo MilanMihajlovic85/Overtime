@@ -4,7 +4,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { LoginGuard } from './shared/guards/login.guard';
 import { AppLayoutComponent } from './shared/ui/layouts/app-layout/app-layout.component';
 import { LoginLayoutComponent } from './shared/ui/layouts/login-layout/login-layout.component';
-
+// C:\Program Files\Android\Android Studio\plugins\android\resources\images\asset_studio\ic_launcher_foreground.xml
 const routes: Routes = [
   {
     path: '',

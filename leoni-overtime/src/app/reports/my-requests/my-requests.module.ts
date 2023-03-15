@@ -17,6 +17,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 import { MessagesModule } from 'src/app/shared/ui/messages/messages.module';
 import { LoadingModule } from 'src/app/shared/ui/loading/loading.module';
+import { PaginatedListModule } from 'src/app/shared/ui/paginated-list/paginated-list.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { LoadingModule } from 'src/app/shared/ui/loading/loading.module';
     MatDatepickerModule,
     ReactiveFormsModule,
     ListModule,
+    PaginatedListModule,
     TranslateModule,
     LoadingModule,
     MessagesModule

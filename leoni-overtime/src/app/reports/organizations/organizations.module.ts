@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MessagesModule } from 'src/app/shared/ui/messages/messages.module';
 import { LoadingModule } from 'src/app/shared/ui/loading/loading.module';
+import { PaginatedListModule } from 'src/app/shared/ui/paginated-list/paginated-list.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { LoadingModule } from 'src/app/shared/ui/loading/loading.module';
     FormsModule,
     IonicModule,
     ListModule,
+    PaginatedListModule,
     MatIconModule,
     MatInputModule,
     MatDatepickerModule,

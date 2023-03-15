@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Injector } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
+import { ReportsService } from '../../data-store/reports/reports.service';
 import { RequestService } from '../../data-store/request/request.service';
 import { I18nService } from '../../services/i18n/i18n.service';
+import { LoadingService } from '../../services/loading/loading.service';
 
 @Component({
   selector: 'app-paginated-list',
@@ -11,16 +13,21 @@ import { I18nService } from '../../services/i18n/i18n.service';
 })
 export class PaginatedListComponent  implements OnInit {
 
-  private _data!: {[key: string]: any}[];
+  // private _data!: {[key: string]: any}[];
 
-  @Input() set data(value: {[key: string]: any}[]) {
-    this._data = value;
-  }
+  // @Input() set data(value: {[key: string]: any}[]) {
+  //   this._data = value;
+  // }
 
+  @Input() searchData!: {[key: string]: string | Date};
   @Input() schema!: {[key: string]: any};
   @Input() buttons: any;
+  @Input() category!: string;
 
   @Output() modalOpen: EventEmitter<any> = new EventEmitter();
+
+  dynamicService: any;
+  service!: any;
 
   isCreateBtn = false;
   btns!: {[key: string]: any}[];
@@ -32,7 +39,7 @@ export class PaginatedListComponent  implements OnInit {
   url!: string;
   itemListData = [];
   page_number = 1;
-  page_limit = 13;
+  page_limit = 15;
 
 
   dataSource: {[key: string]: string | number}[] = [];
@@ -41,10 +48,29 @@ export class PaginatedListComponent  implements OnInit {
   constructor(
     private datePipe: DatePipe,
     private i18n: I18nService,
-    private requestSrv: RequestService
+    private reportSrv: ReportsService,
+    private injector: Injector,
+    private loadingSrv: LoadingService
   ) { }
 
   ngOnInit() {
+
+    // switch (this.srv) {
+    //   case 'request':
+
+    //     this.service = RequestService;
+
+
+    //     this.dynamicService = this.injector.get<any>(this.service);
+    //     break;
+
+    //   default:
+    //     break;
+    // }
+
+    this.getElements(false, "");
+
+
 
     if ('create' in this.buttons) {
       this.isCreateBtn = true;
@@ -74,21 +100,47 @@ export class PaginatedListComponent  implements OnInit {
       this.translatedSchema = schema;
     });
 
-    this.getElements(false, "");
 
   }
 
-  get data() {
-    return this._data;
-  }
+  // get data() {
+  //   return this._data;
+  // }
 
   getElements(isFirstLoad: boolean, event: any) {
 
-    this.url = '?_page=' + this.page_number + '&_limit=' + this.page_limit;
+    const startDate = this.datePipe.transform(this.searchData.startDate, 'yyyy-MM-dd');
+    const endDate = this.datePipe.transform(this.searchData.endDate, 'yyyy-MM-dd');
 
-    this.requestSrv.getMyRequestsPaginated(this.url).pipe(
+    let url!: string;
 
-    ).subscribe(resData => {
+    switch (this.category) {
+      case 'myRequests':
+        url = '/Reports/MyRequestsFromHistory';
+        break;
+      case 'departments':
+        url = `/Reports/DepartmentFromHistory/${this.searchData.department}`;
+        break;
+      case 'organizations':
+        url = `/Reports/WOFromHistory/${this.searchData.organization}`
+        break;
+      case 'projects':
+        url = `/Reports/ProjectFromHistory/${this.searchData.project}`
+        break;
+      default:
+        break;
+    }
+
+    url = `${url}/${startDate}/${endDate}/${this.page_limit}/${this.page_number}`;
+
+    console.log(url);
+
+
+    // this.url = '?_page=' + this.page_number + '&_limit=' + this.page_limit;
+
+    this.reportSrv.getReports(url).pipe(
+
+    ).subscribe((resData: any) => {
 
       for (let i = 0; i < resData.length; i++) {
         this.elements.push(resData[i]);

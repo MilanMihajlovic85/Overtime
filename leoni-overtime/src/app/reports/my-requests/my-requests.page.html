@@ -41,15 +41,15 @@
 
   <ion-row>
     <ion-col>
-      <app-list
-        *ngIf="reports"
-        [data]="reports"
+      <app-paginated-list
+        *ngIf="data"
+        [searchData]="data"
         [schema]="schema"
         [buttons]="{}"
+        [category]="'myRequests'"
       >
-      </app-list>
+      </app-paginated-list>
     </ion-col>
-
   </ion-row>
 
 </ion-content>

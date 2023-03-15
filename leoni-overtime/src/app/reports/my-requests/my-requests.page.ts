@@ -15,7 +15,7 @@ export class MyRequestsPage implements OnInit {
 
   form!: FormGroup;
 
-  reports!: RequestModel[];
+  data!: {startDate: Date, endDate: Date};
 
   schema = {
     properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject'],
@@ -27,8 +27,6 @@ export class MyRequestsPage implements OnInit {
     private formBuilder: FormBuilder,
     private translate: TranslateService,
     private datePipe: DatePipe,
-    private loadingSrv: LoadingService,
-    private reportSrv: ReportsService
   ) { }
 
   ngOnInit() {
@@ -54,12 +52,7 @@ export class MyRequestsPage implements OnInit {
 
     if (!this.form.valid) return;
 
-    this.loadingSrv.showLoaderUntilCompleted(
-      this.reportSrv.myRequests(this.form.value.startDate, this.form.value.endDate)).subscribe(resData => {
-
-        this.reports = resData;
-
-    });
+    this.data = this.form.value;
 
   }
 

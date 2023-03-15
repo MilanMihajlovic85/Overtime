@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, tap, throwError } from 'rxjs';
-import { ReportsService } from 'src/app/shared/data-store/reports/reports.service';
-import { RequestModel } from 'src/app/shared/data-store/request/request.model';
-import { LoadingService } from 'src/app/shared/services/loading/loading.service';
+import { catchError, throwError } from 'rxjs';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
 import { environment } from 'src/environments/environment';
 
@@ -15,9 +12,9 @@ import { environment } from 'src/environments/environment';
 })
 export class DepartmentsPage implements OnInit {
 
-  reports!: RequestModel[];
-
   form!: FormGroup;
+
+  data!: {department: string, startDate: Date, endDate: Date};
 
   schema = {
     properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'requestorForWO', 'requestorForProject'],
@@ -26,7 +23,6 @@ export class DepartmentsPage implements OnInit {
   }
 
   departments$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_Departments`).pipe(
-    tap(d => console.log(d)),
     catchError(err => {
       if (err.error.Message) {
         this.messagesSrv.showErrors(err.error.Message);
@@ -43,15 +39,11 @@ export class DepartmentsPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private messagesSrv: MessagesService,
-    private loadingSrv: LoadingService,
-    private reportSrv: ReportsService
+    private messagesSrv: MessagesService
   ) { }
 
 
   ngOnInit() {
-
-    this.departments$.subscribe(console.log);
 
     this.form = this.formBuilder.group(
       {
@@ -78,12 +70,7 @@ export class DepartmentsPage implements OnInit {
 
     if (!this.form.valid) return;
 
-    this.loadingSrv.showLoaderUntilCompleted(
-      this.reportSrv.departments(this.form.value.startDate, this.form.value.endDate, this.form.value.department)).subscribe(resData => {
-
-        this.reports = resData;
-
-    });
+    this.data = this.form.value;
 
   }
 
