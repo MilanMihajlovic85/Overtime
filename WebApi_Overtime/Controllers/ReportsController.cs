@@ -16,39 +16,39 @@ namespace WebApi_Overtime.Controllers
         Report_CTL ReportCTL = new Report_CTL();
 
         [HttpGet]
-        [Route("MyRequestsFromHistory/{StartDate}/{EndDate}/{Rows}")]
-        public HttpResponseMessage GetAllMyRequestsFromHistory(DateTime StartDate, DateTime EndDate, int Rows=100)
+        [Route("MyRequestsFromHistory/{StartDate}/{EndDate}/{Rows}/{Pages}")]
+        public HttpResponseMessage GetAllMyRequestsFromHistory(DateTime StartDate, DateTime EndDate, int Rows,int Pages)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
 
-            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetAllMyOvertimesFromHistory(ActualUser, Rows,StartDate, EndDate));
+            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetAllMyOvertimesFromHistory(ActualUser, Rows, Pages,StartDate, EndDate));
         }
 
         [HttpGet]
-        [Route("DepartmentFromHistory/{DepartmentName}/{StartDate}/{EndDate}/{Rows}")]
-        public HttpResponseMessage GetAllDepartmentRequestsFromHistory(string DepartmentName,DateTime StartDate, DateTime EndDate, int Rows=100)
+        [Route("DepartmentFromHistory/{DepartmentName}/{StartDate}/{EndDate}/{Rows}/{Pages}")]
+        public HttpResponseMessage GetAllDepartmentRequestsFromHistory(string DepartmentName,DateTime StartDate, DateTime EndDate, int Rows, int Pages)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
 
-            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetOvertimesFromHistoryForDepartment(ActualUser,DepartmentName,Rows,StartDate, EndDate));
+            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetOvertimesFromHistoryForDepartment(ActualUser,DepartmentName,Rows,Pages,StartDate, EndDate));
         }
 
         [HttpGet]
-        [Route("WOFromHistory/{WOName}/{StartDate}/{EndDate}/{Rows}")]
-        public HttpResponseMessage GetAllWORequestsFromHistory(string WOName, DateTime StartDate, DateTime EndDate, int Rows=100)
+        [Route("WOFromHistory/{WOName}/{StartDate}/{EndDate}/{Rows}/{Pages}")]
+        public HttpResponseMessage GetAllWORequestsFromHistory(string WOName, DateTime StartDate, DateTime EndDate, int Rows, int Pages)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
 
-            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetOvertimesFromHistoryForWO(ActualUser,WOName,Rows,StartDate,EndDate));
+            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetOvertimesFromHistoryForWO(ActualUser,WOName,Rows,Pages,StartDate,EndDate));
         }
 
         [HttpGet]
-        [Route("ProjectFromHistory/{ProjectName}/{StartDate}/{EndDate}/{Rows}")]
-        public HttpResponseMessage GetAllProjectRequestsFromHistory(string ProjectName ,DateTime StartDate, DateTime EndDate, int Rows=100)
+        [Route("ProjectFromHistory/{ProjectName}/{StartDate}/{EndDate}/{Rows}/{Pages}")]
+        public HttpResponseMessage GetAllProjectRequestsFromHistory(string ProjectName ,DateTime StartDate, DateTime EndDate, int Rows, int Pages)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
 
-            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetOvertimesFromHistoryForProject(ActualUser,ProjectName, Rows,StartDate, EndDate));
+            return Request.CreateResponse(HttpStatusCode.OK, ReportCTL.GetOvertimesFromHistoryForProject(ActualUser,ProjectName, Rows,Pages,StartDate, EndDate));
         }
     }
 }
