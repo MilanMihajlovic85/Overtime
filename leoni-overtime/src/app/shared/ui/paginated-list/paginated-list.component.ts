@@ -55,19 +55,6 @@ export class PaginatedListComponent  implements OnInit {
 
   ngOnInit() {
 
-    // switch (this.srv) {
-    //   case 'request':
-
-    //     this.service = RequestService;
-
-
-    //     this.dynamicService = this.injector.get<any>(this.service);
-    //     break;
-
-    //   default:
-    //     break;
-    // }
-
     this.getElements(false, "");
 
 

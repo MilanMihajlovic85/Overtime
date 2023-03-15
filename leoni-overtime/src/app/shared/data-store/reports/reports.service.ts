@@ -63,18 +63,18 @@ export class ReportsService {
       return throwError(() => err);
     }),
     tap(reports => {
-      this.reports$.next(
-        reports.sort((a, b) => {
-          if (a.createdAt < b.createdAt)
-            return 1;
-          if (a.createdAt > b.createdAt)
-            return -1;
-          return 0;
-        })
-      );
-    }),
-    shareReplay()
-  );
+        this.reports$.next(
+          reports.sort((a, b) => {
+            if (a.createdAt < b.createdAt)
+              return 1;
+            if (a.createdAt > b.createdAt)
+              return -1;
+            return 0;
+          })
+        );
+      }),
+      shareReplay()
+    );
 
 
   }

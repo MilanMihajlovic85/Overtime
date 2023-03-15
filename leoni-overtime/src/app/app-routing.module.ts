@@ -63,8 +63,19 @@ const routes: Routes = [
         loadChildren: () => import('./reports/projects/projects.module').then( m => m.ProjectsPageModule),
         title: 'Reports/Projects',
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'statistics/organizations',
+        loadChildren: () => import('./statistics/organizations/organizations.module').then( m => m.OrganizationsPageModule),
+        title: 'Statistics/Organizations',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'statistics/departments',
+        loadChildren: () => import('./statistics/departments/departments.module').then( m => m.DepartmentsPageModule),
+        title: 'Statistics/Departments',
+        canActivate: [AuthGuard],
       }
-
     ]
   },
   {
@@ -78,7 +89,8 @@ const routes: Routes = [
         canActivate: [LoginGuard]
       }
     ]
-  }
+  },
+
 
 ];
 
