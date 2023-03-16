@@ -19,9 +19,9 @@ namespace WebApi_Overtime.HelperClasses
             IEnumerable<string> ApiKey = null;
             actionContext.Request.Headers.TryGetValues("ApiKey",out ApiKey );
 
-            var AuthCookie = actionContext.Request.Headers.GetCookies("SessionID").FirstOrDefault();
-            string SessionID = AuthCookie["data"].Value;
-            var Expire = AuthCookie.Expires.Value;
+            //var AuthCookie = actionContext.Request.Headers.GetCookies("SessionID").FirstOrDefault();
+            //string SessionID = AuthCookie["data"].Value;
+            //var Expire = AuthCookie.Expires.Value;
 
 
 

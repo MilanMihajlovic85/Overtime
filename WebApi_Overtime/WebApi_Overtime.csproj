@@ -222,8 +222,9 @@
     <Compile Include="HelperClasses\StartHandler.cs" />
     <Compile Include="HelperClasses\WEBSessionState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignalR\SignalR_Authorize.cs" />
     <Compile Include="SignalR\SignalR_Groups.cs" />
-    <Compile Include="SignalR\SignalR_Persist.cs" />
+    <Compile Include="SignalR\SignalR_HUB.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
