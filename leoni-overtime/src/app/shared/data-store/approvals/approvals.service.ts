@@ -78,16 +78,17 @@ export class ApprovalsService {
     );
   }
 
-  updateStatus(request: { [key: string]: string | number }, oldStatus: number, newStatus: number) {
+  updateStatus(requestId: number, newStatus: number, minutes?: number) {
 
     const approvals = this.approvals$.getValue();
-    const newApprovals = approvals.filter(a => a.id !== request.id);
+    const newApprovals = approvals.filter(a => a.id !== requestId);
 
     this.approvals$.next(newApprovals);
 
-    return this.http.post(`${environment.apiUrl}/Employee/UpdateRequestStatus/${request.id}/${oldStatus}`, {
-      RequestID: request.id,
-      RequestStatus: newStatus
+    return this.http.post(`${environment.apiUrl}/Employee/UpdateRequestStatus`, {
+      RequestID: requestId,
+      RequestStatus: newStatus,
+      Minutes: minutes ?? null
     }).pipe(
       catchError(err => {
 

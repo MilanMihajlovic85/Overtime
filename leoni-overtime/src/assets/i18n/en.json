@@ -1,4 +1,8 @@
 {
+  "btn": {
+    "updateStatus": "Change Status",
+    "delete": "Delete"
+  },
   "requestorWO": "Organization",
   "requestorFullName": "Full Name",
   "requestorWOManager": "Manager",
@@ -11,5 +15,8 @@
   "minutes": "Minutes",
   "status": "Status",
   "responseDate": "Responded",
-  "createdAt": "Created"
+  "createdAt": "Created",
+  "hours": "Hours",
+  "requestsNum": "Requests Number",
+  "organization": "Organization"
 }

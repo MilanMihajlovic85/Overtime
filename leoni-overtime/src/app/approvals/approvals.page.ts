@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { switchMap, tap } from 'rxjs';
 import { ApprovalsService } from '../shared/data-store/approvals/approvals.service';
 import { RequestModel } from '../shared/data-store/request/request.model';
@@ -15,7 +15,7 @@ export class ApprovalsPage implements OnInit {
   approvals!: RequestModel[];
 
   buttons: {[key: string]: any} = {
-    updateStatus: { modal: 'updateStatus', icon: 'manage_accounts', color: 'primary', mobileIcon: 'create', mobileColor: 'secondary', tooltip: 'tooltip.updateStatus' }
+    updateStatus: { modal: 'updateStatus', icon: 'manage_accounts', color: 'primary', mobileIcon: 'create', mobileColor: 'secondary', tooltip: 'btn.updateStatus' }
   };
 
   schema = {
@@ -37,52 +37,91 @@ export class ApprovalsPage implements OnInit {
   constructor(
     private approvalSrv: ApprovalsService,
     private loadingSrv: LoadingService,
+    private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {}
 
-  openActions(event: {modal: string, data: {[key: string]: string}, mobile?: boolean}) {
+  openActionSheet(event: {modal: string, data: {[key: string]: string}, mobile?: boolean}) {
 
     this.presentAlert(event.data);
 
   }
 
   async presentAlert(request: { [key: string]: string }) {
-    const alert = await this.alertCtrl.create({
+
+    const newStatus = await this.presentActionSheet();
+
+    if (newStatus) {
+
+      if (newStatus === 2) {
+
+        const alert = await this.alertCtrl.create({
+          header: 'Set request duration',
+          buttons: ['Approve'],
+          inputs: [
+            {
+              // type: 'number',
+              value: request.minutes,
+            }
+          ],
+        });
+
+        await alert.present();
+
+        const result = await alert.onDidDismiss();
+
+        if (result.data) {
+          const minutes: any = Object.values(result.data.values)[0];
+
+          this.approvalSrv.updateStatus(+request.id, newStatus, minutes);
+        }
+
+
+      } else {
+
+        this.approvalSrv.updateStatus(+request.id, newStatus);
+
+      }
+
+
+
+    }
+
+
+  }
+
+  async presentActionSheet() {
+
+    const actionSheet = await this.actionSheetCtrl.create({
       header: 'Change Request Status',
-      buttons: ['Save'],
-      inputs: [
+      // subHeader: 'Example subheader',
+      buttons: [
         {
-          label: 'Approved',
-          type: 'radio',
-          value: 2,
+          text: 'Decline',
+          role: 'destructive',
+          data: {
+            action: 3,
+          },
         },
         {
-          label: 'Declined',
-          type: 'radio',
-          value: 3,
+          text: 'Approve',
+          data: {
+            action: 2,
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
         },
       ],
     });
 
-    await alert.present();
+    await actionSheet.present();
+    const actionResult = await actionSheet.onDidDismiss();
 
-    const result = await alert.onDidDismiss();
-
-    let status!: number;
-    switch (request.status) {
-      case 'Approved':
-        status = 2;
-        break;
-      default:
-        status = 3;
-        break;
-    }
-
-    if (result.data && result.data.values) {
-      this.approvalSrv.updateStatus(request, status, result.data.values).subscribe();
-    }
+    return actionResult.data ? actionResult.data.action : null;
 
   }
 

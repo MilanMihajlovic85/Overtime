@@ -15,7 +15,7 @@ export class RequestsPage implements OnInit {
   requests!: RequestModel[];
 
   buttons: {[key: string]: any} = {
-    delete: { modal: 'delete', icon: 'delete_outline', color: 'warn', mobileIcon: 'trash', mobileColor: 'danger', tooltip: 'tooltip.delete' }
+    delete: { modal: 'delete', icon: 'delete_outline', color: 'warn', mobileIcon: 'trash', mobileColor: 'danger', tooltip: 'btn.delete' }
   };
 
   schema = {

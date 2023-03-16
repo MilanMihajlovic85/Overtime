@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatTableModule } from '@angular/material/table';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -30,7 +31,8 @@ import { MatTableModule } from '@angular/material/table';
     MatTableModule,
     MatDividerModule,
     ScrollingModule,
-    IonicModule
+    IonicModule,
+    TranslateModule
   ],
   exports: [
     ListComponent

@@ -59,8 +59,9 @@
     </mat-table>
 
     <div *ngIf="btns.length > 0" class="buttons">
-      <ion-button *ngFor="let btn of btns" color="{{ btn['mobileColor'] }}" fill="solid" (click)="openModal(btn['modal'], activeElement)">
-        <ion-icon slot="icon-only" name="{{ btn['mobileIcon'] }}"></ion-icon>
+      <ion-button *ngFor="let btn of btns" color="{{ btn['mobileColor'] }}" size="small" fill="clear" (click)="openModal(btn['modal'], activeElement)">
+        <ion-icon slot="start" name="{{ btn['mobileIcon'] }}"></ion-icon>
+        {{ btn['tooltip'] | translate }}
       </ion-button>
     </div>
   </div>

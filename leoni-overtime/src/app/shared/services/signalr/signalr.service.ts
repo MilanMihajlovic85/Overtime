@@ -21,22 +21,26 @@ export class SignalrService {
       take(1),
       tap(token => {
 
-        console.log(token);
         if (token) {
           this.connection = new signalR.HubConnectionBuilder()
-          .withUrl('http://localhost:2078/API/signalr', {
+          .withUrl('http://localhost:2078/API/SignalR', {
             accessTokenFactory: () => token
           })
           .withAutomaticReconnect()
           .build()
 
-        this.connection.start()
-          .catch((error: any) => console.log(error));
+          this.connection.start()
+            .catch((error: any) => console.log(error));
 
-        this.connection.received((text: any) => {
-          console.log(text);
+          this.connection.on('DisplayMessage', (message: string) => {
+            console.log(message);
 
-        })
+          });
+
+          this.connection.received((text: any) => {
+            console.log(text);
+
+          })
         }
 
       })
