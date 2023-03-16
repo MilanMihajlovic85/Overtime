@@ -38,18 +38,20 @@ namespace CRUD_overtime
             ObjectParameter Loged_ApiKey = new ObjectParameter("Loged_ApiKey", typeof(string));
             ObjectParameter Loged_EmployeeID = new ObjectParameter("Loged_EmployeeID", typeof(string));
             ObjectParameter Loged_EmpoloyeeName = new ObjectParameter("Loged_EmployeeName", typeof(string));
+            ObjectParameter ExpireDate = new ObjectParameter("ExpireDate", typeof(DateTime?));
 
 
 
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.W_Login(ActualUser, LoginCode, Loged_ApiKey, Loged_EmpoloyeeName, Loged_EmployeeID, AppName, ReturnInt, ReturnText);
+                baza.W_Login(ActualUser, LoginCode, Loged_ApiKey, Loged_EmpoloyeeName, Loged_EmployeeID,ExpireDate, AppName, ReturnInt, ReturnText);
 
                 LogedUser.ReturnInt = (int)ReturnInt.Value;
                 LogedUser.ReturnText = ReturnText.Value.ToString();
                 LogedUser.ApiKey = Loged_ApiKey.Value.ToString();
                 LogedUser.EmployeeID = Loged_EmployeeID.Value.ToString();
                 LogedUser.FullName = Loged_EmpoloyeeName.Value.ToString();
+                LogedUser.ExpireDate = (DateTime?)ExpireDate.Value;
 
                 return LogedUser;
 

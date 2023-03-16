@@ -580,7 +580,7 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllProjects");
         }
     
-        public virtual int W_Login(string actualUser, Nullable<int> loginCode, ObjectParameter loged_ApiKey, ObjectParameter loged_EmployeeName, ObjectParameter loged_EmployeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int W_Login(string actualUser, Nullable<int> loginCode, ObjectParameter loged_ApiKey, ObjectParameter loged_EmployeeName, ObjectParameter loged_EmployeeID, ObjectParameter expireDate, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
         {
             var actualUserParameter = actualUser != null ?
                 new ObjectParameter("ActualUser", actualUser) :
@@ -594,7 +594,7 @@ namespace Entity_Overtime
                 new ObjectParameter("ApplicationName", applicationName) :
                 new ObjectParameter("ApplicationName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("W_Login", actualUserParameter, loginCodeParameter, loged_ApiKey, loged_EmployeeName, loged_EmployeeID, applicationNameParameter, returnInt, returnText);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("W_Login", actualUserParameter, loginCodeParameter, loged_ApiKey, loged_EmployeeName, loged_EmployeeID, expireDate, applicationNameParameter, returnInt, returnText);
         }
     
         public virtual int W_PreLogin(string actualUser, string employeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)

@@ -13,5 +13,7 @@ namespace ViewModel_Overtime
 
         public string EmployeeID { get; set; }
 
+        public DateTime? ExpireDate { get; set; }
+
     }
 }

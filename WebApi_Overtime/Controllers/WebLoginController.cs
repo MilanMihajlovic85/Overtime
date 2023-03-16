@@ -64,6 +64,7 @@ namespace WebApi_Overtime.Controllers
                 AuthUser.ApiKey = LogedUser.ApiKey;
                 AuthUser.EmployeeID = LogedUser.EmployeeID;
                 AuthUser.FullName = LogedUser.FullName;
+                AuthUser.ExpireDate = LogedUser.ExpireDate;
 
                 return Request.CreateResponse(HttpStatusCode.OK, AuthUser);
             }

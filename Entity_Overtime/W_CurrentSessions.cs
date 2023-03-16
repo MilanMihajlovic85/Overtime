@@ -19,5 +19,6 @@ namespace Entity_Overtime
         public string UserName { get; set; }
         public string ApiKey { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> ExpireDate { get; set; }
     }
 }
