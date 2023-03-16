@@ -13,6 +13,7 @@ import { LoadingService } from 'src/app/shared/services/loading/loading.service'
 })
 export class MyRequestsPage implements OnInit {
 
+  showForm = true;
   form!: FormGroup;
 
   data!: {startDate: Date, endDate: Date};
@@ -54,6 +55,10 @@ export class MyRequestsPage implements OnInit {
 
     this.data = this.form.value;
 
+  }
+
+  onElementSelected(event: boolean) {
+    this.showForm = event;
   }
 
 }

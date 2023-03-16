@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-row>
+  <ion-row *ngIf="showForm">
     <ion-col>
 
       <app-loading></app-loading>
@@ -57,6 +57,7 @@
           [data]="statistics"
           [schema]="schema"
           [buttons]="{}"
+          (elementSelected)="onElementSelected($event)"
         >
         </app-list>
 

@@ -13,11 +13,7 @@ import { LoadingService } from '../../services/loading/loading.service';
 })
 export class PaginatedListComponent  implements OnInit {
 
-  // private _data!: {[key: string]: any}[];
 
-  // @Input() set data(value: {[key: string]: any}[]) {
-  //   this._data = value;
-  // }
 
   @Input() searchData!: {[key: string]: string | Date};
   @Input() schema!: {[key: string]: any};
@@ -25,6 +21,7 @@ export class PaginatedListComponent  implements OnInit {
   @Input() category!: string;
 
   @Output() modalOpen: EventEmitter<any> = new EventEmitter();
+  @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();
 
   dynamicService: any;
   service!: any;
@@ -158,11 +155,17 @@ export class PaginatedListComponent  implements OnInit {
       this.setDataSource();
     }
 
+    this.elementSelected.emit(false);
+
   }
 
   onBackToList() {
+
     this.activeElement = null;
     this.dataSource = [];
+
+    this.elementSelected.emit(true);
+
   }
 
   setDataSource() {

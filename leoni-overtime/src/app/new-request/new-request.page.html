@@ -15,7 +15,7 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col size="12" size-lg="6" push-lg="3">
 
         <app-loading></app-loading>
         <app-messages></app-messages>
@@ -40,8 +40,8 @@
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
             <mat-label>Start Time</mat-label>
-            <input type="test" matInput id="start-time-modal" formControlName="start">
-            <mat-icon matSuffix>calendar_month</mat-icon>
+            <input type="test" matInput formControlName="start">
+            <mat-icon matSuffix id="start-time-modal">calendar_month</mat-icon>
             <mat-error *ngIf="form.get('start')!.errors?.required && !form.get('start')!.errors?.matDatetimePickerParse">
               Start time is required
             </mat-error>
@@ -49,8 +49,8 @@
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
             <mat-label>End Time</mat-label>
-            <input type="test" matInput id="end-time-modal" formControlName="end">
-            <mat-icon matSuffix>calendar_month</mat-icon>
+            <input type="test" matInput formControlName="end">
+            <mat-icon matSuffix id="end-time-modal">calendar_month</mat-icon>
             <mat-error *ngIf="form.get('end')!.errors?.required && !form.get('end')!.errors?.matDatetimePickerParse">
               End time is required
             </mat-error>

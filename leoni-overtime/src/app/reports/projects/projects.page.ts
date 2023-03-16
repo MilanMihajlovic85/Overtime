@@ -13,6 +13,7 @@ import { MessagesService } from 'src/app/shared/services/messages/messages.servi
 })
 export class ProjectsPage implements OnInit {
 
+  showForm = true;
   form!: FormGroup;
 
   data!: {project: string, startDate: Date, endDate: Date};
@@ -75,6 +76,10 @@ export class ProjectsPage implements OnInit {
 
     this.data = this.form.value;
 
+  }
+
+  onElementSelected(event: boolean) {
+    this.showForm = event;
   }
 
 }
