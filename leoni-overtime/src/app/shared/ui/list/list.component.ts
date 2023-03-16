@@ -27,8 +27,7 @@ export class ListComponent  implements OnInit {
   translatedSchema!: {[key: string]: any};
   activeElement!: {[key: string]: any} | undefined | null;
   selectedElement!: {[key: string]: any};
-  elements!: {[key: string]: any}[];
-
+  elements: {[key: string]: any}[] = [];
 
   dataSource: {[key: string]: string | number}[] = [];
   value = '';
@@ -69,7 +68,9 @@ export class ListComponent  implements OnInit {
       this.translatedSchema = schema;
     });
 
-    this.elements = this.data;
+    // this.data = [...this.data, ...this.data, ...this.data, ...this.data, ...this.data, ...this.data, ...this.data];
+
+    this.getElements();
 
 
 
@@ -196,6 +197,24 @@ export class ListComponent  implements OnInit {
 
   }
 
+  getElements() {
 
+    const count = this.elements.length;
+
+    for (let i = 0; i < 13; i++) {
+      if (this.elements.length < this.data.length) {
+        this.elements.push(this.data[count + i]);
+      }
+    }
+
+  }
+
+  doInfinite(event: any) {
+
+    this.getElements();
+
+    event.target.complete();
+
+  }
 
 }

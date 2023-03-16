@@ -5,6 +5,7 @@ import { catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoadingService } from '../shared/services/loading/loading.service';
 import { MessagesService } from '../shared/services/messages/messages.service';
+import { SignalrService } from '../shared/services/signalr/signalr.service';
 
 @Component({
   selector: 'app-home',
@@ -32,9 +33,13 @@ export class HomePage implements OnInit {
   constructor(
     private http: HttpClient,
     private messagesSrv: MessagesService,
-    private loadingSrv: LoadingService
+    private loadingSrv: LoadingService,
+    private signalrSrv: SignalrService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    // this.signalrSrv.createConnection().subscribe();
+  }
 
 }
