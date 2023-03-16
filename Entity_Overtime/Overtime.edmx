@@ -227,6 +227,30 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Name="ShortCreateDate" Type="date" />
           <Property Name="CreateDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="W_AuthenticationCode">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmployeeMobile" Type="nvarchar" MaxLength="100" />
+          <Property Name="LoginCode" Type="int" />
+          <Property Name="LoginCodeActivityStart" Type="datetime" />
+          <Property Name="LoginCodeActivityEnd" Type="datetime" />
+          <Property Name="LoginCodeUsed" Type="bit" />
+          <Property Name="ApiKey" Type="nvarchar" MaxLength="100" />
+          <Property Name="UpdateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="W_CurrentSessions">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ApiKey" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
         <Association Name="fK_WorkOrganization">
           <End Role="WorkOrganizations" Type="Self.WorkOrganizations" Multiplicity="0..1" />
           <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
@@ -433,6 +457,31 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Parameter Name="StartDate" Type="date" Mode="In" />
           <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
+        <Function Name="W_GetAllSessions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="WEB" />
+        <Function Name="W_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="WEB">
+          <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="LoginCode" Type="int" Mode="In" />
+          <Parameter Name="Loged_ApiKey" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="Loged_EmployeeName" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="Loged_EmployeeID" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="W_Logout" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="WEB">
+          <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApiKey" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="W_PreLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="WEB">
+          <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
+          <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+        </Function>
         <EntityContainer Name="OvertimeModelStoreContainer">
           <EntitySet Name="EmployeesMaster" EntityType="Self.EmployeesMaster" Schema="BAS" store:Type="Tables" />
           <EntitySet Name="WorkingTable" EntityType="Self.WorkingTable" Schema="BAS" store:Type="Tables" />
@@ -446,6 +495,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <EntitySet Name="ExternComunicationHandler" EntityType="Self.ExternComunicationHandler" Schema="COM" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="HIS" store:Type="Tables" />
           <EntitySet Name="EventLog" EntityType="Self.EventLog" Schema="HIS" store:Type="Tables" />
+          <EntitySet Name="W_AuthenticationCode" EntityType="Self.W_AuthenticationCode" Schema="WEB" store:Type="Tables" />
+          <EntitySet Name="W_CurrentSessions" EntityType="Self.W_CurrentSessions" Schema="WEB" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" store:Type="Tables" store:Schema="CFG">
             <DefiningQuery>SELECT 
     [Notification].[ID] AS [ID], 
@@ -953,6 +1004,33 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           </FunctionImport>
           <FunctionImport Name="GetAllOvertimeReasons" ReturnType="Collection(OvertimeModel.GetAllOvertimeReasons_Result)" />
           <FunctionImport Name="GetAllProjects" ReturnType="Collection(String)" />
+          <FunctionImport Name="W_Login">
+            <Parameter Name="ActualUser" Mode="In" Type="String" />
+            <Parameter Name="LoginCode" Mode="In" Type="Int32" />
+            <Parameter Name="Loged_ApiKey" Mode="InOut" Type="String" />
+            <Parameter Name="Loged_EmployeeName" Mode="InOut" Type="String" />
+            <Parameter Name="Loged_EmployeeID" Mode="InOut" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="W_PreLogin">
+            <Parameter Name="ActualUser" Mode="In" Type="String" />
+            <Parameter Name="EmployeeID" Mode="In" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="W_Logout">
+            <Parameter Name="ActualUser" Mode="In" Type="String" />
+            <Parameter Name="ApiKey" Mode="In" Type="String" />
+            <Parameter Name="ApplicationName" Mode="In" Type="String" />
+            <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
+            <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="W_AuthenticationCode" EntityType="OvertimeModel.W_AuthenticationCode" />
+          <EntitySet Name="W_CurrentSessions" EntityType="OvertimeModel.W_CurrentSessions" />
+          <FunctionImport Name="W_GetAllSessions" ReturnType="Collection(OvertimeModel.W_GetAllSessions_Result)" />
         </EntityContainer>
         <ComplexType Name="PendingApprovalsForMyApprove_Result">
           <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
@@ -1181,6 +1259,34 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Reason" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="W_AuthenticationCode">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeMobile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LoginCode" Type="Int32" />
+          <Property Name="LoginCodeActivityStart" Type="DateTime" Precision="3" />
+          <Property Name="LoginCodeActivityEnd" Type="DateTime" Precision="3" />
+          <Property Name="LoginCodeUsed" Type="Boolean" />
+          <Property Name="ApiKey" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="W_CurrentSessions">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ApiKey" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <ComplexType Name="W_GetAllSessions_Result">
+          <Property Type="String" Name="EmployeeID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApiKey" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1650,6 +1756,43 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllProjects" FunctionName="OvertimeModel.Store.GetAllProjects" />
+          <FunctionImportMapping FunctionImportName="W_Login" FunctionName="OvertimeModel.Store.W_Login" />
+          <FunctionImportMapping FunctionImportName="W_PreLogin" FunctionName="OvertimeModel.Store.W_PreLogin" />
+          <FunctionImportMapping FunctionImportName="W_Logout" FunctionName="OvertimeModel.Store.W_Logout" />
+          <EntitySetMapping Name="W_AuthenticationCode">
+            <EntityTypeMapping TypeName="OvertimeModel.W_AuthenticationCode">
+              <MappingFragment StoreEntitySet="W_AuthenticationCode">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="LoginCodeUsed" ColumnName="LoginCodeUsed" />
+                <ScalarProperty Name="LoginCodeActivityEnd" ColumnName="LoginCodeActivityEnd" />
+                <ScalarProperty Name="LoginCodeActivityStart" ColumnName="LoginCodeActivityStart" />
+                <ScalarProperty Name="LoginCode" ColumnName="LoginCode" />
+                <ScalarProperty Name="EmployeeMobile" ColumnName="EmployeeMobile" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="W_CurrentSessions">
+            <EntityTypeMapping TypeName="OvertimeModel.W_CurrentSessions">
+              <MappingFragment StoreEntitySet="W_CurrentSessions">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="W_GetAllSessions" FunctionName="OvertimeModel.Store.W_GetAllSessions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OvertimeModel.W_GetAllSessions_Result">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
