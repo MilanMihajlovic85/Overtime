@@ -43,6 +43,8 @@ namespace Entity_Overtime
         public virtual DbSet<Messaging> Messagings { get; set; }
         public virtual DbSet<Messaging1> Messaging1 { get; set; }
         public virtual DbSet<WorkingTable1> WorkingTable1 { get; set; }
+        public virtual DbSet<W_AuthenticationCode> W_AuthenticationCode { get; set; }
+        public virtual DbSet<W_CurrentSessions> W_CurrentSessions { get; set; }
     
         public virtual int ChangeRequestStatus(Nullable<int> requestID, Nullable<int> requestStatus, Nullable<int> time, string employeeID, ObjectParameter returnInt, ObjectParameter returnText, ObjectParameter returnEmployeeID, ObjectParameter returnManagerID)
         {
@@ -576,6 +578,62 @@ namespace Entity_Overtime
         public virtual ObjectResult<string> GetAllProjects()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllProjects");
+        }
+    
+        public virtual int W_Login(string actualUser, Nullable<int> loginCode, ObjectParameter loged_ApiKey, ObjectParameter loged_EmployeeName, ObjectParameter loged_EmployeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var loginCodeParameter = loginCode.HasValue ?
+                new ObjectParameter("LoginCode", loginCode) :
+                new ObjectParameter("LoginCode", typeof(int));
+    
+            var applicationNameParameter = applicationName != null ?
+                new ObjectParameter("ApplicationName", applicationName) :
+                new ObjectParameter("ApplicationName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("W_Login", actualUserParameter, loginCodeParameter, loged_ApiKey, loged_EmployeeName, loged_EmployeeID, applicationNameParameter, returnInt, returnText);
+        }
+    
+        public virtual int W_PreLogin(string actualUser, string employeeID, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var employeeIDParameter = employeeID != null ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(string));
+    
+            var applicationNameParameter = applicationName != null ?
+                new ObjectParameter("ApplicationName", applicationName) :
+                new ObjectParameter("ApplicationName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("W_PreLogin", actualUserParameter, employeeIDParameter, applicationNameParameter, returnInt, returnText);
+        }
+    
+        public virtual int W_Logout(string actualUser, string apiKey, string applicationName, ObjectParameter returnInt, ObjectParameter returnText)
+        {
+            var actualUserParameter = actualUser != null ?
+                new ObjectParameter("ActualUser", actualUser) :
+                new ObjectParameter("ActualUser", typeof(string));
+    
+            var apiKeyParameter = apiKey != null ?
+                new ObjectParameter("ApiKey", apiKey) :
+                new ObjectParameter("ApiKey", typeof(string));
+    
+            var applicationNameParameter = applicationName != null ?
+                new ObjectParameter("ApplicationName", applicationName) :
+                new ObjectParameter("ApplicationName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("W_Logout", actualUserParameter, apiKeyParameter, applicationNameParameter, returnInt, returnText);
+        }
+    
+        public virtual ObjectResult<W_GetAllSessions_Result> W_GetAllSessions()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<W_GetAllSessions_Result>("W_GetAllSessions");
         }
     }
 }

@@ -59,6 +59,8 @@
     <Compile Include="RequestData_CTL.cs" />
     <Compile Include="SessionHelper_CRUD.cs" />
     <Compile Include="Statistics_CTL.cs" />
+    <Compile Include="WEBLogin_CTL.cs" />
+    <Compile Include="WEBSessionHelper_CRUD.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entity_Overtime\Entity_Overtime.csproj">

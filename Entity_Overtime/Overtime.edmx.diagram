@@ -22,6 +22,8 @@
         <EntityTypeShape EntityType="OvertimeModel.Messaging1" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OvertimeModel.WorkingTable1" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
         <AssociationConnector Association="OvertimeModel.fK_WorkOrganization" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OvertimeModel.W_AuthenticationCode" Width="1.5" PointX="11.375" PointY="7.75" />
+        <EntityTypeShape EntityType="OvertimeModel.W_CurrentSessions" Width="1.5" PointX="7.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

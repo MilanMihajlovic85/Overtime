@@ -30,16 +30,38 @@ namespace WebApi_Overtime.HelperClasses
                 {
                     SessionState.RefreshSessions();
                 }
-
-                if (SessionState.AllSessions.Where(s => s.ApiKey == Key).Count() > 0)
+                if (WEBSessionState.AllWebSessions.Count() == 0)
                 {
-                    string EmployeeID = SessionState.AllSessions.Where(s => s.ApiKey == Key).Select(u=>u.EmployeeID).FirstOrDefault().ToString();
+                    WEBSessionState.RefreshSessions();
+                }
+
+
+
+                if (SessionState.AllSessions.Where(s => s.ApiKey == Key).Count() > 0 || WEBSessionState.AllWebSessions.Where(s => s.ApiKey == Key).Count() > 0)
+                {
+                    string EmployeeID = SessionState.AllSessions.Where(s => s.ApiKey == Key).Select(u=>u.EmployeeID).FirstOrDefault();
+                    string WebEmployeeID = WEBSessionState.AllWebSessions.Where(s => s.ApiKey == Key).Select(u => u.EmployeeID).FirstOrDefault();
 
                     if (EmployeeID != null && EmployeeID.Length > 0)
                     {
                         List<Claim> Claims = new List<Claim>()
                         {
                             new Claim(ClaimTypes.Name, EmployeeID)
+                        };
+
+                        ClaimsIdentity id = new ClaimsIdentity(Claims, "Mobile");
+                        ClaimsPrincipal CP = new ClaimsPrincipal(id);
+
+                        Thread.CurrentPrincipal = CP;
+                        HttpContext.Current.User = CP;
+
+                        return true;
+                    }
+                    else if (WebEmployeeID != null && WebEmployeeID.Length > 0)
+                    {
+                        List<Claim> Claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.Name, WebEmployeeID)
                         };
 
                         ClaimsIdentity id = new ClaimsIdentity(Claims, "WEB");

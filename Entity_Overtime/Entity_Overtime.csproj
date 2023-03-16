@@ -175,6 +175,15 @@
     <Compile Include="WorkOrganization.cs">
       <DependentUpon>Overtime.tt</DependentUpon>
     </Compile>
+    <Compile Include="W_AuthenticationCode.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
+    <Compile Include="W_CurrentSessions.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
+    <Compile Include="W_GetAllSessions_Result.cs">
+      <DependentUpon>Overtime.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Overtime.edmx">
