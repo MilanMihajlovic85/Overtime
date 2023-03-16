@@ -6,35 +6,33 @@
     </ion-fab-button>
   </ion-fab>
 
-  <mat-list *ngIf="data.length > 0">
-    <cdk-virtual-scroll-viewport #scroller itemSize="72" class="list-content">
-      <mat-form-field appearance="outline" class="list-search">
-        <mat-icon matPrefix>search</mat-icon>
-        <input matInput (keyup)="applyFilter($event)" #input [(ngModel)]="value">
-        <button class="pdf-save" *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-      <!-- <button mat-stroked-button (click)="openPDF()">
-        <mat-icon>file_download</mat-icon>
-        pdf
-      </button> -->
-      <ng-container *cdkVirtualFor="let el of elements; let i = index">
-        <ion-list>
-          <ion-item (click)="onSelectElement(el, true)" detail="true">
-            <!-- <ion-avatar slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-              <ion-icon name="logo-ionic" color="primary"></ion-icon>
-            </ion-avatar> -->
-            <ion-label>
-              <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
-              <p>{{ el[schema['subtitle']] }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ng-container>
-    </cdk-virtual-scroll-viewport>
-  </mat-list>
+  <mat-form-field appearance="outline" class="list-search">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput (keyup)="applyFilter($event)" #input [(ngModel)]="value">
+    <button class="pdf-save" *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <ion-list>
+
+    <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" detail="true">
+      <!-- <ion-avatar slot="start">
+        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        <ion-icon name="logo-ionic" color="primary"></ion-icon>
+      </ion-avatar> -->
+      <ion-label>
+        <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
+        <p>{{ el[schema['subtitle']] }}</p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ng-container>
 

@@ -139,6 +139,7 @@ export class PaginatedListComponent  implements OnInit {
 
   }
 
+
   doInfinite(event: Event) {
 
     this.getElements(true, event);
