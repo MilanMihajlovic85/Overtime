@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IonInput } from '@ionic/angular';
 import { catchError, throwError } from 'rxjs';
 import { LoadingService } from '../shared/services/loading/loading.service';
 import { MessagesService } from '../shared/services/messages/messages.service';
@@ -15,6 +16,8 @@ import { AuthService } from './auth.service';
 export class AuthPage implements OnInit {
 
   readyToLogin = false;
+
+  focusIsSet!: boolean;
 
   constructor(
     private loadingSrv: LoadingService,

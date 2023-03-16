@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class OrganizationsPage implements OnInit {
 
+  showForm = true;
   form!: FormGroup;
 
   data!: {organization: string, startDate: Date, endDate: Date};
@@ -24,7 +25,6 @@ export class OrganizationsPage implements OnInit {
   }
 
   organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_WorkOrganizations`).pipe(
-    tap(d => console.log(d)),
     catchError(err => {
       if (err.error.Message) {
         this.messagesSrv.showErrors(err.error.Message);
@@ -75,6 +75,10 @@ export class OrganizationsPage implements OnInit {
 
     this.data = this.form.value;
 
+  }
+
+  onElementSelected(event: boolean) {
+    this.showForm = event;
   }
 
 }

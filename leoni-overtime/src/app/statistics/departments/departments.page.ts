@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HubConnectionBuilder } from '@microsoft/signalr/dist/esm/HubConnectionBuilder';
 import { catchError, tap, throwError } from 'rxjs';
 
 import { StatisticsModel } from 'src/app/shared/data-store/statistics/statistics.model';
@@ -19,6 +20,7 @@ export class DepartmentsPage implements OnInit {
 
   statistics!: StatisticsModel[];
 
+  showForm = true;
   form!: FormGroup;
 
   departments$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_Departments`).pipe(
@@ -88,6 +90,10 @@ export class DepartmentsPage implements OnInit {
     });
 
 
+  }
+
+  onElementSelected(event: boolean) {
+    this.showForm = event;
   }
 
 }

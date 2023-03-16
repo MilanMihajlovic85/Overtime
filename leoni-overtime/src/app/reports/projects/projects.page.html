@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-row>
+  <ion-row *ngIf="showForm">
     <ion-col>
 
       <app-loading></app-loading>
@@ -20,7 +20,7 @@
           <mat-label>Project</mat-label>
           <mat-select formControlName="project">
             <mat-option *ngFor="let project of projects$ | async" [value]="project.Value">
-              {{ project.Description }}
+              {{ project.Description }} {{ project.Value }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="form.get('project')!.errors?.required">Please select project</mat-error>
@@ -54,6 +54,7 @@
         [schema]="schema"
         [buttons]="{}"
         [category]="'projects'"
+        (elementSelected)="onElementSelected($event)"
       >
       </app-paginated-list>
     </ion-col>

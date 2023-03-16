@@ -19,6 +19,7 @@ export class OrganizationsPage implements OnInit {
 
   statistics!: StatisticsModel[];
 
+  showForm = true;
   form!: FormGroup;
 
   schema = {
@@ -89,7 +90,10 @@ export class OrganizationsPage implements OnInit {
       this.statistics = resData;
     });
 
+  }
 
+  onElementSelected(event: boolean) {
+    this.showForm = event;
   }
 
 }

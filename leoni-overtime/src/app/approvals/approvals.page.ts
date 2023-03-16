@@ -19,7 +19,7 @@ export class ApprovalsPage implements OnInit {
   };
 
   schema = {
-    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'responseDate', 'createdAt'],
+    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'createdAt'],
     title: ['requestorFullName'],
     subtitle: ['requestorDepartment']
   }

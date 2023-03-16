@@ -42,7 +42,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     DatePipe,
     ApiKeyHttpInterceptorProvider,
     MessagesService,
-    { provide: MAT_DATE_LOCALE, useValue: 'sr' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

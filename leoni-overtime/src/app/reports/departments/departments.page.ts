@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class DepartmentsPage implements OnInit {
 
+  showForm = true;
   form!: FormGroup;
 
   data!: {department: string, startDate: Date, endDate: Date};
@@ -72,6 +73,10 @@ export class DepartmentsPage implements OnInit {
 
     this.data = this.form.value;
 
+  }
+
+  onElementSelected(event: boolean) {
+    this.showForm = event;
   }
 
 }

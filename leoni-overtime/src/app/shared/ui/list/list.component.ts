@@ -20,6 +20,7 @@ export class ListComponent  implements OnInit {
   @Input() buttons: any;
 
   @Output() modalOpen: EventEmitter<any> = new EventEmitter();
+  @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();
 
   isCreateBtn = false;
   btns!: {[key: string]: any}[];
@@ -142,11 +143,17 @@ export class ListComponent  implements OnInit {
       this.setDataSource();
     }
 
+    this.elementSelected.emit(false);
+
+
   }
 
   onBackToList() {
     this.activeElement = null;
     this.dataSource = [];
+
+    this.elementSelected.emit(true);
+
   }
 
   setDataSource() {

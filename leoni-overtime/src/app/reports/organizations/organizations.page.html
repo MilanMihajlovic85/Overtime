@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-row>
+  <ion-row *ngIf="showForm">
     <ion-col>
 
       <app-loading></app-loading>
@@ -55,6 +55,7 @@
         [schema]="schema"
         [buttons]="{}"
         [category]="'organizations'"
+        (elementSelected)="onElementSelected($event)"
       >
       </app-paginated-list>
     </ion-col>
