@@ -13,17 +13,13 @@ namespace WebApi_Overtime
     {
         public void Configuration(IAppBuilder app)
         {
-           
 
+            app.UseCors(CorsOptions.AllowAll);
+            app.MapSignalR();//("/API/Signalr", new Microsoft.AspNet.SignalR.HubConfiguration());
             
 
-            app.Map("/API/signalr",
-                        map =>
-                        {
-                            map.UseCors(CorsOptions.AllowAll);
-                            map.RunSignalR<SignalR_Persist>();
-                        }
-            );
+          
+           
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
         }
     }

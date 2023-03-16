@@ -249,6 +249,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Name="EmployeeID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="100" />
           <Property Name="ApiKey" Type="nvarchar" MaxLength="100" />
+          <Property Name="ExpireDate" Type="datetime" />
           <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <Association Name="fK_WorkOrganization">
@@ -464,6 +465,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Parameter Name="Loged_ApiKey" Type="nvarchar" Mode="InOut" />
           <Parameter Name="Loged_EmployeeName" Type="nvarchar" Mode="InOut" />
           <Parameter Name="Loged_EmployeeID" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ExpireDate" Type="datetime" Mode="InOut" />
           <Parameter Name="ApplicationName" Type="nvarchar" Mode="In" />
           <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
           <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
@@ -1010,6 +1012,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
             <Parameter Name="Loged_ApiKey" Mode="InOut" Type="String" />
             <Parameter Name="Loged_EmployeeName" Mode="InOut" Type="String" />
             <Parameter Name="Loged_EmployeeID" Mode="InOut" Type="String" />
+            <Parameter Name="ExpireDate" Mode="InOut" Type="DateTime" />
             <Parameter Name="ApplicationName" Mode="In" Type="String" />
             <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
             <Parameter Name="ReturnText" Mode="InOut" Type="String" />
@@ -1283,6 +1286,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ApiKey" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpireDate" Type="DateTime" Precision="3" />
         </EntityType>
         <ComplexType Name="W_GetAllSessions_Result">
           <Property Type="String" Name="EmployeeID" Nullable="false" MaxLength="50" />
@@ -1777,6 +1781,7 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <EntitySetMapping Name="W_CurrentSessions">
             <EntityTypeMapping TypeName="OvertimeModel.W_CurrentSessions">
               <MappingFragment StoreEntitySet="W_CurrentSessions">
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />

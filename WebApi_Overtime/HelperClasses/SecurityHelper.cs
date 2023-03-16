@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
@@ -17,6 +18,12 @@ namespace WebApi_Overtime.HelperClasses
       
             IEnumerable<string> ApiKey = null;
             actionContext.Request.Headers.TryGetValues("ApiKey",out ApiKey );
+
+            //var AuthCookie = actionContext.Request.Headers.GetCookies("SessionID").FirstOrDefault();
+            //string SessionID = AuthCookie["data"].Value;
+            //var Expire = AuthCookie.Expires.Value;
+
+
 
             if(ApiKey==null || ApiKey.Count()==0)
             {

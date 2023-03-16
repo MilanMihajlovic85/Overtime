@@ -59,7 +59,7 @@ namespace WebApi_Overtime.Controllers
 
             if (DbResponse.ReturnInt==0)
             {
-                var ConContext = GlobalHost.ConnectionManager.GetConnectionContext<SignalR_Persist>();
+                var ConContext = GlobalHost.ConnectionManager.GetHubContext<SignalR_HUB>();
 
                 if (DbResponseSignalR.ReturnEmployeeID != null)
                 {
@@ -67,7 +67,7 @@ namespace WebApi_Overtime.Controllers
 
                     if (ConnectionID != null)
                     {
-                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
+                        ConContext.Clients.Client(ConnectionID).Notify(EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
                     }
 
                 }
@@ -76,7 +76,7 @@ namespace WebApi_Overtime.Controllers
                     string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnMangerID);
                     if (ConnectionID != null)
                     {
-                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
+                        ConContext.Clients.Client(ConnectionID).Notify(EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
 
                     }
 
@@ -109,7 +109,7 @@ namespace WebApi_Overtime.Controllers
 
             if (DbResponse.ReturnInt == 0)
             {
-                var ConContext = GlobalHost.ConnectionManager.GetConnectionContext<SignalR_Persist>();
+                var ConContext = GlobalHost.ConnectionManager.GetHubContext<SignalR_HUB>();
 
                 if (DbResponseSignalR.ReturnEmployeeID != null)
                 {
@@ -117,7 +117,7 @@ namespace WebApi_Overtime.Controllers
 
                     if(ConnectionID!=null)
                     {
-                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
+                        ConContext.Clients.Client(ConnectionID).Notify(EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
                     }
  
                 }
@@ -126,7 +126,7 @@ namespace WebApi_Overtime.Controllers
                     string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnMangerID);
                     if(ConnectionID!=null)
                     {
-                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
+                        ConContext.Clients.Client(ConnectionID).Notify(EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
 
                     }
 
@@ -158,7 +158,7 @@ namespace WebApi_Overtime.Controllers
 
             if (DbResponse.ReturnInt == 0)
             {
-                var ConContext = GlobalHost.ConnectionManager.GetConnectionContext<SignalR_Persist>();
+                var ConContext = GlobalHost.ConnectionManager.GetHubContext<SignalR_HUB>();
 
                 if (DbResponseSignalR.ReturnEmployeeID != null)
                 {
@@ -166,7 +166,7 @@ namespace WebApi_Overtime.Controllers
 
                     if (ConnectionID != null)
                     {
-                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
+                        ConContext.Clients.Client(ConnectionID).Notify(EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
                     }
 
                 }
@@ -175,7 +175,7 @@ namespace WebApi_Overtime.Controllers
                     string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnMangerID);
                     if (ConnectionID != null)
                     {
-                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
+                        ConContext.Clients.Client(ConnectionID).Notify(EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
 
                     }
 
