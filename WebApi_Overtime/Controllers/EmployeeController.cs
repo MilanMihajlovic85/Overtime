@@ -27,18 +27,7 @@ namespace WebApi_Overtime.Controllers
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
-            string ApiKey = string.Empty;
 
-            IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
-
-            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not proided");
-            }
-            else
-            {
-                ApiKey = ApiKeyHeader.FirstOrDefault();
-            }
 
 
 
@@ -50,20 +39,6 @@ namespace WebApi_Overtime.Controllers
         public HttpResponseMessage GetMyPendingApprovals()
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
-            string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
-            string ApiKey = string.Empty;
-
-            IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
-
-            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not proided");
-            }
-            else
-            {
-                ApiKey = ApiKeyHeader.FirstOrDefault();
-            }
-
 
 
             return Request.CreateResponse(HttpStatusCode.OK, EmployeeCTL.GetApprovalsPendingOnMe(ActualUser));
@@ -75,20 +50,6 @@ namespace WebApi_Overtime.Controllers
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
-            string ApiKey = string.Empty;
-
-         
-
-            IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
-
-            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not proided");
-            }
-            else
-            {
-                ApiKey = ApiKeyHeader.FirstOrDefault();
-            }
 
 
             DbResponseSignalR = EmployeeCTL.ChangeRequestStatus(Req, ActualUser );
@@ -122,8 +83,6 @@ namespace WebApi_Overtime.Controllers
                 }
 
 
-
-
                 return Request.CreateResponse(HttpStatusCode.OK, DbResponse.ReturnText);
             }
             else
@@ -140,18 +99,7 @@ namespace WebApi_Overtime.Controllers
 
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
-            string ApiKey = string.Empty;
 
-            IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
-
-            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not provided");
-            }
-            else
-            {
-                ApiKey = ApiKeyHeader.FirstOrDefault();
-            }
 
 
             DbResponseSignalR = EmployeeCTL.CreateRequest(ActualUser,request);
@@ -200,18 +148,6 @@ namespace WebApi_Overtime.Controllers
 
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
-            string ApiKey = string.Empty;
-
-            IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
-
-            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not provided");
-            }
-            else
-            {
-                ApiKey = ApiKeyHeader.FirstOrDefault();
-            }
 
 
            DbResponseSignalR = EmployeeCTL.DeleteRequest(RequestID,ActualUser);
@@ -260,20 +196,6 @@ namespace WebApi_Overtime.Controllers
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
-            string ApiKey = string.Empty;
-
-            IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
-
-            if (ApiKeyHeader == null || ApiKeyHeader.Count() == 0)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "ApiKey not proided");
-            }
-            else
-            {
-                ApiKey = ApiKeyHeader.FirstOrDefault();
-            }
-
-
 
             return Request.CreateResponse(HttpStatusCode.OK, EmployeeCTL.GetAllWaitings(ActualUser));
         }

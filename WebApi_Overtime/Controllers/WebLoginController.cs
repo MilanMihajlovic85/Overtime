@@ -77,7 +77,7 @@ namespace WebApi_Overtime.Controllers
         }
 
         [HttpGet]
-        [Route("Logout")]
+        [Route("WebPreLogin/Logout")]
         public HttpResponseMessage Logout()
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
