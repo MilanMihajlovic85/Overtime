@@ -13,6 +13,10 @@ namespace WebApi_Overtime.HelperClasses
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            if(SessionState.AllSessions.Count()==0)
+            {
+                SessionState.RefreshSessions();
+            }
 
             if (request.Method.Method.ToString().Contains("OPTIONS") && request.Headers.Contains("Origin"))
             {

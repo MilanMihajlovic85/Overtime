@@ -19,5 +19,31 @@ namespace WebApi_Overtime.HelperClasses
 
         }
 
+        public static void AddConnectionSignalR(string ConnectionID, string ApiKey)
+        {
+            if(AllSessions.Where(x=>x.ConnectionID==ConnectionID).Count()==0)
+            {
+               var user= AllSessions.Where(s => s.ApiKey == ApiKey).FirstOrDefault();
+                AllSessions.Remove(user);
+
+                user.ConnectionID = ConnectionID;
+
+                AllSessions.Add(user);
+            }
+        }
+
+        public static void RemoveConnectionSignalR(string ConnectionID)
+        {
+            if (AllSessions.Where(x => x.ConnectionID == ConnectionID).Count() == 0)
+            {
+                var user = AllSessions.Where(s => s.ConnectionID == ConnectionID).FirstOrDefault();
+                AllSessions.Remove(user);
+
+                user.ConnectionID = null;
+
+                AllSessions.Add(user);
+            }
+        }
+
     }
 }

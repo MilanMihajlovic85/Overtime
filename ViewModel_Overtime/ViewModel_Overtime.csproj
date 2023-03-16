@@ -54,6 +54,7 @@
     <Compile Include="AuthorizedUser.cs" />
     <Compile Include="ChangeRequest_ViewModel.cs" />
     <Compile Include="DBResponse_ViewModel.cs" />
+    <Compile Include="DbRsponseSignalR_ViewModel.cs" />
     <Compile Include="DropDownList_ViewModel.cs" />
     <Compile Include="LogedUser_ViewModel.cs" />
     <Compile Include="Login_ViewModel.cs" />

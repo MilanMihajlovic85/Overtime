@@ -10,5 +10,7 @@ namespace ViewModel_Overtime
     {
         public string EmployeeID { get; set; }
         public string ApiKey { get; set; }
+
+        public string ConnectionID { get; set; }
     }
 }

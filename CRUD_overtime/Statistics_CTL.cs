@@ -16,11 +16,11 @@ namespace CRUD_overtime
             {
               return  baza.CumulativeOvertimeForDepartment(EmployeeID,DepartmentName,StartDate, EndaDate).Select(x => new StatsDEPTCumulative_ViewModel()
                 {
-                    Department = x.Requestor_Department,
+                    Department = x.Department,
                     Hours = x.RequestedHours,
                     NumberOfRequests = x.NumberOfRequests,
                     Status = x.Status,
-                    WorkOrganization = x.Requestor_WO
+                    WorkOrganization = x.WorkOrganization
                 }
                     ).ToList() ;
             }
