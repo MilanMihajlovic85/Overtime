@@ -8,6 +8,9 @@ using System.Threading;
 using ViewModel_Overtime;
 using CRUD_overtime;
 using System.Web;
+using Microsoft.AspNet.SignalR;
+using WebApi_Overtime.SignalR;
+using System.Text.Json;
 
 namespace WebApi_Overtime.Controllers
 {
@@ -16,6 +19,7 @@ namespace WebApi_Overtime.Controllers
     {
         Employee_CTL EmployeeCTL = new Employee_CTL();
         DBResponse_ViewModel DbResponse = new DBResponse_ViewModel();
+        DbRsponseSignalR_ViewModel DbResponseSignalR = new DbRsponseSignalR_ViewModel();
 
         [HttpGet]
         [Route("Employee/GetMyRequests")]
@@ -66,12 +70,14 @@ namespace WebApi_Overtime.Controllers
         }
 
         [HttpPost]
-        [Route("Employee/UpdateRequestStatus/{RequestID:int}/{Status:int}")]
+        [Route("Employee/UpdateRequestStatus")]
         public HttpResponseMessage UpdateRequestStatus (ChangeRequest_ViewModel Req)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
             string ApiKey = string.Empty;
+
+         
 
             IEnumerable<string> ApiKeyHeader = HttpContext.Current.Request.Headers.GetValues("ApiKey");
 
@@ -85,11 +91,39 @@ namespace WebApi_Overtime.Controllers
             }
 
 
-            DbResponse = EmployeeCTL.ChangeRequestStatus(Req, ActualUser );
+            DbResponseSignalR = EmployeeCTL.ChangeRequestStatus(Req, ActualUser );
 
+            DbResponse.ReturnInt = DbResponseSignalR.ReturnInt;
+            DbResponse.ReturnText = DbResponseSignalR.ReturnText;
 
-            if(DbResponse.ReturnInt==0)
+            if (DbResponse.ReturnInt==0)
             {
+                var ConContext = GlobalHost.ConnectionManager.GetConnectionContext<SignalR_Persist>();
+
+                if (DbResponseSignalR.ReturnEmployeeID != null)
+                {
+                    string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnEmployeeID);
+
+                    if (ConnectionID != null)
+                    {
+                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
+                    }
+
+                }
+                if (DbResponseSignalR.ReturnMangerID != null)
+                {
+                    string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnMangerID);
+                    if (ConnectionID != null)
+                    {
+                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
+
+                    }
+
+                }
+
+
+
+
                 return Request.CreateResponse(HttpStatusCode.OK, DbResponse.ReturnText);
             }
             else
@@ -102,6 +136,8 @@ namespace WebApi_Overtime.Controllers
         [Route("Employee/CreateRequest")]
         public HttpResponseMessage UpdateRequestStatus(OvertimeRequest_ViewModel request)
         {
+        
+
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
             string ApiKey = string.Empty;
@@ -118,11 +154,36 @@ namespace WebApi_Overtime.Controllers
             }
 
 
-            DbResponse = EmployeeCTL.CreateRequest(ActualUser,request);
+            DbResponseSignalR = EmployeeCTL.CreateRequest(ActualUser,request);
 
+            DbResponse.ReturnInt = DbResponseSignalR.ReturnInt;
+            DbResponse.ReturnText = DbResponseSignalR.ReturnText;
 
             if (DbResponse.ReturnInt == 0)
             {
+                var ConContext = GlobalHost.ConnectionManager.GetConnectionContext<SignalR_Persist>();
+
+                if (DbResponseSignalR.ReturnEmployeeID != null)
+                {
+                    string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnEmployeeID);
+
+                    if(ConnectionID!=null)
+                    {
+                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
+                    }
+ 
+                }
+                if (DbResponseSignalR.ReturnMangerID != null)
+                {
+                    string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnMangerID);
+                    if(ConnectionID!=null)
+                    {
+                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
+
+                    }
+
+                }
+
                 return Request.CreateResponse(HttpStatusCode.Created,EmployeeCTL.GetLastCreatedRequestyEmpployee(ActualUser));
             }
             else
@@ -135,6 +196,8 @@ namespace WebApi_Overtime.Controllers
         [Route("Employee/DeleteRequest/{RequestID}")]
         public HttpResponseMessage DeleteRequest(int RequestID)
         {
+         
+
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
             string ApiKey = string.Empty;
@@ -151,11 +214,38 @@ namespace WebApi_Overtime.Controllers
             }
 
 
-            DbResponse = EmployeeCTL.DeleteRequest(RequestID,ActualUser);
+           DbResponseSignalR = EmployeeCTL.DeleteRequest(RequestID,ActualUser);
+
+            DbResponse.ReturnInt = DbResponseSignalR.ReturnInt;
+            DbResponse.ReturnText = DbResponseSignalR.ReturnText;
 
 
             if (DbResponse.ReturnInt == 0)
             {
+                var ConContext = GlobalHost.ConnectionManager.GetConnectionContext<SignalR_Persist>();
+
+                if (DbResponseSignalR.ReturnEmployeeID != null)
+                {
+                    string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnEmployeeID);
+
+                    if (ConnectionID != null)
+                    {
+                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnEmployeeID));
+                    }
+
+                }
+                if (DbResponseSignalR.ReturnMangerID != null)
+                {
+                    string ConnectionID = SignalR_Groups.GetConnectionForUSer(DbResponseSignalR.ReturnMangerID);
+                    if (ConnectionID != null)
+                    {
+                        ConContext.Connection.Send(ConnectionID, EmployeeCTL.GetAllWaitings(DbResponseSignalR.ReturnMangerID));
+
+                    }
+
+                }
+
+
                 return Request.CreateResponse(HttpStatusCode.OK, DbResponse.ReturnText);
             }
             else

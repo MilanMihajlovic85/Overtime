@@ -13,10 +13,10 @@ namespace Entity_Overtime
     
     public partial class CumulativeOvertimeForDepartment_Result
     {
-        public string Requestor_WO { get; set; }
-        public string Requestor_Department { get; set; }
         public string Status { get; set; }
         public Nullable<int> NumberOfRequests { get; set; }
-        public Nullable<decimal> RequestedHours { get; set; }
+        public Nullable<int> RequestedHours { get; set; }
+        public string WorkOrganization { get; set; }
+        public string Department { get; set; }
     }
 }

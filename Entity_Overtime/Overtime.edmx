@@ -272,6 +272,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
           <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
           <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ReturnEmployeeID" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ReturnManagerID" Type="nvarchar" Mode="InOut" />
         </Function>
         <Function Name="CountAllPendingRequests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
           <Parameter Name="EmployeeID" Type="nvarchar" Mode="In" />
@@ -286,12 +288,16 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Parameter Name="Requestor_EndTime" Type="datetime" Mode="In" />
           <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
           <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ReturnManagerID" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ReturnEmployeeID" Type="nvarchar" Mode="InOut" />
         </Function>
         <Function Name="DeleteRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
           <Parameter Name="ActualUser" Type="nvarchar" Mode="In" />
           <Parameter Name="RequestID" Type="int" Mode="In" />
           <Parameter Name="ReturnInt" Type="int" Mode="InOut" />
           <Parameter Name="ReturnText" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ReturnManagerID" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="ReturnEmployeeID" Type="nvarchar" Mode="InOut" />
         </Function>
         <Function Name="GenerateMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="COM">
           <Parameter Name="RequestID" Type="int" Mode="In" />
@@ -760,6 +766,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
             <Parameter Name="EmployeeID" Mode="In" Type="String" />
             <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
             <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+            <Parameter Name="ReturnEmployeeID" Mode="InOut" Type="String" />
+            <Parameter Name="ReturnManagerID" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CreateOverTimeRequest">
             <Parameter Name="Requestor_EmployeeID" Mode="In" Type="String" />
@@ -769,6 +777,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
             <Parameter Name="Requestor_EndTime" Mode="In" Type="DateTime" />
             <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
             <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+            <Parameter Name="ReturnManagerID" Mode="InOut" Type="String" />
+            <Parameter Name="ReturnEmployeeID" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GenerateMessage">
             <Parameter Name="RequestID" Mode="In" Type="Int32" />
@@ -896,6 +906,8 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
             <Parameter Name="RequestID" Mode="In" Type="Int32" />
             <Parameter Name="ReturnInt" Mode="InOut" Type="Int32" />
             <Parameter Name="ReturnText" Mode="InOut" Type="String" />
+            <Parameter Name="ReturnManagerID" Mode="InOut" Type="String" />
+            <Parameter Name="ReturnEmployeeID" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLastCreatedRequestByEmployee" ReturnType="Collection(OvertimeModel.GetLastCreatedRequestByEmployee_Result)">
           <Parameter Name="ActualUser" Mode="In" Type="String" />
@@ -1117,11 +1129,11 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <Property Type="Decimal" Name="RequestedHours" Nullable="true" Precision="38" Scale="6" />
         </ComplexType>
         <ComplexType Name="CumulativeOvertimeForDepartment_Result">
-          <Property Type="String" Name="Requestor_WO" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Requestor_Department" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="NumberOfRequests" Nullable="true" />
-          <Property Type="Decimal" Name="RequestedHours" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Int32" Name="RequestedHours" Nullable="true" />
+          <Property Type="String" Name="WorkOrganization" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Department" Nullable="true" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="DepartmentAprrovalsFromHistory_Result1">
           <Property Type="String" Name="Requestor_ID" Nullable="true" MaxLength="20" />
@@ -1556,11 +1568,11 @@ warning 6002: The table/view 'Overtime.HIS.WorkingTable' does not have a primary
           <FunctionImportMapping FunctionImportName="CumulativeOvertimeForDepartment" FunctionName="OvertimeModel.Store.CumulativeOvertimeForDepartment" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="OvertimeModel.CumulativeOvertimeForDepartment_Result">
-                <ScalarProperty Name="Requestor_WO" ColumnName="Requestor_WO" />
-                <ScalarProperty Name="Requestor_Department" ColumnName="Requestor_Department" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="NumberOfRequests" ColumnName="NumberOfRequests" />
                 <ScalarProperty Name="RequestedHours" ColumnName="RequestedHours" />
+                <ScalarProperty Name="WorkOrganization" ColumnName="WorkOrganization" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -44,7 +44,7 @@ namespace Entity_Overtime
         public virtual DbSet<Messaging1> Messaging1 { get; set; }
         public virtual DbSet<WorkingTable1> WorkingTable1 { get; set; }
     
-        public virtual int ChangeRequestStatus(Nullable<int> requestID, Nullable<int> requestStatus, Nullable<int> time, string employeeID, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int ChangeRequestStatus(Nullable<int> requestID, Nullable<int> requestStatus, Nullable<int> time, string employeeID, ObjectParameter returnInt, ObjectParameter returnText, ObjectParameter returnEmployeeID, ObjectParameter returnManagerID)
         {
             var requestIDParameter = requestID.HasValue ?
                 new ObjectParameter("RequestID", requestID) :
@@ -62,10 +62,10 @@ namespace Entity_Overtime
                 new ObjectParameter("EmployeeID", employeeID) :
                 new ObjectParameter("EmployeeID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeRequestStatus", requestIDParameter, requestStatusParameter, timeParameter, employeeIDParameter, returnInt, returnText);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeRequestStatus", requestIDParameter, requestStatusParameter, timeParameter, employeeIDParameter, returnInt, returnText, returnEmployeeID, returnManagerID);
         }
     
-        public virtual int CreateOverTimeRequest(string requestor_EmployeeID, string requestor_Reason, Nullable<int> requestor_For_WO_Project_ID, Nullable<System.DateTime> requestor_StartTime, Nullable<System.DateTime> requestor_EndTime, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int CreateOverTimeRequest(string requestor_EmployeeID, string requestor_Reason, Nullable<int> requestor_For_WO_Project_ID, Nullable<System.DateTime> requestor_StartTime, Nullable<System.DateTime> requestor_EndTime, ObjectParameter returnInt, ObjectParameter returnText, ObjectParameter returnManagerID, ObjectParameter returnEmployeeID)
         {
             var requestor_EmployeeIDParameter = requestor_EmployeeID != null ?
                 new ObjectParameter("Requestor_EmployeeID", requestor_EmployeeID) :
@@ -87,7 +87,7 @@ namespace Entity_Overtime
                 new ObjectParameter("Requestor_EndTime", requestor_EndTime) :
                 new ObjectParameter("Requestor_EndTime", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateOverTimeRequest", requestor_EmployeeIDParameter, requestor_ReasonParameter, requestor_For_WO_Project_IDParameter, requestor_StartTimeParameter, requestor_EndTimeParameter, returnInt, returnText);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateOverTimeRequest", requestor_EmployeeIDParameter, requestor_ReasonParameter, requestor_For_WO_Project_IDParameter, requestor_StartTimeParameter, requestor_EndTimeParameter, returnInt, returnText, returnManagerID, returnEmployeeID);
         }
     
         public virtual int GenerateMessage(Nullable<int> requestID, ObjectParameter returnInt, ObjectParameter returnText)
@@ -422,7 +422,7 @@ namespace Entity_Overtime
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveUserFromReportRole", actualUserParameter, employeeIDParameter, returnInt, returnText);
         }
     
-        public virtual int DeleteRequest(string actualUser, Nullable<int> requestID, ObjectParameter returnInt, ObjectParameter returnText)
+        public virtual int DeleteRequest(string actualUser, Nullable<int> requestID, ObjectParameter returnInt, ObjectParameter returnText, ObjectParameter returnManagerID, ObjectParameter returnEmployeeID)
         {
             var actualUserParameter = actualUser != null ?
                 new ObjectParameter("ActualUser", actualUser) :
@@ -432,7 +432,7 @@ namespace Entity_Overtime
                 new ObjectParameter("RequestID", requestID) :
                 new ObjectParameter("RequestID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteRequest", actualUserParameter, requestIDParameter, returnInt, returnText);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteRequest", actualUserParameter, requestIDParameter, returnInt, returnText, returnManagerID, returnEmployeeID);
         }
     
         public virtual ObjectResult<GetLastCreatedRequestByEmployee_Result> GetLastCreatedRequestByEmployee(string actualUser)

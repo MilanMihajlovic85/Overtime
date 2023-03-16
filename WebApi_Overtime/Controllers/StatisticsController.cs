@@ -18,7 +18,7 @@ namespace WebApi_Overtime.Controllers
 
         [HttpGet]
         [Route("GetCumulativeStatisticsForWO/{WorkOrganization}/{StartDate}/{EndDate}")]
-        public HttpResponseMessage GetCumulativeStatisticsForWO(string WorOrganization,DateTime StartDate, DateTime EndDate)
+        public HttpResponseMessage GetCumulativeStatisticsForWO(string WorkOrganization,DateTime StartDate, DateTime EndDate)
         {
             string ActualUser = Thread.CurrentPrincipal.Identity.Name;
             string AppName = Request.Headers.UserAgent.FirstOrDefault().Product.Name.FirstOrDefault().ToString();
@@ -35,7 +35,7 @@ namespace WebApi_Overtime.Controllers
                 ApiKey = ApiKeyHeader.FirstOrDefault();
             }
 
-           return Request.CreateResponse(HttpStatusCode.OK, StatisticsCTL.GetCumuativeStatisticsForWO(ActualUser,WorOrganization, StartDate, EndDate));
+           return Request.CreateResponse(HttpStatusCode.OK, StatisticsCTL.GetCumuativeStatisticsForWO(ActualUser,WorkOrganization, StartDate, EndDate));
         }
 
         [HttpGet]

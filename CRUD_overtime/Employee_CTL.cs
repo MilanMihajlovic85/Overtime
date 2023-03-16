@@ -14,10 +14,12 @@ namespace CRUD_overtime
         WorkingTable_ViewModel Result = new WorkingTable_ViewModel();
 
         DBResponse_ViewModel DbResponse = new DBResponse_ViewModel();
+        DbRsponseSignalR_ViewModel DbResponseSignalR = new DbRsponseSignalR_ViewModel();
 
         // SQL Params
         ObjectParameter ReturnInt = new ObjectParameter("ReturnInt", typeof(int));
         ObjectParameter ReturnText = new ObjectParameter("ReturnText", typeof(string));
+
 
         public List<WorkingTable_ViewModel> GetMyRequestedApprovals(string EmployeeID)
         {
@@ -97,44 +99,62 @@ namespace CRUD_overtime
             }
         }
 
-        public DBResponse_ViewModel ChangeRequestStatus(ChangeRequest_ViewModel Request, string EmpployeID)
+        public DbRsponseSignalR_ViewModel ChangeRequestStatus(ChangeRequest_ViewModel Request, string EmpployeID)
         {
+            ObjectParameter ReturnText = new ObjectParameter("ReturnText", typeof(string));
+            ObjectParameter ReturnManagerID = new ObjectParameter("ReturnManagerID", typeof(string));
+            ObjectParameter ReturnEmployeeID = new ObjectParameter("ReturnEmployeeID", typeof(string));
+
+
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.ChangeRequestStatus( Request.RequestID,Request.RequestStatus,Request.Minutes,EmpployeID, ReturnInt, ReturnText);
+                baza.ChangeRequestStatus( Request.RequestID,Request.RequestStatus,Request.Minutes,EmpployeID, ReturnInt, ReturnText,ReturnEmployeeID,ReturnManagerID);
 
-                DbResponse.ReturnText = ReturnText.Value.ToString();
-                DbResponse.ReturnInt = (int)ReturnInt.Value;
+               DbResponseSignalR.ReturnText = ReturnText.Value.ToString();
+               DbResponseSignalR.ReturnInt = (int)ReturnInt.Value;
+               DbResponseSignalR.ReturnMangerID = ReturnManagerID.Value.ToString();
+               DbResponseSignalR.ReturnEmployeeID = ReturnEmployeeID.Value.ToString();
 
-                return DbResponse;
+                return DbResponseSignalR;
                     
             }
         }
 
-        public DBResponse_ViewModel DeleteRequest(int RequestID, string EmployeeID)
+        public DbRsponseSignalR_ViewModel DeleteRequest(int RequestID, string EmployeeID)
         {
+            ObjectParameter ReturnManagerID = new ObjectParameter("ReturnManagerID", typeof(string));
+            ObjectParameter ReturnEmployeeID = new ObjectParameter("ReturnEmployeeID", typeof(string));
+
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.DeleteRequest(EmployeeID, RequestID,ReturnInt, ReturnText);
+                baza.DeleteRequest(EmployeeID, RequestID,ReturnInt, ReturnText,ReturnManagerID,ReturnEmployeeID);
 
-                DbResponse.ReturnText = ReturnText.Value.ToString();
-                DbResponse.ReturnInt = (int)ReturnInt.Value;
+               DbResponseSignalR.ReturnText = ReturnText.Value.ToString();
+               DbResponseSignalR.ReturnInt = (int)ReturnInt.Value;
+                DbResponseSignalR.ReturnEmployeeID = ReturnEmployeeID.Value.ToString();
+                DbResponseSignalR.ReturnMangerID = ReturnManagerID.Value.ToString();
 
-                return DbResponse;
+                return DbResponseSignalR;
 
             }
         }
 
-        public DBResponse_ViewModel CreateRequest(string EmployeeID, OvertimeRequest_ViewModel Request)
+        public DbRsponseSignalR_ViewModel CreateRequest(string EmployeeID, OvertimeRequest_ViewModel Request)
         {
+            ObjectParameter ReturnManagerID = new ObjectParameter("ReturnManagerID", typeof(string));
+            ObjectParameter ReturnEmployeeID = new ObjectParameter("ReturnEmployeeID", typeof(string));
+
             using (OvertimeEntities baza = new OvertimeEntities())
             {
-                baza.CreateOverTimeRequest(EmployeeID,Request.Reason,Request.Project_ID, Request.StartTime, Request.EndTime, ReturnInt,ReturnText);
+                baza.CreateOverTimeRequest(EmployeeID,Request.Reason,Request.Project_ID, Request.StartTime, Request.EndTime, ReturnInt,ReturnText,ReturnManagerID,ReturnEmployeeID);
 
-                DbResponse.ReturnText = ReturnText.Value.ToString();
-                DbResponse.ReturnInt = (int)ReturnInt.Value;
 
-                return DbResponse;
+                DbResponseSignalR.ReturnText = ReturnText.Value.ToString();
+                DbResponseSignalR.ReturnInt = (int)ReturnInt.Value;
+                DbResponseSignalR.ReturnMangerID = ReturnManagerID.Value.ToString();
+                DbResponseSignalR.ReturnEmployeeID = ReturnEmployeeID.Value.ToString();
+
+                return DbResponseSignalR;
 
             }
         }
