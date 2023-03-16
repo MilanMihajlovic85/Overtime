@@ -3,19 +3,29 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Reports / My Requests</ion-title>
+    <ion-title>Statistics / Organizations</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-row>
 
+  <ion-row>
     <ion-col>
 
       <app-loading></app-loading>
       <app-messages></app-messages>
 
       <form [formGroup]="form" class="filter-form">
+
+        <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+          <mat-label>Organization</mat-label>
+          <mat-select formControlName="organization">
+            <mat-option *ngFor="let org of organizations$ | async" [value]="org.Value">
+              {{ org.Description }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('organization')!.errors?.required">Please select organization</mat-error>
+        </mat-form-field>
 
         <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
           <mat-label>Period</mat-label>
@@ -36,19 +46,26 @@
       </form>
 
     </ion-col>
-
   </ion-row>
 
   <ion-row>
     <ion-col>
-      <app-paginated-list
-        *ngIf="data"
-        [searchData]="data"
-        [schema]="schema"
-        [buttons]="{}"
-        [category]="'myRequests'"
-      >
-      </app-paginated-list>
+      <ng-container *ngIf="statistics">
+
+        <app-list
+          *ngIf="statistics.length > 0; else noData"
+          [data]="statistics"
+          [schema]="schema"
+          [buttons]="{}"
+        >
+        </app-list>
+
+        <ng-template #noData>
+          <h1>No Data</h1>
+          <ion-icon name="alert-circle-outline"></ion-icon>
+        </ng-template>
+
+      </ng-container>
     </ion-col>
   </ion-row>
 

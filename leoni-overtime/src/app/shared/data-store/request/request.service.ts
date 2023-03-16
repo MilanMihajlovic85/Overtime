@@ -46,7 +46,7 @@ export class RequestService {
     private datePipe: DatePipe
   ) { }
 
-  getMyRequestsPaginated(url: string) {
+  getResultsPaginated(url: string) {
 
     return this.http.get<RequestApiData[]>(`http://localhost:3000/reports${url}`).pipe(
     // return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyRequests`).pipe(

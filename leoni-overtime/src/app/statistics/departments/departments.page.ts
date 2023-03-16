@@ -1,7 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
+
+import { StatisticsModel } from 'src/app/shared/data-store/statistics/statistics.model';
+import { StatisticsService } from 'src/app/shared/data-store/statistics/statistics.service';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
 import { environment } from 'src/environments/environment';
 
@@ -12,15 +17,9 @@ import { environment } from 'src/environments/environment';
 })
 export class DepartmentsPage implements OnInit {
 
+  statistics!: StatisticsModel[];
+
   form!: FormGroup;
-
-  data!: {department: string, startDate: Date, endDate: Date};
-
-  schema = {
-    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'requestorForWO', 'requestorForProject'],
-    title: ['requestorWO'],
-    subtitle: ['requestorFullName']
-  }
 
   departments$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_Departments`).pipe(
     catchError(err => {
@@ -36,12 +35,20 @@ export class DepartmentsPage implements OnInit {
     })
   );
 
+  schema = {
+    properties: ['department', 'hours', 'requestsNum', 'status', 'organization'],
+    title: ['department'],
+    subtitle: ['organization']
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private messagesSrv: MessagesService
+    private messagesSrv: MessagesService,
+    private statisticSrv: StatisticsService,
+    private loadingSrv: LoadingService,
+    private datePipe: DatePipe
   ) { }
-
 
   ngOnInit() {
 
@@ -64,13 +71,22 @@ export class DepartmentsPage implements OnInit {
         }]
       }
     );
+
   }
 
   onFormSubmit() {
 
     if (!this.form.valid) return;
 
-    this.data = this.form.value;
+    const startDate = this.datePipe.transform(this.form.value.startDate, 'yyyy-MM-dd');
+    const endDate = this.datePipe.transform(this.form.value.endDate, 'yyyy-MM-dd');
+
+    this.loadingSrv.showLoaderUntilCompleted(
+      this.statisticSrv.getStatistics(`/Statistics/GetCumulativeStatisticsForDepartment/${this.form.value.department}/${startDate}/${endDate}`)
+    ).subscribe(resData => {
+      this.statistics = resData;
+    });
+
 
   }
 

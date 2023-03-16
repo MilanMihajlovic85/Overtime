@@ -2,11 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, catchError, combineLatest, map, Subscription, tap, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
-import { LoadingService } from 'src/app/shared/services/loading/loading.service';
-import { ReportsService } from 'src/app/shared/data-store/reports/reports.service';
-import { RequestModel } from 'src/app/shared/data-store/request/request.model';
 
 
 @Component({
@@ -16,9 +13,10 @@ import { RequestModel } from 'src/app/shared/data-store/request/request.model';
 })
 export class ProjectsPage implements OnInit {
 
-  reports!: RequestModel[];
-
   form!: FormGroup;
+
+  data!: {project: string, startDate: Date, endDate: Date};
+
 
   schema = {
     properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject'],
@@ -27,7 +25,6 @@ export class ProjectsPage implements OnInit {
   }
 
   projects$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_Projects`).pipe(
-    tap(d => console.log(d)),
     catchError(err => {
       if (err.error.Message) {
         this.messagesSrv.showErrors(err.error.Message);
@@ -45,9 +42,7 @@ export class ProjectsPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private messagesSrv: MessagesService,
-    private loadingSrv: LoadingService,
-    private reportSrv: ReportsService
+    private messagesSrv: MessagesService
   ) { }
 
   ngOnInit() {
@@ -78,16 +73,7 @@ export class ProjectsPage implements OnInit {
 
     if (!this.form.valid) return;
 
-    this.loadingSrv.showLoaderUntilCompleted(
-      this.reportSrv.projects(
-        this.form.value.startDate,
-        this.form.value.endDate,
-        this.form.value.project
-      )).subscribe(resData => {
-
-        this.reports = resData;
-
-    });
+    this.data = this.form.value;
 
   }
 

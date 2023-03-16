@@ -4,7 +4,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { LoginGuard } from './shared/guards/login.guard';
 import { AppLayoutComponent } from './shared/ui/layouts/app-layout/app-layout.component';
 import { LoginLayoutComponent } from './shared/ui/layouts/login-layout/login-layout.component';
-
+// C:\Program Files\Android\Android Studio\plugins\android\resources\images\asset_studio\ic_launcher_foreground.xml
 const routes: Routes = [
   {
     path: '',
@@ -63,8 +63,19 @@ const routes: Routes = [
         loadChildren: () => import('./reports/projects/projects.module').then( m => m.ProjectsPageModule),
         title: 'Reports/Projects',
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'statistics/organizations',
+        loadChildren: () => import('./statistics/organizations/organizations.module').then( m => m.OrganizationsPageModule),
+        title: 'Statistics/Organizations',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'statistics/departments',
+        loadChildren: () => import('./statistics/departments/departments.module').then( m => m.DepartmentsPageModule),
+        title: 'Statistics/Departments',
+        canActivate: [AuthGuard],
       }
-
     ]
   },
   {
@@ -78,7 +89,8 @@ const routes: Routes = [
         canActivate: [LoginGuard]
       }
     ]
-  }
+  },
+
 
 ];
 

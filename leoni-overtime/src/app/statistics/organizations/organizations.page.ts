@@ -1,9 +1,13 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, tap, throwError } from 'rxjs';
-
+import { StatisticsModel } from 'src/app/shared/data-store/statistics/statistics.model';
+import { StatisticsService } from 'src/app/shared/data-store/statistics/statistics.service';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,14 +17,14 @@ import { environment } from 'src/environments/environment';
 })
 export class OrganizationsPage implements OnInit {
 
+  statistics!: StatisticsModel[];
+
   form!: FormGroup;
 
-  data!: {organization: string, startDate: Date, endDate: Date};
-
   schema = {
-    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'requestorForWO', 'requestorForProject'],
-    title: ['requestorWO'],
-    subtitle: ['requestorFullName']
+    properties: ['department', 'hours', 'requestsNum', 'status', 'organization'],
+    title: ['department'],
+    subtitle: ['organization']
   }
 
   organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_WorkOrganizations`).pipe(
@@ -38,12 +42,15 @@ export class OrganizationsPage implements OnInit {
     })
   );
 
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private messagesSrv: MessagesService
+    private messagesSrv: MessagesService,
+    private statisticSrv: StatisticsService,
+    private loadingSrv: LoadingService,
+    private datePipe: DatePipe
   ) { }
-
 
   ngOnInit() {
 
@@ -73,7 +80,15 @@ export class OrganizationsPage implements OnInit {
 
     if (!this.form.valid) return;
 
-    this.data = this.form.value;
+    const startDate = this.datePipe.transform(this.form.value.startDate, 'yyyy-MM-dd');
+    const endDate = this.datePipe.transform(this.form.value.endDate, 'yyyy-MM-dd');
+
+    this.loadingSrv.showLoaderUntilCompleted(
+      this.statisticSrv.getStatistics(`/Statistics/GetCumulativeStatisticsForWO/${this.form.value.organization}/${startDate}/${endDate}`)
+    ).subscribe(resData => {
+      this.statistics = resData;
+    });
+
 
   }
 

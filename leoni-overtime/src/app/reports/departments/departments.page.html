@@ -20,12 +20,9 @@
         <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
           <mat-label>Department</mat-label>
           <mat-select formControlName="department">
-            <mat-option value="IT">
-              IT
+            <mat-option *ngFor="let department of departments$ | async" [value]="department.Value">
+              {{ department.Description }}
             </mat-option>
-            <!-- <mat-option *ngFor="let o of departments$ | async" [value]="o.WO_Name">
-              {{ o.WO_Name }}
-            </mat-option> -->
           </mat-select>
           <mat-error *ngIf="form.get('department')!.errors?.required">Please select department</mat-error>
         </mat-form-field>
@@ -52,16 +49,17 @@
 
   <ion-row>
     <ion-col>
-      <app-list
-        *ngIf="reports"
-        [data]="reports"
+
+      <app-paginated-list
+        *ngIf="data"
+        [searchData]="data"
         [schema]="schema"
         [buttons]="{}"
+        [category]="'departments'"
       >
-      </app-list>
+      </app-paginated-list>
     </ion-col>
 
   </ion-row>
-
 
 </ion-content>

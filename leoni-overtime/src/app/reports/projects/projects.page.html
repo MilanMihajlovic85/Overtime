@@ -19,8 +19,8 @@
         <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
           <mat-label>Project</mat-label>
           <mat-select formControlName="project">
-            <mat-option *ngFor="let p of projects$ | async" [value]="p.Project">
-              {{ p.Project }}
+            <mat-option *ngFor="let project of projects$ | async" [value]="project.Value">
+              {{ project.Description }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="form.get('project')!.errors?.required">Please select project</mat-error>
@@ -40,8 +40,6 @@
 
         </mat-form-field>
 
-        <!-- <button mat-stroked-button class="mat-primary" (click)="onFormSubmit()" [disabled]="!form.valid">{{ 'btnText.view' | translate }}</button> -->
-
         <ion-button expand="block" fill="outline" (click)="onFormSubmit()" [disabled]="!form.valid">Show</ion-button>
 
       </form>
@@ -50,13 +48,14 @@
 
   <ion-row>
     <ion-col>
-      <app-list
-        *ngIf="reports"
-        [data]="reports"
+      <app-paginated-list
+        *ngIf="data"
+        [searchData]="data"
         [schema]="schema"
         [buttons]="{}"
+        [category]="'projects'"
       >
-      </app-list>
+      </app-paginated-list>
     </ion-col>
 
   </ion-row>
