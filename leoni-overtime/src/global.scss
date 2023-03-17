@@ -34,6 +34,13 @@ ion-toast.success-toast {
   --color: white;
 }
 
+// notification toast
+ion-toast.notification-toast {
+  --background: var(--ion-color-medium);
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: var(--ion-color-medium-contrast);
+}
+
 // Delete alert
 .delete-alert {
 

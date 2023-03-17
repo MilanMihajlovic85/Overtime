@@ -32,14 +32,14 @@
         <ion-menu-toggle auto-hide="false">
           <ion-item routerDirection="root" [routerLink]="['/', 'requests']" lines="none" detail="false" routerLinkActive="selected">
             <ion-icon aria-hidden="true" slot="start" [ios]="'file-tray-full-outline'" [md]="'file-tray-full-sharp'"></ion-icon>
-            <ion-label>My Requests</ion-label>
+            <ion-label>My Requests <span *ngIf="counts$ | async as counts">({{ counts.requests }})</span></ion-label>
           </ion-item>
         </ion-menu-toggle>
 
         <ion-menu-toggle auto-hide="false">
           <ion-item routerDirection="root" [routerLink]="['/', 'approvals']" lines="none" detail="false" routerLinkActive="selected">
             <ion-icon aria-hidden="true" slot="start" [ios]="'help-circle-outline'" [md]="'help-circle-sharp'"></ion-icon>
-            <ion-label>My Approvals</ion-label>
+            <ion-label>My Approvals <span *ngIf="counts$ | async as counts">({{ counts.approvals }})</span></ion-label>
           </ion-item>
         </ion-menu-toggle>
 

@@ -5,6 +5,7 @@ import { IonInput } from '@ionic/angular';
 import { catchError, throwError } from 'rxjs';
 import { LoadingService } from '../shared/services/loading/loading.service';
 import { MessagesService } from '../shared/services/messages/messages.service';
+import { SignalrService } from '../shared/services/signalr/signalr.service';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class AuthPage implements OnInit {
     private loadingSrv: LoadingService,
     private authService: AuthService,
     private messagesSrv: MessagesService,
-    private router: Router
+    private router: Router,
+    private signalrSrv: SignalrService
   ) { }
 
   ngOnInit() {

@@ -25,12 +25,12 @@
 
           <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'requests']">
             My Requests
-            <ion-badge color="danger" >{{ counts.NumberOfRequests }}</ion-badge>
+            <ion-badge color="danger" *ngIf="counts.requests > 0">{{ counts.requests }}</ion-badge>
           </ion-button>
 
           <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'approvals']">
             My Approvals
-            <ion-badge color="danger" >{{ counts.NumberOfApprovals }}</ion-badge>
+            <ion-badge color="danger" *ngIf="counts.approvals > 0">{{ counts.approvals }}</ion-badge>
           </ion-button>
 
         </div>

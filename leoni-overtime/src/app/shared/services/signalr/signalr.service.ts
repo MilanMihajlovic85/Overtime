@@ -1,55 +1,93 @@
 import { Injectable } from '@angular/core';
-import * as signalR from '@microsoft/signalr';
-import { take, tap } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
+import { ToastController } from '@ionic/angular';
+// import * as signalR from '@microsoft/signalr';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+
+import { BehaviorSubject, shareReplay, take, tap } from 'rxjs';
+// import { AuthService } from 'src/app/auth/auth.service';
+import { environment } from 'src/environments/environment';
+import { MessagesService } from '../messages/messages.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalrService {
 
-  hubUrl = 'http://localhost:2078/API/signalr';
-  private connection: any;
+  private connection!: HubConnection;
+
+  private reqAppCount = new BehaviorSubject<{approvals: number, requests: number}>({
+    approvals: 0, requests: 0
+  });
+
+  reqAppCount$ = this.reqAppCount.asObservable().pipe(shareReplay());
 
   constructor(
-    private authSrv: AuthService
+    private toastCtrl: ToastController,
+    private messagesSrv: MessagesService
   ) { }
 
-  public createConnection() {
+  public createConnection(apiKey: string) {
 
-    return this.authSrv.apiKey.pipe(
-      take(1),
-      tap(token => {
+    // this.connection = new HubConnectionBuilder()
+    //   .withUrl(environment.hubUrl, {
+    //     accessTokenFactory: () => apiKey
+    //   })
+    //   .withAutomaticReconnect()
+    //   .build();
 
-        if (token) {
-          this.connection = new signalR.HubConnectionBuilder()
-          .withUrl('http://localhost:2078/API/SignalR', {
-            accessTokenFactory: () => token
-          })
-          .withAutomaticReconnect()
-          .build()
+    // this.connection.start()
+    //   .catch((error: any) => {
+    //     console.log(error);
+    //     this.messagesSrv.showErrors(error);
+    //   });
 
-          this.connection.start()
-            .catch((error: any) => console.log(error));
+    // this.connection.on('notify', (count: {NumberOfApprovals: number, NumberOfRequests: number}) => {
 
-          this.connection.on('DisplayMessage', (message: string) => {
-            console.log(message);
+    //   const currentValues = this.reqAppCount.getValue();
+    //   const appDiff = count.NumberOfApprovals - currentValues.approvals;
 
-          });
+    //   if (appDiff > 0) this.presentToast(appDiff);
 
-          this.connection.received((text: any) => {
-            console.log(text);
+    //   this.reqAppCount.next({approvals: count.NumberOfApprovals, requests: count.NumberOfRequests});
 
-          })
-        }
+    // });
 
-      })
-    );
+    // setInterval(() => {
+    //   const currentValues = this.reqAppCount.getValue();
+    //   const newRequests = currentValues.requests + Math.round(Math.random()*10);
+    //   const newApprovals = currentValues.approvals + Math.round(Math.random()*10);
+
+    //   const reqDiff = newRequests - currentValues.requests;
+    //   const appDiff = newApprovals - currentValues.approvals;
+
+    //   // console.log('Req - ', 'new: ', newRequests, ' old: ', currentValues.requests, ' diff: ', reqDiff);
+    //   // console.log('App - ', 'new: ', newApprovals, ' old: ', currentValues.approvals, ' diff: ', appDiff);
+    //   if (appDiff > 0) {
+    //     this.presentToast(appDiff);
+    //   }
+
+
+
+    //   this.reqAppCount.next({approvals: newApprovals, requests: newRequests});
+    // }, 5000);
+
 
   }
 
   stopConnection() {
 
     this.connection.stop().catch((error: any) => console.log(error));
+  }
+
+  presentToast(appDiff: number) {
+
+    this.toastCtrl.create({
+      message: `You have ${appDiff} new ${appDiff === 1 ? 'request' : 'requests'} for approval`,
+      duration: 3000,
+      position: 'bottom',
+      icon: 'notifications',
+      cssClass: 'notification-toast'
+    }).then(toast => toast.present());
+
   }
 }

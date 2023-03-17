@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 
 import { MessagesService } from '../shared/services/messages/messages.service';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, from, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, delay, from, map, Observable, tap } from 'rxjs';
 import { AuthModel } from './auth.model';
 import { Preferences } from '@capacitor/preferences';
 import { NavController } from '@ionic/angular';
+import { SignalrService } from '../shared/services/signalr/signalr.service';
 
 
 export interface AuthResponseData {
@@ -29,7 +30,8 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private messageSrv: MessagesService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private signalrSrv: SignalrService
   ) { }
 
 
@@ -62,6 +64,7 @@ export class AuthService {
   preLogin(employeeId: string) {
 
     return this.http.get<string>(`${environment.apiUrl}/PreLogin/${employeeId}`).pipe(
+      // delay(30000),
       tap(console.log)
     );
 
@@ -92,7 +95,9 @@ export class AuthService {
         if (!storedData || !storedData.value) return null;
         return JSON.parse(storedData.value) as AuthModel;
       }),
-      tap(user => this.user$.next(user))
+      tap(user => {
+        this.user$.next(user)
+      })
     );
 
   }
@@ -105,6 +110,8 @@ export class AuthService {
 
         Preferences.remove({ key: AUTH_DATA });
         this.messageSrv.deleteErrors();
+
+        this.signalrSrv.stopConnection();
 
         this.router.navigateByUrl('/login');
       },
