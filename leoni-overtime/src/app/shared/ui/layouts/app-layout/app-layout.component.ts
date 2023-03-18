@@ -3,13 +3,11 @@ import { Router } from '@angular/router';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 import { shareReplay, take, tap } from 'rxjs';
-import { MenuController } from '@ionic/angular';
-import { isPlatform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { I18nService } from 'src/app/shared/services/i18n/i18n.service';
-import { TranslateService } from '@ngx-translate/core';
 import { SignalrService } from 'src/app/shared/services/signalr/signalr.service';
 
 @Component({
@@ -26,6 +24,7 @@ export class AppLayoutComponent  implements OnInit {
 
   user$ = this.authSrv.user.pipe(
     take(1),
+    shareReplay(),
     tap(user => {
 
       if (!user && this.previousAuthState !== !!user) {
@@ -41,8 +40,7 @@ export class AppLayoutComponent  implements OnInit {
         this.idle.stop();
       }
 
-    }),
-    shareReplay()
+    })
   );
 
   counts$ = this.signalrSrv.reqAppCount$;
@@ -53,7 +51,6 @@ export class AppLayoutComponent  implements OnInit {
     private router: Router,
     private idle: Idle,
     private keepalive: Keepalive,
-    private menuCtrl: MenuController,
     private translate: TranslateService,
     private i18n: I18nService,
     private signalrSrv: SignalrService
@@ -79,7 +76,7 @@ export class AppLayoutComponent  implements OnInit {
     // Tutorial https://blog.bitsrc.io/how-to-implement-idle-timeout-in-angular-af61eefdb13b
 
     // Sets an idle timeout of 899 seconds.
-    this.idle.setIdle(1799);
+    this.idle.setIdle(899);
     // Sets a timeout period of 1 seconds. after 900 seconds of inactivity, the user will be considered timed out.
     this.idle.setTimeout(1);
     // Sets the default interrupts, in this case, things like clicks, scrolls, touches to the document

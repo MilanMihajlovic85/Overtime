@@ -3,9 +3,6 @@ ion-menu ion-content {
 }
 
 ion-menu.md ion-content {
-  // --padding-start: 8px;
-  // --padding-end: 8px;
-  // --padding-top: 20px;
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
@@ -13,9 +10,7 @@ ion-menu.md ion-content {
 }
 
 ion-menu.md ion-list {
-  // padding: 20px 0;
   padding: 10px 8px;
-
 }
 
 ion-menu.md ion-note {
@@ -40,11 +35,8 @@ ion-menu.md ion-list#inbox-list ion-list-header {
 
 ion-menu.md ion-list#labels-list ion-list-header {
   font-size: 16px;
-
   margin-bottom: 18px;
-
   color: #757575;
-
   min-height: 26px;
 }
 
@@ -127,7 +119,6 @@ svg {
   width: 70%;
   margin-top: 1rem;
   padding-left: 1.5rem;
-  // padding-bottom: 1rem;
 }
 
 ion-header {
@@ -147,6 +138,5 @@ ion-header {
 }
 
 .logout-item {
-  // margin-top: 3rem;
   padding: 0 12px;
 }

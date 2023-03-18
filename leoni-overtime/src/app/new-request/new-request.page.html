@@ -15,7 +15,7 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-lg="6" push-lg="3">
+      <ion-col size="12" size-md="6" push-md="3">
 
         <app-loading></app-loading>
         <app-messages></app-messages>
@@ -66,18 +66,18 @@
 <ion-modal class="date-time" trigger="start-time-modal">
   <ng-template>
     <ion-content>
-      <ion-datetime
-        #startDatetime
-        presentation="time-date"
-        size="cover"
-        (ionChange)="startDateChanged(startDatetime.value)"
-        (ionCancel)="showStartTimePicker = false"
-      >
-        <ion-buttons slot="buttons">
-          <ion-button (click)="closeStartTime()">Cancel</ion-button>
-          <ion-button (click)="selectStartTime()">Select</ion-button>
-        </ion-buttons>
-      </ion-datetime>
+        <ion-datetime
+          #startDatetime
+          presentation="time-date"
+          size="cover"
+          (ionChange)="startDateChanged(startDatetime.value)"
+          (ionCancel)="showStartTimePicker = false"
+        >
+          <ion-buttons slot="buttons">
+            <ion-button (click)="closeStartTime()">Cancel</ion-button>
+            <ion-button (click)="selectStartTime()">Select</ion-button>
+          </ion-buttons>
+        </ion-datetime>
     </ion-content>
   </ng-template>
 </ion-modal>
