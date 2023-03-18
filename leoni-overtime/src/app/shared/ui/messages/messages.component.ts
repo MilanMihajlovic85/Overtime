@@ -11,21 +11,15 @@ export class MessagesComponent implements OnInit {
 
   showMessages = false;
 
-  errors$! : Observable<string[]>
+  errors$: Observable<string[]> = this.messagesSrv.errors$.pipe(
+    tap(errprs => this.showMessages = errprs.length > 0)
+  );
 
   constructor(
     public messagesSrv: MessagesService
   ) { }
 
-  ngOnInit(): void {
-
-    this.errors$ = this.messagesSrv.errors$.pipe(
-      tap((e) => {
-        this.showMessages = true
-      })
-    );
-
-  }
+  ngOnInit(): void {}
 
   onClose() {
 

@@ -44,10 +44,12 @@
             </ion-item>
             <ion-button type="submit" expand="block" [disabled]="!f.valid">Login</ion-button>
           </form>
-          <ion-button fill="clear" size="small" (click)="readyToLogin = false">
+
+          <ion-button class="resendCode" fill="clear" expand="block" size="small" (click)="readyToLogin = false">
             <ion-icon slot="start" [ios]="'arrow-back-outline'" [md]="'arrow-back-sharp'"></ion-icon>
             Back
           </ion-button>
+
         </ng-container>
       </ion-col>
     </ion-row>

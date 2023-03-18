@@ -58,6 +58,7 @@ export class AuthPage implements OnInit {
       )
     ).subscribe((msg) => {
       this.readyToLogin = true;
+      this.messagesSrv.deleteErrors();
       // this.messagesSrv.showErrors(msg.split("...")[1]);
     });
 
