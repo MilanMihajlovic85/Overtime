@@ -97,6 +97,9 @@ export class ListComponent  implements OnInit {
       }
     }
 
+    this.elements = [];
+    this.getElements();
+
   }
 
   get data() {
@@ -192,7 +195,7 @@ export class ListComponent  implements OnInit {
               val = this.activeElement![element];
             }
           } else if ( element === 'startTime' || element === 'endTime' || element === 'responseDate') {
-            val = this.datePipe.transform(this.activeElement![element], 'dd/MM/yyyy HH:ss');
+            val = this.datePipe.transform(this.activeElement![element], 'dd/MM/yyyy HH:mm');
           } else {
             val = this.activeElement![element];
           }

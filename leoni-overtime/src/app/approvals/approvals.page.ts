@@ -74,13 +74,13 @@ export class ApprovalsPage implements OnInit {
         if (result.data) {
           const minutes: any = Object.values(result.data.values)[0];
 
-          this.approvalSrv.updateStatus(+request.id, newStatus, minutes);
+          this.approvalSrv.updateStatus(+request.id, newStatus, minutes).subscribe();
         }
 
 
       } else {
 
-        this.approvalSrv.updateStatus(+request.id, newStatus);
+        this.approvalSrv.updateStatus(+request.id, newStatus).subscribe();
 
       }
 

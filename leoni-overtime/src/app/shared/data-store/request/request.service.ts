@@ -206,7 +206,7 @@ export class RequestService {
    * @param  {number} id
    * @returns Observable
    */
-  deleteRequest(id: number): Observable<RequestModel[]> {
+  deleteRequest(id: number) {
 
     const requests = this.requests$.getValue();
     const newRequests = requests.filter(d => d.id !== id);
