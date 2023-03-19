@@ -52,7 +52,7 @@ export class ListComponent  implements OnInit {
     this.btns = Object.values(this.buttons);
 
     this.showStatusIcon = this.schema['properties'].includes('status') && this.schema['title'][0] === 'requestorForProject';
-    this.showTimeInterval = this.schema['properties'].includes('startTime') && this.schema['properties'].includes('endTime')
+    this.showTimeInterval = this.schema['properties'].includes('startTime') && this.schema['properties'].includes('endTime');
 
 
 

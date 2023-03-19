@@ -9,47 +9,62 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-row *ngIf="showForm">
-    <ion-col>
+  <ion-grid>
 
-      <app-loading></app-loading>
-      <app-messages></app-messages>
+    <ion-row *ngIf="showForm">
 
-      <form [formGroup]="form" class="filter-form">
+      <ion-col size="12" size-md="8" offset-md="2">
 
-        <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-          <mat-label>Department</mat-label>
-          <mat-select formControlName="department">
-            <mat-option *ngFor="let department of departments$ | async" [value]="department.Value">
-              {{ department.Description }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="form.get('department')!.errors?.required">Please select department</mat-error>
-        </mat-form-field>
+        <app-loading></app-loading>
+        <app-messages></app-messages>
 
-        <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-          <mat-label>Period</mat-label>
-          <mat-date-range-input [rangePicker]="picker" calendarLabel="Kalendar">
-            <input matStartDate formControlName="startDate" placeholder="Start">
-            <input matEndDate formControlName="endDate" placeholder="End">
-          </mat-date-range-input>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-          <mat-error *ngIf="form.get('startDate')!.errors?.required || form.get('endDate')!.errors?.required">
-            Please insert start and end date
-          </mat-error>
+        <form [formGroup]="form" class="filter-form">
 
-        </mat-form-field>
+          <ion-row>
 
-        <ion-button expand="block" fill="outline" (click)="onFormSubmit()" [disabled]="!form.valid">Show</ion-button>
+            <ion-col>
+              <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+                <mat-label>Period</mat-label>
+                <mat-date-range-input [rangePicker]="picker" calendarLabel="Kalendar">
+                  <input matStartDate formControlName="startDate" placeholder="Start">
+                  <input matEndDate formControlName="endDate" placeholder="End">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-error *ngIf="form.get('startDate')!.errors?.required || form.get('endDate')!.errors?.required">
+                  Please insert start and end date
+                </mat-error>
+              </mat-form-field>
+            </ion-col>
 
-      </form>
-    </ion-col>
-  </ion-row>
+            <ion-col size="10">
+              <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+                <mat-label>Department</mat-label>
+                <mat-select formControlName="department">
+                  <mat-option *ngFor="let department of departments$ | async" [value]="department.Value">
+                    {{ department.Description }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('department')!.errors?.required">Please select department</mat-error>
+              </mat-form-field>
+            </ion-col>
+
+            <ion-col size="2">
+              <ion-button fill="solid" color="secondary" (click)="onFormSubmit()" [disabled]="!form.valid">
+                <ion-icon slot="icon-only" [ios]="'search-outline'" [md]="'search-sharp'"></ion-icon>
+              </ion-button>
+            </ion-col>
+
+          </ion-row>
+
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
   <ion-row>
-    <ion-col>
-
+    <ion-col size="12" size-md="8" offset-md="2">
       <app-paginated-list
         *ngIf="data"
         [searchData]="data"
@@ -60,7 +75,6 @@
       >
       </app-paginated-list>
     </ion-col>
-
   </ion-row>
 
 </ion-content>

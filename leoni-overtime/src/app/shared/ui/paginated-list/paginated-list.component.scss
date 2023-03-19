@@ -125,7 +125,7 @@ h1 {
 
 }
 
-ion-icon {
+ion-icon.no-data {
   font-size: 16rem;
   width: 16rem;
   margin: 0 auto;
@@ -135,9 +135,8 @@ ion-icon {
   color: #A9AABC;
 }
 
-p {
+p.no-data {
   text-align: center;
-  // margin-top: 5rem;
   font-size: 1.3rem;
   color: #A9AABC;
 }

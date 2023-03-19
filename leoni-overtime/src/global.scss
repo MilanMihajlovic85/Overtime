@@ -28,6 +28,8 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "./styles/datetime-modal.scss";
+@import "./styles/filter-form.scss";
+
 
 // Success toast
 ion-toast.success-toast {
@@ -57,18 +59,6 @@ ion-toast.notification-toast {
     }
   }
 
-}
-
-// Filter form styles
-form.filter-form {
-
-  padding: 0 1rem;
-
-  margin-top: 2rem;
-
-  .mat-mdc-form-field {
-    width: 100%;
-  }
 }
 
 .alert-input {

@@ -1,28 +1,32 @@
 <ng-container *ngIf="!activeElement; else details">
+  <app-loading></app-loading>
 
-  <ng-container *ngIf="elements.length >0; else noData">
-    <ion-list>
+  <ng-container *ngIf="elements">
+    <ion-list *ngIf="elements.length > 0; else noData">
 
       <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" detail="true">
         <ion-label>
           <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
-          <p>{{ el[schema['subtitle']] }}</p>
+          <!-- <p>{{ el[schema['subtitle']] }}</p> -->
+          <p *ngFor="let subtitle of schema['subtitle']">{{ el[subtitle] }}</p>
+          <p *ngIf="showTimeInterval">{{ el.startTime | date:'dd/MM/yyyy HH:mm' }} - {{ el.endTime | date:'HH:mm' }}</p>
         </ion-label>
       </ion-item>
 
     </ion-list>
 
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading...">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 
+    <ng-template #noData>
+      <p class="no-data">No Data</p>
+      <ion-icon class="no-data" name="alert-circle-outline"></ion-icon>
+    </ng-template>
+
   </ng-container>
 
-  <ng-template #noData>
-    <p>No Data</p>
-    <ion-icon name="alert-circle-outline"></ion-icon>
-  </ng-template>
 
 </ng-container>
 

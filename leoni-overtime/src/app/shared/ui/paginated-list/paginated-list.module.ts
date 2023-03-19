@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatTableModule } from '@angular/material/table';
 import { PaginatedListComponent } from './paginated-list.component';
+import { LoadingModule } from '../loading/loading.module';
 
 
 
@@ -30,7 +31,8 @@ import { PaginatedListComponent } from './paginated-list.component';
     MatTableModule,
     MatDividerModule,
     ScrollingModule,
-    IonicModule
+    IonicModule,
+    LoadingModule
   ],
   exports: [
     PaginatedListComponent

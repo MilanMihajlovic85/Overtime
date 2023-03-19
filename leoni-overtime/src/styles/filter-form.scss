@@ -1,0 +1,23 @@
+// Filter form styles
+form.filter-form {
+
+  margin-top: 2rem;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
+  ion-button {
+
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    height: 48px;
+
+    --padding-start: 0;
+    --padding-end: 0;
+
+    --box-shadow: none;
+
+  }
+}

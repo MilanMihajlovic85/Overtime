@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MessagesService } from '../../services/messages/messages.service';
 import { RequestModel } from '../request/request.model';
@@ -19,9 +19,15 @@ export class ReportsService {
     private messagesSrv: MessagesService
   ) { }
 
+  /**
+   * Get reports
+   *
+   * @param  {string} url
+   * @returns Observable
+   */
+  getReports(url: string): Observable<RequestModel[]> {
 
-  getReports(url: string) {
-
+    // return this.http.get<RequestApiData[]>(`http://localhost:3000/reports${url}`).pipe(
     return this.http.get<RequestApiData[]>(`${environment.apiUrl}${url}`).pipe(
       map(resData => resData.map(data => ({
         id: data.ID,

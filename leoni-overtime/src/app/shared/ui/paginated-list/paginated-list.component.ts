@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter, Injector } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
 import { ReportsService } from '../../data-store/reports/reports.service';
-import { RequestService } from '../../data-store/request/request.service';
+import { RequestModel } from '../../data-store/request/request.model';
 import { I18nService } from '../../services/i18n/i18n.service';
 import { LoadingService } from '../../services/loading/loading.service';
 
@@ -10,10 +10,9 @@ import { LoadingService } from '../../services/loading/loading.service';
   selector: 'app-paginated-list',
   templateUrl: './paginated-list.component.html',
   styleUrls: ['./paginated-list.component.scss'],
+  providers: [LoadingService]
 })
 export class PaginatedListComponent  implements OnInit {
-
-
 
   @Input() searchData!: {[key: string]: string | Date};
   @Input() schema!: {[key: string]: any};
@@ -23,21 +22,19 @@ export class PaginatedListComponent  implements OnInit {
   @Output() modalOpen: EventEmitter<any> = new EventEmitter();
   @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();
 
-  dynamicService: any;
-  service!: any;
+  showTimeInterval = false;
 
   isCreateBtn = false;
   btns!: {[key: string]: any}[];
   translatedSchema!: {[key: string]: any};
   activeElement!: {[key: string]: any} | undefined | null;
   selectedElement!: {[key: string]: any};
-  elements: {[key: string]: any}[] = [];
+  elements!: {[key: string]: any}[];
 
   url!: string;
   itemListData = [];
   page_number = 1;
   page_limit = 15;
-
 
   dataSource: {[key: string]: string | number}[] = [];
   value = '';
@@ -46,7 +43,6 @@ export class PaginatedListComponent  implements OnInit {
     private datePipe: DatePipe,
     private i18n: I18nService,
     private reportSrv: ReportsService,
-    private injector: Injector,
     private loadingSrv: LoadingService
   ) { }
 
@@ -54,14 +50,14 @@ export class PaginatedListComponent  implements OnInit {
 
     this.getElements(false, "");
 
-
-
     if ('create' in this.buttons) {
       this.isCreateBtn = true;
       delete this.buttons.create;
     }
 
     this.btns = Object.values(this.buttons);
+
+    this.showTimeInterval = this.schema['properties'].includes('startTime') && this.schema['properties'].includes('endTime');
 
     let translate$!: Observable<{[key: string]: {[key: string]: string}}>;
 
@@ -86,10 +82,6 @@ export class PaginatedListComponent  implements OnInit {
 
 
   }
-
-  // get data() {
-  //   return this._data;
-  // }
 
   getElements(isFirstLoad: boolean, event: any) {
 
@@ -117,14 +109,20 @@ export class PaginatedListComponent  implements OnInit {
 
     url = `${url}/${startDate}/${endDate}/${this.page_limit}/${this.page_number}`;
 
-    console.log(url);
+    // url = '?_page=' + this.page_number + '&_limit=' + this.page_limit;
+
+    let reports$: Observable<RequestModel[]>;
+
+    if (!this.elements) {
+      reports$ = this.loadingSrv.showLoaderUntilCompleted(this.reportSrv.getReports(url));
+    } else {
+      reports$ = this.reportSrv.getReports(url);
+    };
 
 
-    // this.url = '?_page=' + this.page_number + '&_limit=' + this.page_limit;
+    reports$.subscribe((resData: any) => {
 
-    this.reportSrv.getReports(url).pipe(
-
-    ).subscribe((resData: any) => {
+      if (!this.elements) this.elements = []
 
       for (let i = 0; i < resData.length; i++) {
         this.elements.push(resData[i]);
@@ -208,6 +206,5 @@ export class PaginatedListComponent  implements OnInit {
     }
 
   }
-
 
 }
