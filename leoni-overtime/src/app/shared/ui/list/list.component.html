@@ -6,7 +6,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <mat-form-field appearance="outline" class="list-search">
+  <mat-form-field *ngIf="!hideSearch" appearance="outline" class="list-search">
     <mat-icon matPrefix>search</mat-icon>
     <input matInput (keyup)="applyFilter($event)" #input [(ngModel)]="value">
     <button class="pdf-save" *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">

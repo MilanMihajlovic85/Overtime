@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, shareReplay, tap, throwError } from 'rxjs';
@@ -24,15 +23,18 @@ export class StatisticsService {
 
   constructor(
     private http: HttpClient,
-    private messagesSrv: MessagesService,
-    private datePipe: DatePipe
+    private messagesSrv: MessagesService
   ) { }
 
-
-  getStatistics(url: string) {
+  /**
+   * Get ststistics
+   *
+   * @param  {string} url
+   * @returns Observable
+   */
+  getStatistics(url: string): Observable<StatisticsModel[]> {
 
     return this.http.get<StatisticsApiData[]>(`${environment.apiUrl}${url}`).pipe(
-    tap(d => console.log(d)),
     map(resData => resData.map(data => ({
       department: data.Department,
       hours: data.Hours,

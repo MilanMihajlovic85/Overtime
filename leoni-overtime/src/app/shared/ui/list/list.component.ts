@@ -18,6 +18,7 @@ export class ListComponent  implements OnInit {
 
   @Input() schema!: {[key: string]: any};
   @Input() buttons: any;
+  @Input() hideSearch: boolean = false;
 
   @Output() modalOpen: EventEmitter<any> = new EventEmitter();
   @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();

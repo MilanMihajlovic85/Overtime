@@ -64,3 +64,20 @@ ion-toast.notification-toast {
 .alert-input {
   text-align: center;
 }
+
+// No data list styles
+ion-icon.no-data {
+  font-size: 16rem;
+  width: 16rem;
+  margin: 0 auto;
+  position: relative;
+  top: 0;
+  left: calc(50% - 8rem);
+  color: #A9AABC;
+}
+
+p.no-data {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #A9AABC;
+}
