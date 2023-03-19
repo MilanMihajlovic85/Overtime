@@ -17,12 +17,11 @@
   <ion-list>
 
     <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" detail="true">
-      <ion-thumbnail *ngIf="showStatusIcon" slot="start">
+      <!-- <ion-thumbnail *ngIf="showStatusIcon" slot="start">
         <ion-icon [name]="getStatusIcon(el.status)" [color]="getStatusIconColor(el.status)"></ion-icon>
-      </ion-thumbnail>
+      </ion-thumbnail> -->
       <ion-label>
         <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
-        <!-- <p>{{ el[schema['subtitle']] }}</p> -->
         <p *ngFor="let subtitle of schema['subtitle']">{{ el[subtitle] }}</p>
         <p *ngIf="showTimeInterval">{{ el.startTime | date:'dd/MM/yyyy HH:mm' }} - {{ el.endTime | date:'HH:mm' }}</p>
       </ion-label>
@@ -31,7 +30,7 @@
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
