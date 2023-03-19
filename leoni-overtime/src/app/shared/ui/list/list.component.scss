@@ -49,6 +49,9 @@
   height: fit-content;
 }
 
+ion-item {
+  --padding-start: 0;
+}
 
 .item-content-wrapper {
     display: flex;
@@ -72,6 +75,14 @@ h1 {
   margin-bottom: 0;
   border-radius: 4px 4px 0 0;
   font-size: 1.3rem;
+}
+
+ion-thumbnail {
+
+  ion-icon {
+    width: 56px;
+    height: 56px;
+  }
 }
 
 .details {

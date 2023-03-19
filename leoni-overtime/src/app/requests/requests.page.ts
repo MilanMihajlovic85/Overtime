@@ -21,7 +21,8 @@ export class RequestsPage implements OnInit {
   schema = {
     properties: ['status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'responseDate', 'createdAt'],
     title: ['requestorForProject'],
-    subtitle: ['requestorForWO']
+    subtitle: ['requestorForWO'],
+    period: ['startTime', 'endTime']
   }
 
   requests$ = this.loadingSrv.showLoaderUntilCompleted(

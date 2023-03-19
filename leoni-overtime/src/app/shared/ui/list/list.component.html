@@ -17,13 +17,14 @@
   <ion-list>
 
     <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" detail="true">
-      <!-- <ion-avatar slot="start">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-        <ion-icon name="logo-ionic" color="primary"></ion-icon>
-      </ion-avatar> -->
+      <ion-thumbnail *ngIf="showStatusIcon" slot="start">
+        <ion-icon [name]="getStatusIcon(el.status)" [color]="getStatusIconColor(el.status)"></ion-icon>
+      </ion-thumbnail>
       <ion-label>
         <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
-        <p>{{ el[schema['subtitle']] }}</p>
+        <!-- <p>{{ el[schema['subtitle']] }}</p> -->
+        <p *ngFor="let subtitle of schema['subtitle']">{{ el[subtitle] }}</p>
+        <p *ngIf="showTimeInterval">{{ el.startTime | date:'dd/MM/yyyy HH:mm' }} - {{ el.endTime | date:'dd/MM/yyyy HH:mm' }}</p>
       </ion-label>
     </ion-item>
 
@@ -59,7 +60,7 @@
     </mat-table>
 
     <div *ngIf="btns.length > 0" class="buttons">
-      <ion-button *ngFor="let btn of btns" color="{{ btn['mobileColor'] }}" size="small" fill="clear" (click)="openModal(btn['modal'], activeElement)">
+      <ion-button *ngFor="let btn of btns" color="{{ btn['mobileColor'] }}" fill="clear" (click)="openModal(btn['modal'], activeElement)">
         <ion-icon slot="start" name="{{ btn['mobileIcon'] }}"></ion-icon>
         {{ btn['tooltip'] | translate }}
       </ion-button>

@@ -21,7 +21,7 @@ export class ApprovalsPage implements OnInit {
   schema = {
     properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'createdAt'],
     title: ['requestorFullName'],
-    subtitle: ['requestorDepartment']
+    subtitle: ['requestorDepartment', 'requestorForProject']
   }
 
 
@@ -58,11 +58,10 @@ export class ApprovalsPage implements OnInit {
       if (newStatus === 2) {
 
         const alert = await this.alertCtrl.create({
-          header: 'Set request duration',
+          header: 'Set request duration (min)',
           buttons: ['Approve'],
           inputs: [
             {
-              // type: 'number',
               value: request.minutes,
             }
           ],

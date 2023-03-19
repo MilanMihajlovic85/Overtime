@@ -46,56 +46,60 @@ export class RequestService {
     private datePipe: DatePipe
   ) { }
 
-  getResultsPaginated(url: string) {
+  // getResultsPaginated(url: string) {
 
-    return this.http.get<RequestApiData[]>(`http://localhost:3000/reports${url}`).pipe(
-    // return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyRequests`).pipe(
-      map(resData => resData.map(data => ({
-        id: data.ID,
-        requestorId: data.Requestor_ID,
-        requestorWO: data.Requestor_WO,
-        requestorFullName: data.Requestor_FullName,
-        requestorWOManager: data.Requestor_WO_Manager,
-        requestorDepartment: data.Requestor_Department,
-        requestorForWO: data.Requestor_For_WO,
-        requestorForProject: data.Requestor_For_Project,
-        reason: data.Reason,
-        startTime: new Date(data.Start_Time),
-        endTime: new Date(data.End_Time),
-        minutes: data.Minutes,
-        status: data.Status,
-        responseDate: data.ResponseDate ? new Date(data.ResponseDate) : null,
-        createdAt: new Date(data.CreateDate)
-        } as RequestModel))
-      ),
-      catchError(err => {
+  //   return this.http.get<RequestApiData[]>(`http://localhost:3000/reports${url}`).pipe(
+  //   // return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyRequests`).pipe(
+  //     map(resData => resData.map(data => ({
+  //       id: data.ID,
+  //       requestorId: data.Requestor_ID,
+  //       requestorWO: data.Requestor_WO,
+  //       requestorFullName: data.Requestor_FullName,
+  //       requestorWOManager: data.Requestor_WO_Manager,
+  //       requestorDepartment: data.Requestor_Department,
+  //       requestorForWO: data.Requestor_For_WO,
+  //       requestorForProject: data.Requestor_For_Project,
+  //       reason: data.Reason,
+  //       startTime: new Date(data.Start_Time),
+  //       endTime: new Date(data.End_Time),
+  //       minutes: data.Minutes,
+  //       status: data.Status,
+  //       responseDate: data.ResponseDate ? new Date(data.ResponseDate) : null,
+  //       createdAt: new Date(data.CreateDate)
+  //       } as RequestModel))
+  //     ),
+  //     catchError(err => {
 
-        if (err.status && err.statusText) {
-          const message = err.status + ' ' + err.statusText;
-          this.messagesSrv.showErrors(message);
-        } else {
-          this.messagesSrv.showErrors(err.message);
-        }
+  //       if (err.status && err.statusText) {
+  //         const message = err.status + ' ' + err.statusText;
+  //         this.messagesSrv.showErrors(message);
+  //       } else {
+  //         this.messagesSrv.showErrors(err.message);
+  //       }
 
-        return throwError(() => err);
-      }),
-      // tap(requests => {
-      //   this.requests$.next(
-      //     requests.sort((a, b) => {
-      //       if (a.createdAt < b.createdAt)
-      //         return 1;
-      //       if (a.createdAt > b.createdAt)
-      //         return -1;
-      //       return 0;
-      //     })
-      //   );
-      // }),
-      shareReplay()
-    );
-  }
+  //       return throwError(() => err);
+  //     }),
+  //     // tap(requests => {
+  //     //   this.requests$.next(
+  //     //     requests.sort((a, b) => {
+  //     //       if (a.createdAt < b.createdAt)
+  //     //         return 1;
+  //     //       if (a.createdAt > b.createdAt)
+  //     //         return -1;
+  //     //       return 0;
+  //     //     })
+  //     //   );
+  //     // }),
+  //     shareReplay()
+  //   );
+  // }
 
-
-  getMyRequests() {
+  /**
+   * Get all logged in user requests
+   *
+   * @returns Observable
+   */
+  getMyRequests(): Observable<RequestModel[]> {
 
     return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyRequests`).pipe(
       map(resData => resData.map(data => ({
@@ -144,7 +148,16 @@ export class RequestService {
     );
   }
 
-  createRequest(projectId: string, reason: string, start: Date, end: Date) {
+  /**
+   * Create new requests
+   *
+   * @param  {string} projectId
+   * @param  {string} reason
+   * @param  {Date} start
+   * @param  {Date} end
+   * @returns Observable
+   */
+  createRequest(projectId: string, reason: string, start: Date, end: Date): Observable<RequestModel> {
 
     return this.http.post<RequestApiData>(`${environment.apiUrl}/Employee/CreateRequest`, {
         Reason: reason,
@@ -184,11 +197,16 @@ export class RequestService {
         );
       })
     );
-
-
   }
 
-  deleteRequest(id: number) {
+
+  /**
+   * Delete requests
+   *
+   * @param  {number} id
+   * @returns Observable
+   */
+  deleteRequest(id: number): Observable<RequestModel[]> {
 
     const requests = this.requests$.getValue();
     const newRequests = requests.filter(d => d.id !== id);
@@ -216,7 +234,12 @@ export class RequestService {
 
   }
 
-  getWOProjects() {
+  /**
+   * Get projects for work organization
+   *
+   * @returns {}
+   */
+  getWOProjects(): Observable<{[key: string]: {} | string}[]> {
 
     return this.http.get<ProjectApiData[]>(`${environment.apiUrl}/RequestData/GetAllProjectsForWO`).pipe(
       catchError(err => {

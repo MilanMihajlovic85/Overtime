@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MessagesService } from '../../services/messages/messages.service';
 import { RequestModel } from '../request/request.model';
@@ -29,7 +29,12 @@ export class ApprovalsService {
     this.getStatuses().subscribe();
   }
 
-  getMyApprovals() {
+  /**
+   * Get pendong approvals for logged in user
+   *
+   * @returns Observable
+   */
+  getMyApprovals(): Observable<RequestModel[]> {
 
     return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyPendingApprovals`).pipe(
       map(resData => resData.map(data => ({
@@ -78,7 +83,15 @@ export class ApprovalsService {
     );
   }
 
-  updateStatus(requestId: number, newStatus: number, minutes?: number) {
+  /**
+   * Update status of submitted requests
+   *
+   * @param  {number} requestId
+   * @param  {number} newStatus
+   * @param  {number} minutes?
+   * @returns Observable
+   */
+  updateStatus(requestId: number, newStatus: number, minutes?: number): Observable<RequestModel[]> {
 
     const approvals = this.approvals$.getValue();
     const newApprovals = approvals.filter(a => a.id !== requestId);
@@ -111,7 +124,12 @@ export class ApprovalsService {
 
   }
 
-  getStatuses() {
+  /**
+   * Get requests possible statuses
+   *
+   * @returns {}
+   */
+  getStatuses(): Observable<{[key: string]: number | string}[]> {
 
     return this.http.get<StatusApiData[]>(`${environment.apiUrl}/RequestData/GetAllRequestStatuses`).pipe(
       catchError(err => {
