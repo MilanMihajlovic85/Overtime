@@ -5,12 +5,25 @@
     <ion-list *ngIf="elements.length > 0; else noData">
 
       <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" detail="true">
+      <!-- <ion-thumbnail *ngIf="showStatusIcon" slot="end">
+        <ion-icon [name]="getStatusIcon(el.status)" [color]="getStatusIconColor(el.status)"></ion-icon>
+      </ion-thumbnail> -->
         <ion-label>
-          <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
+          <h2 *ngFor="let title of schema['title']">
+            {{ el[title] }}
+            <ion-icon
+              class="status-icon"
+              *ngIf="showStatusIcon"
+              [ios]="getStatusIcon(el.status) + '-outline'" [md]="getStatusIcon(el.status) + '-sharp'"
+              [color]="getStatusIconColor(el.status)"
+            >
+            </ion-icon>
+          </h2>
           <!-- <p>{{ el[schema['subtitle']] }}</p> -->
           <p *ngFor="let subtitle of schema['subtitle']">{{ el[subtitle] }}</p>
           <p *ngIf="showTimeInterval">{{ el.startTime | date:'dd/MM/yyyy HH:mm' }} - {{ el.endTime | date:'HH:mm' }}</p>
         </ion-label>
+        <!-- <ion-icon class="status-icon" *ngIf="showStatusIcon" [name]="getStatusIcon(el.status)" [color]="getStatusIconColor(el.status)"></ion-icon> -->
       </ion-item>
 
     </ion-list>

@@ -19,6 +19,8 @@ export class ListComponent  implements OnInit {
   @Input() schema!: {[key: string]: any};
   @Input() buttons: any;
   @Input() hideSearch: boolean = false;
+  @Input() showDetail: boolean = true;
+
 
   @Output() modalOpen: EventEmitter<any> = new EventEmitter();
   @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();
@@ -150,14 +152,19 @@ export class ListComponent  implements OnInit {
 
   onSelectElement(element: {[key: string]: any}, details?: boolean) {
 
-    this.selectedElement = element;
+    if (this.showDetail) {
 
-    if (details) {
-      this.activeElement = element;
-      this.setDataSource();
+      this.selectedElement = element;
+
+      if (details) {
+        this.activeElement = element;
+        this.setDataSource();
+      }
+
+      this.elementSelected.emit(false);
+
     }
 
-    this.elementSelected.emit(false);
 
 
   }

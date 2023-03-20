@@ -28,29 +28,29 @@ export class SignalrService {
 
   public createConnection(apiKey: string) {
 
-    this.connection = new HubConnectionBuilder()
-      .withUrl(environment.hubUrl, {
-        accessTokenFactory: () => apiKey
-      })
-      .withAutomaticReconnect()
-      .build();
+    // this.connection = new HubConnectionBuilder()
+    //   .withUrl(environment.hubUrl, {
+    //     accessTokenFactory: () => apiKey
+    //   })
+    //   .withAutomaticReconnect()
+    //   .build();
 
-    this.connection.start()
-      .catch((error: any) => {
-        console.log(error);
-        this.messagesSrv.showErrors(error);
-      });
+    // this.connection.start()
+    //   .catch((error: any) => {
+    //     console.log(error);
+    //     this.messagesSrv.showErrors(error);
+    //   });
 
-    this.connection.on('notify', (count: {NumberOfApprovals: number, NumberOfRequests: number}) => {
+    // this.connection.on('notify', (count: {NumberOfApprovals: number, NumberOfRequests: number}) => {
 
-      const currentValues = this.reqAppCount.getValue();
-      const appDiff = count.NumberOfApprovals - currentValues.approvals;
+    //   const currentValues = this.reqAppCount.getValue();
+    //   const appDiff = count.NumberOfApprovals - currentValues.approvals;
 
-      if (appDiff > 0) this.presentToast(appDiff);
+    //   if (appDiff > 0) this.presentToast(appDiff);
 
-      this.reqAppCount.next({approvals: count.NumberOfApprovals, requests: count.NumberOfRequests});
+    //   this.reqAppCount.next({approvals: count.NumberOfApprovals, requests: count.NumberOfRequests});
 
-    });
+    // });
 
     // setInterval(() => {
     //   const currentValues = this.reqAppCount.getValue();
@@ -74,7 +74,7 @@ export class SignalrService {
 
   stopConnection() {
 
-    this.connection.stop().catch((error: any) => console.log(error));
+    // this.connection.stop().catch((error: any) => console.log(error));
   }
 
   presentToast(appDiff: number) {

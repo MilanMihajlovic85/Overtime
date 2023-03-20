@@ -35,28 +35,28 @@ export class StatisticsService {
   getStatistics(url: string): Observable<StatisticsModel[]> {
 
     return this.http.get<StatisticsApiData[]>(`${environment.apiUrl}${url}`).pipe(
-    map(resData => resData.map(data => ({
-      department: data.Department,
-      hours: data.Hours,
-      requestsNum: data.NumberOfRequests,
-      status: data.Status,
-      organization: data.WorkOrganization
-      } as StatisticsModel))
-    ),
-    catchError(err => {
+      map(resData => resData.map(data => ({
+        department: data.Department,
+        hours: data.Hours,
+        requestsNum: data.NumberOfRequests,
+        status: data.Status,
+        organization: data.WorkOrganization
+        } as StatisticsModel))
+      ),
+      catchError(err => {
 
-      if (err.error.Message) {
-        this.messagesSrv.showErrors(err.error.Message);
-      } else if (err.status && err.statusText) {
-        const message = err.status + ' ' + err.statusText;
-        this.messagesSrv.showErrors(message);
-      } else {
-        this.messagesSrv.showErrors(err.message);
-      }
+        if (err.error.Message) {
+          this.messagesSrv.showErrors(err.error.Message);
+        } else if (err.status && err.statusText) {
+          const message = err.status + ' ' + err.statusText;
+          this.messagesSrv.showErrors(message);
+        } else {
+          this.messagesSrv.showErrors(err.message);
+        }
 
-      return throwError(() => err);
-    }),
-      shareReplay()
+        return throwError(() => err);
+      }),
+        shareReplay()
     );
 
 

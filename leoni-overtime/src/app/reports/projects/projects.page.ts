@@ -21,8 +21,8 @@ export class ProjectsPage implements OnInit {
 
   schema = {
     properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject'],
-    title: ['requestorForProject'],
-    subtitle: ['requestorFullName']
+    title: ['requestorForWO'],
+    subtitle: ['requestorDepartment']
   }
 
   projects$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_Projects`).pipe(

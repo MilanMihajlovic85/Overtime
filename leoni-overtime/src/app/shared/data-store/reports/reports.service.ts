@@ -42,7 +42,7 @@ export class ReportsService {
         startTime: new Date(data.Start_Time),
         endTime: new Date(data.End_Time),
         minutes: data.Minutes,
-        status: data.Status,
+        status: +data.Status === 2 ? 'Approved' : 'Declined',
         responseDate: new Date(data.ResponseDate),
         createdAt: new Date(data.CreateDate)
         } as RequestModel))

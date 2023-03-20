@@ -19,9 +19,9 @@ export class OrganizationsPage implements OnInit {
   data!: {organization: string, startDate: Date, endDate: Date};
 
   schema = {
-    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'requestorForWO', 'requestorForProject'],
-    title: ['requestorWO'],
-    subtitle: ['requestorFullName']
+    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject'],
+    title: ['requestorForProject'],
+    subtitle: ['requestorDepartment']
   }
 
   organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_WorkOrganizations`).pipe(

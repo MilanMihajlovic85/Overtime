@@ -85,6 +85,16 @@ ion-thumbnail {
   }
 }
 
+.stats-wrapper {
+  display: flex;
+  justify-content: flex-start;
+
+  p {
+    color: rgb(102, 102, 102);
+    margin-right: 0.75rem;
+  }
+}
+
 .details {
 
   // height: calc(100vh - 56px);

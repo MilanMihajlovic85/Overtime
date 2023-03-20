@@ -23,6 +23,8 @@ export class PaginatedListComponent  implements OnInit {
   @Output() elementSelected: EventEmitter<boolean> = new EventEmitter();
 
   showTimeInterval = false;
+  showStatusIcon = false;
+  statusIcon!: string;
 
   isCreateBtn = false;
   btns!: {[key: string]: any}[];
@@ -57,6 +59,9 @@ export class PaginatedListComponent  implements OnInit {
 
     this.btns = Object.values(this.buttons);
 
+    this.showStatusIcon =
+      this.schema['properties'].includes('status') &&
+      (this.schema['title'][0] === 'requestorForProject' || this.schema['title'][0] === 'requestorForWO');
     this.showTimeInterval = this.schema['properties'].includes('startTime') && this.schema['properties'].includes('endTime');
 
     let translate$!: Observable<{[key: string]: {[key: string]: string}}>;
@@ -205,6 +210,38 @@ export class PaginatedListComponent  implements OnInit {
       }
     }
 
+  }
+
+  getStatusIcon(status: string) {
+
+    switch (status) {
+      case 'Approved':
+        return 'checkmark-circle';
+        break;
+      case 'Pending':
+        return 'time-outline';
+        break;
+      default:
+        return 'ban';
+        break;
+    }
+
+  }
+
+
+  getStatusIconColor(status: string) {
+
+    switch (status) {
+      case 'Approved':
+        return 'success';
+        break;
+      case 'Pending':
+        return 'warning';
+        break;
+      default:
+        return 'danger';
+        break;
+    }
   }
 
 }

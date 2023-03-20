@@ -19,9 +19,9 @@ export class MyRequestsPage implements OnInit {
   data!: {startDate: Date, endDate: Date};
 
   schema = {
-    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject'],
+    properties: ['status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject'],
     title: ['requestorForProject'],
-    subtitle: ['requestorDepartment']
+    subtitle: ['requestorForWO']
   }
 
   constructor(

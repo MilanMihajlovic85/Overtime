@@ -140,3 +140,8 @@ ion-header {
 .logout-item {
   padding: 0 12px;
 }
+
+ion-split-pane.desktop {
+  --side-min-width: 0;
+  --side-width: 17rem;
+}

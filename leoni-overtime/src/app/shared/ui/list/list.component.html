@@ -16,7 +16,7 @@
 
   <ion-list>
 
-    <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" detail="true">
+    <ion-item *ngFor="let el of elements; let i = index" (click)="onSelectElement(el, true)" [detail]="showDetail">
       <!-- <ion-thumbnail *ngIf="showStatusIcon" slot="start">
         <ion-icon [name]="getStatusIcon(el.status)" [color]="getStatusIconColor(el.status)"></ion-icon>
       </ion-thumbnail> -->
@@ -24,6 +24,13 @@
         <h2 *ngFor="let title of schema['title']">{{ el[title] }}</h2>
         <p *ngFor="let subtitle of schema['subtitle']">{{ el[subtitle] }}</p>
         <p *ngIf="showTimeInterval">{{ el.startTime | date:'dd/MM/yyyy HH:mm' }} - {{ el.endTime | date:'HH:mm' }}</p>
+        <ng-container *ngIf="schema['title'][0] === 'department'">
+          <div class="stats-wrapper">
+            <p class="stats">Requests: {{ el.requestsNum }}</p>
+            <p class="stats">Hours: {{ el.hours }}</p>
+            <p class="stats">Status: {{ el.status }}</p>
+          </div>
+        </ng-container>
       </ion-label>
     </ion-item>
 
