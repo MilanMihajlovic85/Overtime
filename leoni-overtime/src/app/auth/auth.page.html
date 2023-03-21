@@ -10,7 +10,7 @@
 
         <form *ngIf="!readyToLogin" #pf="ngForm" (ngSubmit)="onPreLoginFormSubmit(pf)">
           <ion-item fill="outline">
-            <ion-label position="floating">Employee ID</ion-label>
+            <ion-label position="floating">{{ 'labels.employeeId' | translate }}</ion-label>
             <ion-input
               type="text"
               ngModel
@@ -23,13 +23,13 @@
             >
             </ion-input>
           </ion-item>
-          <ion-button type="submit" expand="block" [disabled]="!pf.valid">Send</ion-button>
+          <ion-button type="submit" expand="block" [disabled]="!pf.valid">{{ 'btn.sendEmployeeId' | translate }}</ion-button>
         </form>
 
         <ng-container *ngIf="readyToLogin">
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <ion-item fill="outline">
-              <ion-label position="floating">Code</ion-label>
+              <ion-label position="floating">{{ 'labels.smsCode' | translate }}</ion-label>
               <ion-input
                 type="text"
                 ngModel
@@ -42,12 +42,12 @@
               >
               </ion-input>
             </ion-item>
-            <ion-button type="submit" expand="block" [disabled]="!f.valid">Login</ion-button>
+            <ion-button type="submit" expand="block" [disabled]="!f.valid">{{ 'btn.login' | translate }}</ion-button>
           </form>
 
           <ion-button class="resendCode" fill="clear" expand="block" size="small" (click)="readyToLogin = false">
             <ion-icon slot="start" [ios]="'arrow-back-outline'" [md]="'arrow-back-sharp'"></ion-icon>
-            Back
+            {{ 'btn.resendId' | translate }}
           </ion-button>
 
         </ng-container>
@@ -55,3 +55,12 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<div class="footer">
+  <div class="switch">
+    <input [checked]="checked" (change)="changeLanguage()" id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox">
+    <label for="language-toggle"></label>
+    <span class="on">EN</span>
+    <span class="off">SR</span>
+  </div>
+</div>

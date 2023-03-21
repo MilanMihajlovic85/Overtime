@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>New Request</ion-title>
+    <ion-title>{{ 'pageTitles.newRequest' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onFormSubmit()" [disabled]="!form.valid">
         <ion-icon slot="icon-only" [ios]="'checkmark-outline'" [md]="'checkmark-sharp'"></ion-icon>
@@ -23,36 +23,36 @@
         <form [formGroup]="form">
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-            <mat-label>Project</mat-label>
+            <mat-label>{{ 'project' | translate }}</mat-label>
             <mat-select formControlName="projectId">
               <mat-option *ngFor="let project of projects$ | async as projects" [value]="project.id">
                 {{ project.project }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="form.get('projectId')!.errors?.required">Project ID is required</mat-error>
+            <mat-error *ngIf="form.get('projectId')!.errors?.required">{{ 'errors.projectRequired' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-            <mat-label>Reason</mat-label>
+            <mat-label>{{ 'reason' | translate }}</mat-label>
             <textarea type="text" matInput formControlName="reason" rows="5"></textarea>
-            <mat-error *ngIf="form.get('reason')!.errors?.required">Pleade insert reason for request</mat-error>
+            <mat-error *ngIf="form.get('reason')!.errors?.required">{{ 'errors.reasonRequired' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-            <mat-label>Start Time</mat-label>
+            <mat-label>{{ 'startTime' | translate }}</mat-label>
             <input type="test" matInput formControlName="start">
             <mat-icon matSuffix id="start-time-modal">calendar_month</mat-icon>
             <mat-error *ngIf="form.get('start')!.errors?.required && !form.get('start')!.errors?.matDatetimePickerParse">
-              Start time is required
+              {{ 'errors.startTimeRequired' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-            <mat-label>End Time</mat-label>
+            <mat-label>{{ 'endTime' | translate }}</mat-label>
             <input type="test" matInput formControlName="end">
             <mat-icon matSuffix id="end-time-modal">calendar_month</mat-icon>
             <mat-error *ngIf="form.get('end')!.errors?.required && !form.get('end')!.errors?.matDatetimePickerParse">
-              End time is required
+              {{ 'errors.endTimeRequired' | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -67,6 +67,7 @@
   <ng-template>
     <ion-content>
         <ion-datetime
+          [locale]="locale"
           #startDatetime
           presentation="time-date"
           size="cover"
@@ -74,9 +75,10 @@
           (ionCancel)="showStartTimePicker = false"
         >
           <ion-buttons slot="buttons">
-            <ion-button (click)="closeStartTime()">Cancel</ion-button>
-            <ion-button (click)="selectStartTime()">Select</ion-button>
+            <ion-button (click)="closeStartTime()">{{ 'btn.cancel' | translate }}</ion-button>
+            <ion-button (click)="selectStartTime()">{{ 'btn.select' | translate }}</ion-button>
           </ion-buttons>
+          <span slot="time-label">{{ 'labels.time' | translate }}</span>
         </ion-datetime>
     </ion-content>
   </ng-template>
@@ -86,6 +88,7 @@
   <ng-template>
     <ion-content>
       <ion-datetime
+        [locale]="locale"
         #endDatetime
         presentation="time-date"
         size="cover"
@@ -93,9 +96,10 @@
         (ionCancel)="showEndTimePicker = false"
       >
         <ion-buttons slot="buttons">
-          <ion-button (click)="closeEndTime()">Cancel</ion-button>
-          <ion-button (click)="selectEndTime()">Select</ion-button>
+          <ion-button (click)="closeEndTime()">{{ 'btn.cancel' | translate }}</ion-button>
+          <ion-button (click)="selectEndTime()">{{ 'btn.select' | translate }}</ion-button>
         </ion-buttons>
+        <span slot="time-label">{{ 'labels.time' | translate }}</span>
       </ion-datetime>
     </ion-content>
   </ng-template>

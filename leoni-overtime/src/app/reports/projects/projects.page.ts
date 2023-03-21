@@ -44,7 +44,7 @@ export class ProjectsPage implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private messagesSrv: MessagesService
-  ) { }
+  ) {}
 
   ngOnInit() {
 

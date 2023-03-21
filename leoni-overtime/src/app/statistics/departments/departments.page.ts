@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HubConnectionBuilder } from '@microsoft/signalr/dist/esm/HubConnectionBuilder';
 import { catchError, tap, throwError } from 'rxjs';
 
 import { StatisticsModel } from 'src/app/shared/data-store/statistics/statistics.model';
@@ -50,7 +49,7 @@ export class DepartmentsPage implements OnInit {
     private statisticSrv: StatisticsService,
     private loadingSrv: LoadingService,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit() {
 

@@ -1,10 +1,5 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { ReportsService } from 'src/app/shared/data-store/reports/reports.service';
-import { RequestModel } from 'src/app/shared/data-store/request/request.model';
-import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 
 @Component({
   selector: 'app-my-requests',
@@ -25,10 +20,8 @@ export class MyRequestsPage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
-    private translate: TranslateService,
-    private datePipe: DatePipe,
-  ) { }
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
 

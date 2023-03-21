@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Reports / Departments</ion-title>
+    <ion-title>{{ 'menuSections.reports' | translate }} / {{ 'pageTitles.departments' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,8 +26,8 @@
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>Period</mat-label>
                 <mat-date-range-input [rangePicker]="picker" calendarLabel="Kalendar">
-                  <input matStartDate formControlName="startDate" placeholder="Start">
-                  <input matEndDate formControlName="endDate" placeholder="End">
+                  <input matStartDate formControlName="startDate" placeholder="{{ 'startTime' | translate }}">
+                  <input matEndDate formControlName="endDate" placeholder="{{ 'endTime' | translate }}">
                 </mat-date-range-input>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
@@ -39,7 +39,7 @@
 
             <ion-col size="10">
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
-                <mat-label>Department</mat-label>
+                <mat-label>{{ 'department' | translate }}</mat-label>
                 <mat-select formControlName="department">
                   <mat-option *ngFor="let department of departments$ | async" [value]="department.Value">
                     {{ department.Description }}

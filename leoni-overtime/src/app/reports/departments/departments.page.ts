@@ -41,7 +41,7 @@ export class DepartmentsPage implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private messagesSrv: MessagesService
-  ) { }
+  ) {}
 
 
   ngOnInit() {

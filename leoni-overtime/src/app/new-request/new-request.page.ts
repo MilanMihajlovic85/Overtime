@@ -20,6 +20,8 @@ export class NewRequestPage implements OnInit {
 
   projects$ = this.requestSrv.getWOProjects();
 
+  locale = this.translate.currentLang === 'en' ? 'en-GB' : 'sr-Latn';
+
 
   showStartTimePicker = false;
   showEndTimePicker = false;

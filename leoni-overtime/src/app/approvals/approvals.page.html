@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>My Approvals</ion-title>
+    <ion-title>{{ 'pageTitles.myApprovals' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -27,7 +27,7 @@
           </app-list>
 
           <ng-template #noData>
-            <h1>No Data</h1>
+            <h1>{{ 'messagess.noData' | translate }}</h1>
             <ion-icon name="alert-circle-outline"></ion-icon>
           </ng-template>
 

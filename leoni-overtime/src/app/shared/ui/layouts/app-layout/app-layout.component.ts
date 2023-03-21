@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { I18nService } from 'src/app/shared/services/i18n/i18n.service';
 import { SignalrService } from 'src/app/shared/services/signalr/signalr.service';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-app-layout',
@@ -53,10 +54,20 @@ export class AppLayoutComponent  implements OnInit {
     private keepalive: Keepalive,
     private translate: TranslateService,
     private i18n: I18nService,
-    private signalrSrv: SignalrService
+    private signalrSrv: SignalrService,
+    private dateAdapter: DateAdapter<any>
   ) {
     this.setIdleTimer();
-    i18n.language().subscribe(language => translate.use(language));
+    i18n.language().subscribe(language => {
+      translate.use(language);
+
+      if (this.translate.currentLang === 'sr') {
+        this.dateAdapter.setLocale('sr-Latn');
+      } else {
+        this.dateAdapter.setLocale('en-GB');
+      }
+
+    });
    }
 
   ngOnInit() {}

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 // import * as signalR from '@microsoft/signalr';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { TranslateService } from '@ngx-translate/core';
 
 import { BehaviorSubject, shareReplay, take, tap } from 'rxjs';
 // import { AuthService } from 'src/app/auth/auth.service';
@@ -23,7 +24,8 @@ export class SignalrService {
 
   constructor(
     private toastCtrl: ToastController,
-    private messagesSrv: MessagesService
+    private messagesSrv: MessagesService,
+    private translate: TranslateService
   ) { }
 
   public createConnection(apiKey: string) {
@@ -79,8 +81,10 @@ export class SignalrService {
 
   presentToast(appDiff: number) {
 
+    const translateProperty = appDiff === 1 ? 'messagess.newRequest' : 'messagess.newRequests';
+
     this.toastCtrl.create({
-      message: `You have ${appDiff} new ${appDiff === 1 ? 'request' : 'requests'} for approval`,
+      message: this.translate.instant(translateProperty, { appDiff }),
       duration: 3000,
       position: 'bottom',
       icon: 'notifications',

@@ -15,6 +15,7 @@ import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NGX_MAT_DATE_FORMAT
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { LoadingModule } from '../shared/ui/loading/loading.module';
 import { MessagesModule } from '../shared/ui/messages/messages.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { MessagesModule } from '../shared/ui/messages/messages.module';
     NgxMatMomentModule,
     LoadingModule,
     MessagesModule,
+    TranslateModule
   ],
   declarations: [NewRequestPage],
   providers: [

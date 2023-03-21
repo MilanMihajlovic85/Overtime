@@ -8,6 +8,7 @@ import { AuthPage } from './auth.page';
 import { RouterModule } from '@angular/router';
 import { MessagesModule } from '../shared/ui/messages/messages.module';
 import { LoadingModule } from '../shared/ui/loading/loading.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { LoadingModule } from '../shared/ui/loading/loading.module';
     FormsModule,
     IonicModule,
     LoadingModule,
-    MessagesModule
+    MessagesModule,
+    TranslateModule
   ],
   declarations: [AuthPage]
 })

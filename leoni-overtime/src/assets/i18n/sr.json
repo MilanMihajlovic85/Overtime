@@ -1,0 +1,70 @@
+{
+  "pageTitles": {
+    "dashboard": "Početna",
+    "newRequest": "Novi Zahtev",
+    "myRequests": "Moji Zahtevi",
+    "myApprovals": "Moja Odobrenja",
+    "departments": "Odeljenja",
+    "organizations": "Organizacije",
+    "projects": "Projekti"
+  },
+  "menuSections": {
+    "reports": "Izveštaji",
+    "statistics": "Statistika"
+  },
+  "labels": {
+    "employeeId": "ID",
+    "smsCode": "SMS Kod",
+    "time": "Vreme"
+  },
+  "btn": {
+    "updateStatus": "Sačuvaj",
+    "delete": "Obriši",
+    "sendEmployeeId": "Pošalji",
+    "login": "Prijavi se",
+    "logout": "Odjavi se",
+    "resendId": "Nazad",
+    "newRequest": "Novi Zahtev",
+    "myRequests": "Moji Zahtevi",
+    "myApprovals": "Moja Odobrenja",
+    "backToList": "Nazad",
+    "cancel": "Odustani",
+    "approve": "Odobri",
+    "decline": "Odbaci",
+    "select": "Izaberi"
+  },
+  "messagess": {
+    "noData": "Nema podataka",
+    "deleteWarning": "Upozorenje",
+    "deleteRequest": "Zahtev za projekat {{ projectId }} biće obrisan. Brisanje je trajno i ova akcija se ne može opovrgnuti.",
+    "setDurationHeader": "Trajanje (min)",
+    "changeRequestStatusHeader": "Promena statusa zahteva",
+    "newRequest": "Imate {{appDiff}} novi zahtev",
+    "newRequests": "Imate {{appDiff}} novih zahteva"
+  },
+  "errors": {
+    "projectRequired": "ID projekta je obavezan",
+    "reasonRequired": "Molimo vas unesite razlog za podnošenje zahteva",
+    "startTimeRequired": "Početno vreme jeobavezno",
+    "endTimeRequired": "Vreme završetka je obavezno",
+    "wrongId": "Pogrešan ID"
+  },
+  "requestorWO": "Organizacija",
+  "requestorFullName": "Zahtevao",
+  "requestorWOManager": "Menadžer",
+  "requestorDepartment": "Odeljenje",
+  "requestorForWO": "Za organizaciju",
+  "requestorForProject": "Projekat",
+  "reason": "Razlog",
+  "startTime": "Od",
+  "endTime": "Do",
+  "minutes": "Minuti",
+  "status": "Status",
+  "responseDate": "Odgovoreno",
+  "createdAt": "Kreiran",
+  "hours": "Sati",
+  "requestsNum": "Broj Zahteva",
+  "organization": "Organizacija",
+  "project": "Projekat",
+  "department": "Odeljenje"
+}

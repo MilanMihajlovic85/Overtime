@@ -42,7 +42,7 @@ export class OrganizationsPage implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private messagesSrv: MessagesService
-  ) { }
+  ) {}
 
 
   ngOnInit() {

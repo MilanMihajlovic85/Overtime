@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { ApprovalsService } from '../shared/data-store/approvals/approvals.service';
 import { RequestModel } from '../shared/data-store/request/request.model';
@@ -38,7 +39,8 @@ export class ApprovalsPage implements OnInit {
     private approvalSrv: ApprovalsService,
     private loadingSrv: LoadingService,
     private actionSheetCtrl: ActionSheetController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {}
@@ -58,8 +60,8 @@ export class ApprovalsPage implements OnInit {
       if (newStatus === 2) {
 
         const alert = await this.alertCtrl.create({
-          header: 'Set request duration (min)',
-          buttons: ['Approve'],
+          header: this.translate.instant('messagess.setDurationHeader'),
+          buttons: [this.translate.instant('btn.approve')],
           inputs: [
             {
               value: request.minutes,
@@ -94,18 +96,18 @@ export class ApprovalsPage implements OnInit {
   async presentActionSheet() {
 
     const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Change Request Status',
+      header: this.translate.instant('messagess.changeRequestStatusHeader'),
       // subHeader: 'Example subheader',
       buttons: [
         {
-          text: 'Decline',
+          text: this.translate.instant('btn.decline'),
           role: 'destructive',
           data: {
             action: 3,
           },
         },
         {
-          text: 'Approve',
+          text: this.translate.instant('btn.approve'),
           data: {
             action: 2,
           },

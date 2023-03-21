@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Dashboard</ion-title>
+    <ion-title>{{ 'pageTitles.dashboard' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,16 +20,16 @@
         <div *ngIf="counts$ | async as counts" class="requests-buttons">
 
           <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'new-request']">
-            New Request
+            {{ 'btn.newRequest' | translate }}
           </ion-button>
 
           <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'requests']">
-            My Requests
+            {{ 'btn.myRequests' | translate }}
             <ion-badge color="danger" *ngIf="counts.requests > 0">{{ counts.requests }}</ion-badge>
           </ion-button>
 
           <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'approvals']">
-            My Approvals
+            {{ 'btn.myApprovals' | translate }}
             <ion-badge color="danger" *ngIf="counts.approvals > 0">{{ counts.approvals }}</ion-badge>
           </ion-button>
 

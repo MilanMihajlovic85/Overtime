@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ListModule } from '../shared/ui/list/list.module';
 import { MessagesModule } from '../shared/ui/messages/messages.module';
 import { LoadingModule } from '../shared/ui/loading/loading.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { LoadingModule } from '../shared/ui/loading/loading.module';
     IonicModule,
     ListModule,
     LoadingModule,
-    MessagesModule
+    MessagesModule,
+    TranslateModule
   ],
   declarations: [ApprovalsPage]
 })

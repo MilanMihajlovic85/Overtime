@@ -3,7 +3,7 @@ import {TranslateService} from "@ngx-translate/core";
 import { BehaviorSubject, from, map, Observable, of, shareReplay, tap } from 'rxjs';
 import { Preferences } from '@capacitor/preferences';
 import * as english from "../../../../assets/i18n/en.json";
-
+import * as serbien from "../../../../assets/i18n/sr.json";
 
 
 @Injectable({
@@ -19,6 +19,7 @@ export class I18nService {
     private translate: TranslateService
   ) {
     translate.setTranslation('en', english);
+    translate.setTranslation('sr', serbien);
     translate.setDefaultLang('en');
   }
 
@@ -30,24 +31,24 @@ export class I18nService {
    */
   language(): Observable<any> {
 
-    // return from(Preferences.get({ key: 'language' })).pipe(
-    //   map((resData: any) => {
-    //     if (resData && resData.value === 'sr') return 'sr';
-    //     return 'en';
-    //   }),
-    //   tap(language => {
-    //     this.language$.next(language);
-    //   })
-    // );
-
-    return of('null').pipe(
-      map(() => {
+    return from(Preferences.get({ key: 'language' })).pipe(
+      map((resData: any) => {
+        if (resData && resData.value === 'sr') return 'sr';
         return 'en';
       }),
       tap(language => {
         this.language$.next(language);
       })
     );
+
+    // return of('null').pipe(
+    //   map(() => {
+    //     return 'en';
+    //   }),
+    //   tap(language => {
+    //     this.language$.next(language);
+    //   })
+    // );
 
   }
 

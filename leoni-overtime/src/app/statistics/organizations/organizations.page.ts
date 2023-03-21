@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { StatisticsModel } from 'src/app/shared/data-store/statistics/statistics.model';
 import { StatisticsService } from 'src/app/shared/data-store/statistics/statistics.service';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
@@ -50,7 +50,7 @@ export class OrganizationsPage implements OnInit {
     private statisticSrv: StatisticsService,
     private loadingSrv: LoadingService,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit() {
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { RequestModel } from '../shared/data-store/request/request.model';
 import { RequestService } from '../shared/data-store/request/request.service';
@@ -19,7 +20,7 @@ export class RequestsPage implements OnInit {
   };
 
   schema = {
-    properties: ['status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'responseDate', 'createdAt'],
+    properties: ['minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'responseDate', 'createdAt'],
     title: ['requestorForProject'],
     subtitle: ['requestorForWO'],
     period: ['startTime', 'endTime']
@@ -38,27 +39,25 @@ export class RequestsPage implements OnInit {
   constructor(
     private requestSrv: RequestService,
     private loadingSrv: LoadingService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {}
 
   openModal(event: {modal: string, data: {[key: string]: string}, mobile?: boolean}) {
 
-
-    const msg = `Request for project ${event.data.requestorForProject} will be deleted. The deletion is permanent and this action cannot be revoked.`
-
     this.alertController.create({
-      header: 'Warning',
-      message: msg,
+      header: this.translate.instant('messagess.deleteWarning'),
+      message: this.translate.instant('messagess.deleteRequest', { projectId: event.data.requestorForProject }),
       cssClass: 'delete-alert',
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant('btn.cancel'),
           cssClass: 'alert-button-cancel',
         },
         {
-          text: 'Delete',
+          text: this.translate.instant('btn.delete'),
           cssClass: 'delete-alert-button-confirm',
           handler: () => {
             this.requestSrv.deleteRequest(+event.data.id).subscribe();

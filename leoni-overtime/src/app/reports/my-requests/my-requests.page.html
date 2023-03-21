@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Reports / My Requests</ion-title>
+    <ion-title>{{ 'menuSections.reports' | translate }} / {{ 'pageTitles.myRequests' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -25,8 +25,8 @@
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>Period</mat-label>
                 <mat-date-range-input [rangePicker]="picker" calendarLabel="Kalendar">
-                  <input matStartDate formControlName="startDate" placeholder="Start">
-                  <input matEndDate formControlName="endDate" placeholder="End">
+                  <input matStartDate formControlName="startDate" placeholder="{{ 'startTime' | translate }}">
+                  <input matEndDate formControlName="endDate" placeholder="{{ 'endTime' | translate }}">
                 </mat-date-range-input>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>

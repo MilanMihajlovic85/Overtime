@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonInput } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, throwError } from 'rxjs';
+import { I18nService } from '../shared/services/i18n/i18n.service';
 import { LoadingService } from '../shared/services/loading/loading.service';
 import { MessagesService } from '../shared/services/messages/messages.service';
-import { SignalrService } from '../shared/services/signalr/signalr.service';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -16,6 +16,8 @@ import { AuthService } from './auth.service';
 })
 export class AuthPage implements OnInit {
 
+  checked = true;
+  languageSelected!: string;
   readyToLogin = false;
 
   focusIsSet!: boolean;
@@ -25,8 +27,15 @@ export class AuthPage implements OnInit {
     private authService: AuthService,
     private messagesSrv: MessagesService,
     private router: Router,
-    private signalrSrv: SignalrService
-  ) { }
+    private translate: TranslateService,
+    private i18n: I18nService
+  ) {
+    i18n.language().subscribe(language => {
+      this.checked = language === 'en';
+      translate.use(language);
+      this.languageSelected = language;
+    });
+  }
 
   ngOnInit() {
   }
@@ -41,7 +50,7 @@ export class AuthPage implements OnInit {
 
           if (err.error.Message) {
             if (err.error.Message.includes("no exists in database")) {
-              this.messagesSrv.showErrors('Wrong ID');
+              this.messagesSrv.showErrors(this.translate.instant('errors.wrongId'));
             } else {
               this.messagesSrv.showErrors(err.error.Message);
             }
@@ -90,6 +99,18 @@ export class AuthPage implements OnInit {
       this.router.navigateByUrl('/');
       form.reset();
     });
+
+  }
+
+  changeLanguage() {
+
+    this.checked = !this.checked;
+
+    const language = this.checked ? 'en' : 'sr';
+
+    this.i18n.setLanguage(language);
+    this.translate.use(language)
+
 
   }
 
