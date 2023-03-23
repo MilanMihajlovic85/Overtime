@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 import { MessagesService } from '../shared/services/messages/messages.service';
 import { AuthModel } from './auth.model';
 import { SignalrService } from '../shared/services/signalr/signalr.service';
+import { AutocloseOverlaysServiceService } from '../shared/services/autoclose-overlays/autoclose-overlays.service';
 
 
 export interface AuthResponseData {
@@ -29,7 +30,8 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private messageSrv: MessagesService,
-    private signalrSrv: SignalrService
+    private signalrSrv: SignalrService,
+    private autocloseOverlaysService: AutocloseOverlaysServiceService
   ) { }
 
   /**
@@ -134,6 +136,8 @@ export class AuthService {
    * @returns void
    */
   logout(): void {
+
+    this.autocloseOverlaysService.trigger();
 
     this.http.get(`${environment.apiUrl}/Logout`).subscribe({
       next: () => {

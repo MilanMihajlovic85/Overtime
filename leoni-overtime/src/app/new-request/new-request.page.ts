@@ -132,7 +132,7 @@ export class NewRequestPage implements OnInit {
       });
 
       this.toastCtrl.create({
-        message: 'Request successfuly created',
+        message: this.translate.instant('messagess.requestCreated'),
         duration: 1500,
         position: 'top',
         icon: 'checkmark',

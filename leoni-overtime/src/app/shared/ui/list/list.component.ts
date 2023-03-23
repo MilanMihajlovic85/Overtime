@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectorRef, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
 import { I18nService } from '../../services/i18n/i18n.service';
 
@@ -57,8 +57,6 @@ export class ListComponent  implements OnInit {
     this.showStatusIcon = this.schema['properties'].includes('status') && this.schema['title'][0] === 'requestorForProject';
     this.showTimeInterval = this.schema['properties'].includes('startTime') && this.schema['properties'].includes('endTime');
 
-
-
     let translate$!: Observable<{[key: string]: {[key: string]: string}}>;
 
     if (this.schema.extended) {
@@ -80,11 +78,7 @@ export class ListComponent  implements OnInit {
       this.translatedSchema = schema;
     });
 
-    // this.data = [...this.data, ...this.data, ...this.data, ...this.data, ...this.data, ...this.data, ...this.data];
-
     this.getElements();
-
-
 
   }
 
@@ -164,8 +158,6 @@ export class ListComponent  implements OnInit {
       this.elementSelected.emit(false);
 
     }
-
-
 
   }
 

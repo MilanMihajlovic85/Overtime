@@ -31,7 +31,9 @@
     "cancel": "Odustani",
     "approve": "Odobri",
     "decline": "Odbaci",
-    "select": "Izaberi"
+    "select": "Izaberi",
+    "open": "Otvori",
+    "dismiss": "Odbaci"
   },
   "messagess": {
     "noData": "Nema podataka",
@@ -40,7 +42,10 @@
     "setDurationHeader": "Trajanje (min)",
     "changeRequestStatusHeader": "Promena statusa zahteva",
     "newRequest": "Imate {{appDiff}} novi zahtev",
-    "newRequests": "Imate {{appDiff}} novih zahteva"
+    "newRequests": "Imate {{appDiff}} novih zahteva",
+    "requestCreated": "Zahtev je uspešno kreiran",
+    "newRequestMsgTitle": "Novi zahtev",
+    "newRequestMsg": "Novi zahtev podnet na odobrenje"
   },
   "errors": {
     "projectRequired": "ID projekta je obavezan",

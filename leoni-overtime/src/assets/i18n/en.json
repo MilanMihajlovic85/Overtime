@@ -31,7 +31,9 @@
     "cancel": "Cancel",
     "approve": "Approve",
     "select": "Select",
-    "decline": "Decline"
+    "decline": "Decline",
+    "open": "Open",
+    "dismiss": "Dismiss"
   },
   "messagess": {
     "noData": "No Data",
@@ -40,7 +42,10 @@
     "setDurationHeader": "Set request duration (min)",
     "changeRequestStatusHeader": "Change Request Status",
     "newRequest": "You have {{appDiff}} new request",
-    "newRequests": "You have {{appDiff}} new requests"
+    "newRequests": "You have {{appDiff}} new requests",
+    "requestCreated": "Request successfuly created",
+    "newRequestMsgTitle": "New Request",
+    "newRequestMsg": "New request submitted for approval"
   },
   "errors": {
     "projectRequired": "Project ID is required",

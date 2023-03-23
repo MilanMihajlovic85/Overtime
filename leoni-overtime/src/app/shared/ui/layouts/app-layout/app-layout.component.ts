@@ -11,6 +11,7 @@ import { I18nService } from 'src/app/shared/services/i18n/i18n.service';
 import { SignalrService } from 'src/app/shared/services/signalr/signalr.service';
 import { DateAdapter } from '@angular/material/core';
 
+
 @Component({
   selector: 'app-app-layout',
   templateUrl: './app-layout.component.html',
@@ -36,9 +37,9 @@ export class AppLayoutComponent  implements OnInit {
 
       if (!!user) {
         this.signalrSrv.createConnection(user.apiKey);
-        this.idle.watch();
+        // this.idle.watch();
       } else {
-        this.idle.stop();
+        // this.idle.stop();
       }
 
     })
