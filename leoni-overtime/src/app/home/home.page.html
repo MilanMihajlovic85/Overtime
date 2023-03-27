@@ -4,8 +4,12 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ 'pageTitles.dashboard' | translate }}</ion-title>
+    <ion-buttons *ngIf="isDesktop$ | async" slot="end">
+      <app-logout></app-logout>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
@@ -19,16 +23,16 @@
 
         <div *ngIf="counts$ | async as counts" class="requests-buttons">
 
-          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'new-request']">
+          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" routerDirection="root" [routerLink]="['/', 'new-request']">
             {{ 'btn.newRequest' | translate }}
           </ion-button>
 
-          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'requests']">
+          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" routerDirection="root" [routerLink]="['/', 'requests']">
             {{ 'btn.myRequests' | translate }}
             <ion-badge color="danger" *ngIf="counts.requests > 0">{{ counts.requests }}</ion-badge>
           </ion-button>
 
-          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" [routerLink]="['/', 'approvals']">
+          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" routerDirection="root" [routerLink]="['/', 'approvals']">
             {{ 'btn.myApprovals' | translate }}
             <ion-badge color="danger" *ngIf="counts.approvals > 0">{{ counts.approvals }}</ion-badge>
           </ion-button>

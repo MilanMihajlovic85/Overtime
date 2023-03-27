@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonDatetime, ToastController } from '@ionic/angular';
+import { IonDatetime, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { format, parseISO } from 'date-fns';
 import { RequestService } from '../shared/data-store/request/request.service';
 import { LoadingService } from '../shared/services/loading/loading.service';
+import { ScreensizeService } from '../shared/services/screen-size/screen-size.service';
 
 @Component({
   selector: 'app-new-request',
@@ -13,6 +14,8 @@ import { LoadingService } from '../shared/services/loading/loading.service';
 })
 export class NewRequestPage implements OnInit {
 
+  isDesktop$ = this.screenSizeSrv.isDesktopView();
+
   @ViewChild('startDatetime') startDatetime!: IonDatetime;
   @ViewChild('endDatetime') endDatetime!: IonDatetime;
 
@@ -20,7 +23,7 @@ export class NewRequestPage implements OnInit {
 
   projects$ = this.requestSrv.getWOProjects();
 
-  locale = this.translate.currentLang === 'en' ? 'en-GB' : 'sr-Latn';
+  locale = 'en-GB';
 
 
   showStartTimePicker = false;
@@ -34,6 +37,8 @@ export class NewRequestPage implements OnInit {
 
 
   constructor(
+    private screenSizeSrv: ScreensizeService,
+    public platform: Platform,
     private requestSrv: RequestService,
     private formBuilder: FormBuilder,
     private translate: TranslateService,
@@ -67,6 +72,10 @@ export class NewRequestPage implements OnInit {
         }]
       }
     );
+  }
+
+  ionViewDidEnter() {
+    this.locale = this.translate.currentLang === 'en' ? 'en-GB' : 'sr-Latn';
   }
 
 

@@ -4,19 +4,23 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ 'menuSections.reports' | translate }} / {{ 'pageTitles.myRequests' | translate }}</ion-title>
+    <ion-buttons *ngIf="isDesktop$ | async" slot="end">
+      <app-logout></app-logout>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
+  <app-messages></app-messages>
+
   <ion-grid>
 
     <ion-row *ngIf="showForm">
 
-      <ion-col size="12" size-md="8" offset-md="2">
+      <ion-col size="12" size-md="8" offset-md="2" size-lg="7" offset-lg="2.5" size-xl="5" offset-xl="0">
 
         <app-loading></app-loading>
-        <app-messages></app-messages>
 
         <form [formGroup]="form" class="filter-form">
 
@@ -49,11 +53,10 @@
 
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngIf="data">
 
-      <ion-col size="12" size-md="8" offset-md="2">
+      <ion-col *ngIf="(isDesktop$ | async) === false; else table" size="12" size-md="8" offset-md="2">
         <app-paginated-list
-          *ngIf="data"
           [searchData]="data"
           [schema]="schema"
           [buttons]="{}"
@@ -62,6 +65,19 @@
         >
         </app-paginated-list>
       </ion-col>
+
+      <ng-template #table>
+        <ion-col>
+          <app-paginated-table
+            [searchData]="data"
+            [schema]="desktopSchema"
+            [buttons]="{}"
+            [category]="'myRequests'"
+          >
+          </app-paginated-table>
+        </ion-col>
+      </ng-template>
+
     </ion-row>
 
   </ion-grid>

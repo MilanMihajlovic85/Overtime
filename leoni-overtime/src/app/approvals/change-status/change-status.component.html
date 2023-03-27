@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="onCancel()">
+        <ion-icon *ngIf="(isDesktop$ | async) === false" slot="icon-only" [ios]="'close-outline'" [md]="'close-sharp'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ 'labels.changeStatus' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="(isDesktop$ | async) === false; else closeButton" (click)="onFormSubmit()">
+        <ion-icon slot="icon-only" [ios]="'checkmark-outline'" [md]="'checkmark-sharp'"></ion-icon>
+      </ion-button>
+      <ng-template #closeButton>
+        <ion-button (click)="onCancel()">
+          <ion-icon slot="icon-only" [ios]="'close-outline'" [md]="'close-sharp'"></ion-icon>
+        </ion-button>
+      </ng-template>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" push="3">
+        <form [formGroup]="form">
+
+          <mat-radio-group formControlName="status" (change)="onStatusChange($event)">
+            <ion-row>
+              <ion-col size="12">
+                <mat-radio-button value="3">
+                  {{ 'btn.decline' | translate }}
+                </mat-radio-button>
+              </ion-col>
+              <ion-col  size="12">
+                <mat-radio-button value="2">
+                  {{ 'btn.approve' | translate }}
+                </mat-radio-button>
+              </ion-col>
+            </ion-row>
+          </mat-radio-group>
+
+          <ion-row class="ion-padding-top">
+            <ion-col>
+              <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+                <mat-label>{{ 'minutes' | translate}}</mat-label>
+                <input type="text" inputmode="numeric" pattern="[0-9]*" matInput formControlName="minutes" (keypress)="onKeyPress($event)">
+                <!-- <mat-error *ngIf="form.get('minutes')!.errors?.required">{{ 'errors.minutesRequered' | translate }}</mat-error>
+                <mat-error *ngIf="form.get('minutes')!.errors?.pattern">{{ 'errors.minutesGreaterThenZero' | translate }}</mat-error> -->
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-button
+            *ngIf="isDesktop$ | async"
+            fill="outline"
+            expand="block"
+            (click)="onFormSubmit()"
+            [disabled]="!form.valid"
+          >
+            {{ 'btn.save' | translate }}
+          </ion-button>
+
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

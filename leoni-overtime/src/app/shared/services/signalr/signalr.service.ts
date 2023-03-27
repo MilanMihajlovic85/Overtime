@@ -33,31 +33,29 @@ export class SignalrService {
       await this.localNotificationSrv.setNotifications();
     }
 
-
     this.connection = new HubConnectionBuilder()
-      .withUrl(environment.hubUrl, {
-        accessTokenFactory: () => apiKey
-      })
-      .withAutomaticReconnect()
-      .build();
+    .withUrl(environment.hubUrl, {
+      accessTokenFactory: () => apiKey
+    })
+    .withAutomaticReconnect()
+    .build();
 
-    this.connection.start()
-      .catch((error: any) => {
-        console.log(error);
-        this.messagesSrv.showErrors(error);
-      });
+  this.connection.start()
+    .catch((error: any) => {
+      console.log(error);
+      this.messagesSrv.showErrors(error);
+    });
 
-    this.connection.on('notify', (count: {NumberOfApprovals: number, NumberOfRequests: number}) => {
+  this.connection.on('notify', (count: {NumberOfApprovals: number, NumberOfRequests: number}) => {
 
-      const currentValues = this.reqAppCount.getValue();
-      const appDiff = count.NumberOfApprovals - currentValues.approvals;
+    const currentValues = this.reqAppCount.getValue();
+    const appDiff = count.NumberOfApprovals - currentValues.approvals;
 
-      if (!this.platform.is('desktop')) this.localNotificationSrv.presentNotifications();
+    if (!this.platform.is('desktop')) this.localNotificationSrv.presentNotifications();
 
       this.reqAppCount.next({approvals: count.NumberOfApprovals, requests: count.NumberOfRequests});
 
     });
-
 
     // setTimeout(() => {
     //   const currentValues = this.reqAppCount.getValue();

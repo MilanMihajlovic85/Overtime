@@ -2,11 +2,13 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 import { catchError, throwError } from 'rxjs';
 import { StatisticsModel } from 'src/app/shared/data-store/statistics/statistics.model';
 import { StatisticsService } from 'src/app/shared/data-store/statistics/statistics.service';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
+import { ScreensizeService } from 'src/app/shared/services/screen-size/screen-size.service';
 
 import { environment } from 'src/environments/environment';
 
@@ -17,13 +19,16 @@ import { environment } from 'src/environments/environment';
 })
 export class OrganizationsPage implements OnInit {
 
-  statistics!: StatisticsModel[];
+  isDesktop$ = this.screenSizeSrv.isDesktopView();
+
+  statisticsData = new MatTableDataSource<StatisticsModel>([]);
 
   showForm = true;
   form!: FormGroup;
 
   schema = {
-    properties: ['department', 'hours', 'requestsNum', 'status', 'organization'],
+    properties: ['department', 'hours', 'requestsNum', 'status'],
+    noSearch: true,
     title: ['department'],
     subtitle: ['organization']
   }
@@ -44,6 +49,7 @@ export class OrganizationsPage implements OnInit {
 
 
   constructor(
+    private screenSizeSrv: ScreensizeService,
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private messagesSrv: MessagesService,
@@ -86,7 +92,7 @@ export class OrganizationsPage implements OnInit {
     this.loadingSrv.showLoaderUntilCompleted(
       this.statisticSrv.getStatistics(`/Statistics/GetCumulativeStatisticsForWO/${this.form.value.organization}/${startDate}/${endDate}`)
     ).subscribe(resData => {
-      this.statistics = resData;
+      this.statisticsData.data = resData;
     });
 
   }

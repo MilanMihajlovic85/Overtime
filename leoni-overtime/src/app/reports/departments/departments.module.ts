@@ -15,6 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MessagesModule } from 'src/app/shared/ui/messages/messages.module';
 import { LoadingModule } from 'src/app/shared/ui/loading/loading.module';
 import { PaginatedListModule } from 'src/app/shared/ui/paginated-list/paginated-list.module';
+import { PaginatedTableModule } from 'src/app/shared/ui/paginated-table/paginated-table.module';
+import { LogoutModule } from 'src/app/shared/ui/logout/logout.module';
 
 @NgModule({
   imports: [
@@ -31,7 +33,9 @@ import { PaginatedListModule } from 'src/app/shared/ui/paginated-list/paginated-
     TranslateModule,
     MatSelectModule,
     LoadingModule,
-    MessagesModule
+    MessagesModule,
+    PaginatedTableModule,
+    LogoutModule
   ],
   declarations: [DepartmentsPage]
 })

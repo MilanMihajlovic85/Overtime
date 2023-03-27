@@ -18,13 +18,14 @@ import { ApiKeyHttpInterceptorProvider } from './shared/interceptors/api-key.int
 import { DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AppLayoutComponent,
-    LoginLayoutComponent,
+    LoginLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +54,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     ApiKeyHttpInterceptorProvider,
     MessagesService,
     { provide: MAT_DATE_LOCALE, useValue: 'sr-Latn' },
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

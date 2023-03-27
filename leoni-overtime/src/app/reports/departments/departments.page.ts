@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 import { MessagesService } from 'src/app/shared/services/messages/messages.service';
+import { ScreensizeService } from 'src/app/shared/services/screen-size/screen-size.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,10 +13,16 @@ import { environment } from 'src/environments/environment';
 })
 export class DepartmentsPage implements OnInit {
 
+  isDesktop$ = this.screenSizeSrv.isDesktopView();
+
   showForm = true;
   form!: FormGroup;
 
   data!: {department: string, startDate: Date, endDate: Date};
+
+  desktopSchema = {
+    properties: ['status', 'requestorForWO', 'requestorForProject', 'requestorWO','requestorWOManager', 'minutes', 'startTime', 'endTime', 'reason'],
+  };
 
   schema = {
     properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'requestorForWO', 'requestorForProject'],
@@ -38,6 +45,8 @@ export class DepartmentsPage implements OnInit {
   );
 
   constructor(
+    private screenSizeSrv: ScreensizeService,
+    private changeDetector: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private messagesSrv: MessagesService
@@ -72,6 +81,8 @@ export class DepartmentsPage implements OnInit {
     if (!this.form.valid) return;
 
     this.data = this.form.value;
+
+    this.changeDetector.detectChanges();
 
   }
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ScreensizeService } from 'src/app/shared/services/screen-size/screen-size.service';
 
 @Component({
   selector: 'app-my-requests',
@@ -8,10 +9,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class MyRequestsPage implements OnInit {
 
+  isDesktop$ = this.screenSizeSrv.isDesktopView();
+
   showForm = true;
   form!: FormGroup;
 
   data!: {startDate: Date, endDate: Date};
+
+  desktopSchema = {
+    properties: ['status', 'requestorDepartment', 'requestorForWO', 'requestorForProject', 'requestorWO','requestorWOManager', 'minutes', 'startTime', 'endTime', 'reason'],
+  };
 
   schema = {
     properties: ['status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject'],
@@ -20,7 +27,9 @@ export class MyRequestsPage implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private screenSizeSrv: ScreensizeService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -47,6 +56,9 @@ export class MyRequestsPage implements OnInit {
     if (!this.form.valid) return;
 
     this.data = this.form.value;
+
+    this.changeDetector.detectChanges();
+
 
   }
 

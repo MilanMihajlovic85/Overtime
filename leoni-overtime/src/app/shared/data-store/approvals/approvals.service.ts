@@ -36,7 +36,11 @@ export class ApprovalsService {
    */
   getMyApprovals(): Observable<RequestModel[]> {
 
-    return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyPendingApprovals`).pipe(
+    const url = '?_page=0&_limit=150';
+
+
+    return this.http.get<RequestApiData[]>(`http://localhost:3000/reports${url}`).pipe(
+    // return this.http.get<RequestApiData[]>(`${environment.apiUrl}/Employee/GetMyPendingApprovals`).pipe(
       map(resData => resData.map(data => ({
         id: data.ID,
         requestorId: data.Requestor_ID,

@@ -39,3 +39,11 @@ ion-modal.date-time {
   }
 
 }
+
+@media only screen and (min-width: 768px) {
+
+  ion-modal.date-time.desktop-modal {
+    --height: 450px;
+  }
+}
+

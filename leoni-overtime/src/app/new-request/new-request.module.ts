@@ -16,6 +16,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { LoadingModule } from '../shared/ui/loading/loading.module';
 import { MessagesModule } from '../shared/ui/messages/messages.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { LogoutModule } from '../shared/ui/logout/logout.module';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { TranslateModule } from '@ngx-translate/core';
     NgxMatMomentModule,
     LoadingModule,
     MessagesModule,
-    TranslateModule
+    TranslateModule,
+    LogoutModule
   ],
   declarations: [NewRequestPage],
   providers: [

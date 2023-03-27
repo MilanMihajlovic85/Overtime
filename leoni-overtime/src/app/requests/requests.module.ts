@@ -13,6 +13,8 @@ import { PaginatedListModule } from '../shared/ui/paginated-list/paginated-list.
 import { MessagesModule } from '../shared/ui/messages/messages.module';
 import { LoadingModule } from '../shared/ui/loading/loading.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { LogoutModule } from '../shared/ui/logout/logout.module';
+import { TableModule } from '../shared/ui/table/table.module';
 
 @NgModule({
   imports: [
@@ -21,10 +23,12 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     ListModule,
+    TableModule,
     PaginatedListModule,
     LoadingModule,
     MessagesModule,
-    TranslateModule
+    TranslateModule,
+    LogoutModule
   ],
   declarations: [RequestsPage]
 })

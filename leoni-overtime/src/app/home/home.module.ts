@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { MessagesModule } from '../shared/ui/messages/messages.module';
 import { LoadingModule } from '../shared/ui/loading/loading.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { LogoutModule } from '../shared/ui/logout/logout.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     LoadingModule,
     MessagesModule,
-    TranslateModule
+    TranslateModule,
+    LogoutModule
   ],
   declarations: [HomePage]
 })

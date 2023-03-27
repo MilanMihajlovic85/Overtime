@@ -1,0 +1,79 @@
+<div *ngIf="!schema.noSearch" class="search-print">
+  <mat-form-field appearance="outline" class="search-wrapper">
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput (keyup)="applyFilter($event)" #input [(ngModel)]="value" placeholder="">
+    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div class="table-wrapper">
+
+  <div *ngIf="extendedRowData.length > 0" class="table-buttons">
+    <button *ngIf="!rowsExpanded" mat-stroked-button (click)="manageAllRows()">
+      <mat-icon>unfold_more</mat-icon>{{ 'btn.expandAll' | translate }}
+    </button>
+    <button *ngIf="rowsExpanded" mat-stroked-button color="primary" (click)="manageAllRows()">
+      <mat-icon>unfold_less</mat-icon>{{ 'btn.closeAll' | translate }}
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="data" matSort #TableSort="matSort" matSortDisableClear multiTemplateDataRows>
+
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">{{ column.header }}</th>
+      <td mat-cell *matCellDef="let row" [class.expanded]="row.expanded">{{ column.cell(row) }}</td>
+    </ng-container>
+
+    <ng-container *ngFor="let btnCol of btnColumns" [matColumnDef]="btnCol">
+      <th mat-header-cell *matHeaderCellDef class="btn-header-cell"></th>
+      <td mat-cell *matCellDef="let row" class="btn-cell">
+        <button mat-icon-button color="{{ buttons[btnCol].color }}" (click)="openModal(buttons[btnCol].modal, row)" matTooltip="{{ buttons[btnCol].tooltip | translate }}">
+          <mat-icon>{{ buttons[btnCol].icon }}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Extended content column -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length" [class.expanded-row]="row.expanded" [class.not-expanded-row]="!row.expanded">
+
+        <div class="element-detail" [@detailExpand]="row.expanded ? 'expanded' : 'collapsed'" >
+          <table>
+            <tbody>
+              <tr>
+                <ng-container *ngFor="let property of extendedRowData">
+                  <th>{{ property.key }}</th>
+                  <td *ngIf="['Opened', 'Responded', 'Closed'].includes(property.key) || ['Otvoren', 'Odgovoreno', 'Zatvoren'].includes(property.key); else notDate">
+                    {{ row[property.val] | date: 'dd/MM/yyyy HH:mm'}}
+                  </td>
+                  <ng-template #notDate><td>{{ row[property.val] }}</td></ng-template>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length" [style.TextAlign]="'center'" [style.Height.px]="40">
+        {{ 'labels.noData' | translate }}
+      </td>
+    </tr>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" [style.Height.px]="40"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="toggleRow(row)"></tr>
+
+    <ng-container *ngIf="extendedRowData.length > 0">
+      <tr mat-row *matRowDef="let el; columns: ['expandedDetail']" class="detail-row"></tr>
+    </ng-container>
+
+  </table>
+
+</div>
+
+<mat-paginator *ngIf="data.data.length > 10" [length]="data.length" [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>

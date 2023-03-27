@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, throwError } from 'rxjs';
 import { I18nService } from '../shared/services/i18n/i18n.service';
 import { LoadingService } from '../shared/services/loading/loading.service';
 import { MessagesService } from '../shared/services/messages/messages.service';
+import { ScreensizeService } from '../shared/services/screen-size/screen-size.service';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -23,6 +25,7 @@ export class AuthPage implements OnInit {
   focusIsSet!: boolean;
 
   constructor(
+    public platform: Platform,
     private loadingSrv: LoadingService,
     private authService: AuthService,
     private messagesSrv: MessagesService,

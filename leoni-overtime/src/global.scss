@@ -29,6 +29,8 @@
 
 @import "./styles/datetime-modal.scss";
 @import "./styles/filter-form.scss";
+@import "./styles/table.scss";
+
 
 
 // Success toast
@@ -81,3 +83,36 @@ p.no-data {
   font-size: 1.3rem;
   color: #A9AABC;
 }
+
+.desktop {
+
+  // #main-content {
+  //   --ion-toolbar-background: var(--ion-color-light);
+
+  // }
+
+
+  ion-menu {
+    --width: 17rem;
+  }
+
+
+}
+
+.change-status-modal {
+
+  // --ion-toolbar-background: var(--ion-color-light);
+  // --ion-toolbar-color: var(--ion-color-light-contrast);
+
+   --height: 365px;
+   --width: 400px;
+   --border-radius: 10px;
+
+   .mat-mdc-form-field {
+    width: 100%;
+   }
+
+   .mat-mdc-input-element {
+    text-align: center;
+   }
+ }

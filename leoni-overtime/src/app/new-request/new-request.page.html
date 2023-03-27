@@ -4,18 +4,23 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ 'pageTitles.newRequest' | translate }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="onFormSubmit()" [disabled]="!form.valid">
-        <ion-icon slot="icon-only" [ios]="'checkmark-outline'" [md]="'checkmark-sharp'"></ion-icon>
-      </ion-button>
+    <ion-buttons *ngIf="isDesktop$ | async; else formSubmit" slot="end">
+      <app-logout></app-logout>
     </ion-buttons>
+    <ng-template #formSubmit>
+      <ion-buttons slot="end">
+        <ion-button (click)="onFormSubmit()" [disabled]="!form.valid">
+          <ion-icon slot="icon-only" [ios]="'checkmark-outline'" [md]="'checkmark-sharp'"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-template>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="6" push-md="3">
+      <ion-col size="12" size-md="6" push-md="3" size-lg="7" push-lg="2.5" size-xl="5" push-xl="3.5">
 
         <app-loading></app-loading>
         <app-messages></app-messages>
@@ -56,6 +61,16 @@
             </mat-error>
           </mat-form-field>
 
+          <ion-button
+            *ngIf="isDesktop$ | async"
+            fill="outline"
+            expand="block"
+            (click)="onFormSubmit()"
+            [disabled]="!form.valid"
+          >
+            {{ 'btn.save' | translate }}
+          </ion-button>
+
         </form>
 
       </ion-col>
@@ -63,7 +78,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-modal class="date-time" trigger="start-time-modal">
+<ion-modal class="date-time" [ngClass]="{'desktop-modal': platform.is('desktop')}" trigger="start-time-modal">
   <ng-template>
     <ion-content>
         <ion-datetime
@@ -84,7 +99,7 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal class="date-time" trigger="end-time-modal">
+<ion-modal class="date-time" [ngClass]="{'desktop-modal': platform.is('desktop')}" trigger="end-time-modal">
   <ng-template>
     <ion-content>
       <ion-datetime

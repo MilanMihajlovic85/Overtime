@@ -1,0 +1,20 @@
+.search-print {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding: 0 0.6rem;
+}
+
+.mat-mdc-header-row,
+.mat-mdc-table .mdc-data-table__header-row {
+  height: 2rem !important;
+}
+
+tr.mat-mdc-header-row th:not(:first-child) {
+  div.mat-sort-header-container {
+    justify-content: center;
+    // padding-top: 5px;
+  }
+}

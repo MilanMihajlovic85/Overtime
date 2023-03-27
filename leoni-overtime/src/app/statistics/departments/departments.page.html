@@ -4,6 +4,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ 'menuSections.statistics' | translate }} / {{ 'pageTitles.departments' | translate }}</ion-title>
+    <ion-buttons *ngIf="isDesktop$ | async" slot="end">
+      <app-logout></app-logout>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +17,7 @@
 
     <ion-row *ngIf="showForm">
 
-      <ion-col size="12" size-md="8" offset-md="2">
+      <ion-col size="12" size-md="8" offset-md="2" size-lg="8.5" offset-lg="1.5" size-xl="8" offset-xl="0">
 
         <app-loading></app-loading>
         <app-messages></app-messages>
@@ -23,7 +26,7 @@
 
           <ion-row>
 
-            <ion-col>
+            <ion-col size="12" size-lg="5.5">
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>Period</mat-label>
                 <mat-date-range-input [rangePicker]="picker" calendarLabel="Kalendar">
@@ -38,7 +41,7 @@
               </mat-form-field>
             </ion-col>
 
-            <ion-col size="10">
+            <ion-col size="10" size-lg="5">
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>{{ 'department' | translate }}</mat-label>
                 <mat-select formControlName="department">
@@ -50,7 +53,7 @@
               </mat-form-field>
             </ion-col>
 
-            <ion-col size="2">
+            <ion-col size="2" size-lg="1.5">
               <ion-button fill="solid" color="secondary" (click)="onFormSubmit()" [disabled]="!form.valid">
                 <ion-icon slot="icon-only" [ios]="'search-outline'" [md]="'search-sharp'"></ion-icon>
               </ion-button>
@@ -63,13 +66,12 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col size="12" size-md="8" offset-md="2">
-        <ng-container *ngIf="statistics">
+    <ion-row *ngIf="statisticsData.data">
+      <ion-col *ngIf="(isDesktop$ | async) === false; else table" size="12" size-md="8" offset-md="2">
 
           <app-list
-            *ngIf="statistics.length > 0; else noData"
-            [data]="statistics"
+            *ngIf="statisticsData.data.length > 0; else noData"
+            [data]="statisticsData.data"
             [schema]="schema"
             [buttons]="{}"
             [hideSearch]="true"
@@ -83,8 +85,18 @@
             <ion-icon class="no-data" name="alert-circle-outline"></ion-icon>
           </ng-template>
 
-        </ng-container>
       </ion-col>
+
+      <ng-template #table>
+        <ion-col>
+          <app-table
+          [data]="statisticsData"
+          [schema]="schema"
+          [buttons]="{}"
+        >
+        </app-table>
+        </ion-col>
+      </ng-template>
     </ion-row>
 
 

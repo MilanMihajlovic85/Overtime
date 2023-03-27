@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OverlayEventDetail } from '@ionic/core/components';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActionSheetController, AlertController, IonModal, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs';
 import { ApprovalsService } from '../shared/data-store/approvals/approvals.service';
 import { RequestModel } from '../shared/data-store/request/request.model';
 import { LoadingService } from '../shared/services/loading/loading.service';
+import { ScreensizeService } from '../shared/services/screen-size/screen-size.service';
+import { ChangeStatusComponent } from './change-status/change-status.component';
 
 @Component({
   selector: 'app-approvals',
@@ -13,14 +17,25 @@ import { LoadingService } from '../shared/services/loading/loading.service';
 })
 export class ApprovalsPage implements OnInit {
 
-  approvals!: RequestModel[];
+  isDesktop!: boolean;
+
+  isDesktop$ = this.screenSizeSrv.isDesktopView().pipe(
+    tap(resData => this.isDesktop = resData)
+  );
+
+  approvalsData = new MatTableDataSource<RequestModel>([]);
 
   buttons: {[key: string]: any} = {
-    updateStatus: { modal: 'updateStatus', icon: 'manage_accounts', color: 'primary', mobileIcon: 'create', mobileColor: 'secondary', tooltip: 'btn.updateStatus' }
+    updateStatus: { modal: 'updateStatus', icon: 'checklist', color: 'primary', mobileIcon: 'create', mobileColor: 'secondary', tooltip: 'btn.updateStatus' }
+  };
+
+  desktopSchema = {
+    properties: ['requestorFullName', 'requestorDepartment', 'requestorWO', 'requestorForWO', 'requestorForProject', 'requestorWOManager', 'minutes', 'startTime', 'endTime', 'createdAt', 'reason'],
+    noSearch: true
   };
 
   schema = {
-    properties: ['requestorFullName', 'status', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'createdAt'],
+    properties: ['requestorFullName', 'minutes', 'reason', 'startTime', 'endTime', 'requestorDepartment', 'requestorWO','requestorWOManager', 'requestorForWO', 'requestorForProject', 'createdAt'],
     title: ['requestorFullName'],
     subtitle: ['requestorDepartment', 'requestorForProject']
   }
@@ -31,27 +46,62 @@ export class ApprovalsPage implements OnInit {
   ).pipe(
     switchMap(() => this.approvalSrv.approvals),
     tap(resData => {
-      this.approvals = resData;
+      this.approvalsData.data = resData;
     })
   );
 
   constructor(
+    private screenSizeSrv: ScreensizeService,
     private approvalSrv: ApprovalsService,
     private loadingSrv: LoadingService,
     private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {}
 
-  openActionSheet(event: {modal: string, data: {[key: string]: string}, mobile?: boolean}) {
+  openActionSheet(event: {modal: string, data: RequestModel, mobile?: boolean}) {
 
-    this.presentAlert(event.data);
+    if (!this.isDesktop) {
+      this.presentAlert(event.data);
+    } else {
+      this.openModal(event.data);
+    }
+
 
   }
 
-  async presentAlert(request: { [key: string]: string }) {
+  async openModal(req: RequestModel) {
+
+    const modal = await this.modalCtrl.create({
+      component: ChangeStatusComponent,
+      cssClass: 'change-status-modal',
+      componentProps: {request: req}
+    });
+
+    await modal.present();
+
+    const resData = await modal.onWillDismiss();
+
+    if (resData.role === 'confirm') {
+
+      const newStatus = +resData.data.formValue.status;
+      const minutes = resData.data.formValue.status.minutes;
+
+      if (minutes) {
+        this.approvalSrv.updateStatus(+req.id, newStatus, minutes).subscribe();
+      } else {
+        this.approvalSrv.updateStatus(+req.id, newStatus).subscribe();
+      }
+
+    }
+
+
+  }
+
+  async presentAlert(request: RequestModel) {
 
     const newStatus = await this.presentActionSheet();
 
