@@ -89,6 +89,7 @@
       <ng-template #table>
         <ion-col>
           <app-table
+          *ngIf="!firstLoad"
           [data]="statisticsData"
           [schema]="schema"
           [buttons]="{}"

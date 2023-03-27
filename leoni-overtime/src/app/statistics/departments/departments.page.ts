@@ -21,7 +21,9 @@ export class DepartmentsPage implements OnInit {
 
   isDesktop$ = this.screenSizeSrv.isDesktopView();
 
-  statisticsData = new MatTableDataSource<StatisticsModel>([]);
+  firstLoad = true;
+
+  statisticsData = new MatTableDataSource<StatisticsModel>;
 
   showForm = true;
   form!: FormGroup;
@@ -92,6 +94,7 @@ export class DepartmentsPage implements OnInit {
       this.statisticSrv.getStatistics(`/Statistics/GetCumulativeStatisticsForDepartment/${this.form.value.department}/${startDate}/${endDate}`)
     ).subscribe(resData => {
       this.statisticsData.data = resData;
+      this.firstLoad = false;
     });
 
 

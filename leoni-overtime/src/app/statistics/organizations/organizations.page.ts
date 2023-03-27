@@ -23,6 +23,8 @@ export class OrganizationsPage implements OnInit {
 
   statisticsData = new MatTableDataSource<StatisticsModel>([]);
 
+  firstLoad = true;
+
   showForm = true;
   form!: FormGroup;
 
@@ -93,6 +95,7 @@ export class OrganizationsPage implements OnInit {
       this.statisticSrv.getStatistics(`/Statistics/GetCumulativeStatisticsForWO/${this.form.value.organization}/${startDate}/${endDate}`)
     ).subscribe(resData => {
       this.statisticsData.data = resData;
+      this.firstLoad = false;
     });
 
   }
