@@ -29,33 +29,33 @@ export class SignalrService {
 
   async createConnection(apiKey: string) {
 
-  //   if (!this.platform.is('desktop')) {
-  //     await this.localNotificationSrv.setNotifications();
-  //   }
+    if (!this.platform.is('desktop')) {
+      await this.localNotificationSrv.setNotifications();
+    }
 
-  //   this.connection = new HubConnectionBuilder()
-  //   .withUrl(environment.hubUrl, {
-  //     accessTokenFactory: () => apiKey
-  //   })
-  //   .withAutomaticReconnect()
-  //   .build();
+    this.connection = new HubConnectionBuilder()
+    .withUrl(environment.hubUrl, {
+      accessTokenFactory: () => apiKey
+    })
+    .withAutomaticReconnect()
+    .build();
 
-  // this.connection.start()
-  //   .catch((error: any) => {
-  //     console.log(error);
-  //     this.messagesSrv.showErrors(error);
-  //   });
+  this.connection.start()
+    .catch((error: any) => {
+      console.log(error);
+      this.messagesSrv.showErrors(error);
+    });
 
-  // this.connection.on('notify', (count: {NumberOfApprovals: number, NumberOfRequests: number}) => {
+  this.connection.on('notify', (count: {NumberOfApprovals: number, NumberOfRequests: number}) => {
 
-  //   const currentValues = this.reqAppCount.getValue();
-  //   const appDiff = count.NumberOfApprovals - currentValues.approvals;
+    const currentValues = this.reqAppCount.getValue();
+    const appDiff = count.NumberOfApprovals - currentValues.approvals;
 
-  //   if (!this.platform.is('desktop')) this.localNotificationSrv.presentNotifications();
+    if (!this.platform.is('desktop')) this.localNotificationSrv.presentNotifications();
 
-  //     this.reqAppCount.next({approvals: count.NumberOfApprovals, requests: count.NumberOfRequests});
+      this.reqAppCount.next({approvals: count.NumberOfApprovals, requests: count.NumberOfRequests});
 
-  //   });
+    });
 
     // setTimeout(() => {
     //   const currentValues = this.reqAppCount.getValue();
@@ -79,9 +79,9 @@ export class SignalrService {
 
   stopConnection() {
 
-    // this.connection.stop().then(() => {
-    //   this.localNotificationSrv.cancelNotifications();
-    // }).catch((error: any) => console.log(error));
+    this.connection.stop().then(() => {
+      this.localNotificationSrv.cancelNotifications();
+    }).catch((error: any) => console.log(error));
 
   }
 

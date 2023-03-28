@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -47,7 +48,13 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
     MessagesModule,
     NgIdleKeepaliveModule.forRoot(),
     TranslateModule.forRoot(),
-    MatNativeDateModule
+    MatNativeDateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     DatePipe,

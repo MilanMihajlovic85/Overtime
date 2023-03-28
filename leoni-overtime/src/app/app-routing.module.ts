@@ -4,7 +4,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { LoginGuard } from './shared/guards/login.guard';
 import { AppLayoutComponent } from './shared/ui/layouts/app-layout/app-layout.component';
 import { LoginLayoutComponent } from './shared/ui/layouts/login-layout/login-layout.component';
-// C:\Program Files\Android\Android Studio\plugins\android\resources\images\asset_studio\ic_launcher_foreground.xml
+
+
 const routes: Routes = [
   {
     path: '',
@@ -31,13 +32,13 @@ const routes: Routes = [
       {
         path: 'requests',
         loadChildren: () => import('./requests/requests.module').then( m => m.RequestsPageModule),
-        title: 'Requests',
+        title: 'My Requests',
         canActivate: [AuthGuard],
       },
       {
         path: 'approvals',
         loadChildren: () => import('./approvals/approvals.module').then( m => m.ApprovalsPageModule),
-        title: 'Approvals',
+        title: 'My Approvals',
         canActivate: [AuthGuard],
       },
       {
@@ -85,12 +86,20 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule),
-        title: 'Login-Leoni',
+        title: 'Login',
         canActivate: [LoginGuard]
       }
     ]
   },
-
+  {
+    path: 'page-not-found',
+    loadChildren: () => import('./shared/ui/page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule),
+    title: '404-Page not found'
+  },
+  {
+    path: '**',
+    redirectTo: '/page-not-found'
+  }
 
 ];
 

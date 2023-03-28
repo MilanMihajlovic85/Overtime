@@ -12,15 +12,15 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <app-messages></app-messages>
-
   <ion-grid>
+
+    <app-loading></app-loading>
+    <app-messages></app-messages>
 
     <ion-row *ngIf="showForm">
 
       <ion-col size="12" size-md="8" offset-md="2" size-lg="8.5" offset-lg="1.5" size-xl="8" offset-xl="0">
 
-        <app-loading></app-loading>
 
         <form [formGroup]="form" class="filter-form">
 
