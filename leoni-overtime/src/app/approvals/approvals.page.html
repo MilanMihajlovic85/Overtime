@@ -10,11 +10,10 @@
   </ion-toolbar>
 </ion-header>
 
+<app-loading></app-loading>
+
 <ion-content [fullscreen]="true" class="ion-padding">
-
-
   <ion-grid class="ion-padding-top">
-    <app-loading></app-loading>
     <app-messages></app-messages>
     <ion-row *ngIf="approvals$ | async">
       <ion-col *ngIf="(isDesktop$ | async) === false; else table" size="12" size-md="8" push-md="2">

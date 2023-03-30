@@ -7,11 +7,12 @@ ion-modal.date-time {
   }
 
   ion-content {
-    --background: transparent;
+    background: transparent;
 
     --padding-top: 25vh;
     --padding-start: 20px;
     --padding-end: 20px;
+    --offset-bottom: none !important;
 
     ion-datetime {
       border-radius: 8px;

@@ -1,5 +1,6 @@
 ion-row {
-  height: 66vh;
+  // height: 66vh;
+  margin-top: 20vh;
 }
 
 ion-col {
@@ -22,16 +23,24 @@ ion-button.resendCode {
 
 
 .footer {
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
   background-color: white;
+
+  p {
+    display: block;
+    color: var(--ion-color-primary);
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .switch {
   position: relative;
   display: inline-block;
   margin: 0 5px;
-  bottom: 3rem
+  bottom: 5vh;
+  left: calc(50vw - 50px);
 }
 
 .switch > span {

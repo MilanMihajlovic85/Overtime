@@ -1,16 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { catchError, throwError } from 'rxjs';
+import { DropdownsDataService } from 'src/app/shared/data-store/dropdowns-data/dropdowns-data.service';
 import { StatisticsModel } from 'src/app/shared/data-store/statistics/statistics.model';
 import { StatisticsService } from 'src/app/shared/data-store/statistics/statistics.service';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
-import { MessagesService } from 'src/app/shared/services/messages/messages.service';
 import { ScreensizeService } from 'src/app/shared/services/screen-size/screen-size.service';
 
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-organizations',
@@ -35,29 +32,15 @@ export class OrganizationsPage implements OnInit {
     subtitle: ['organization']
   }
 
-  organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_WorkOrganizations`).pipe(
-    catchError(err => {
-      if (err.error.Message) {
-        this.messagesSrv.showErrors(err.error.Message);
-      } else if (err.status && err.statusText) {
-        const message = err.status + ' ' + err.statusText;
-        this.messagesSrv.showErrors(message);
-      } else {
-        this.messagesSrv.showErrors(err.message);
-      }
-      return throwError(() => err);
-    })
-  );
-
+  organizations$ = this.dropdownsDataSrv.getData('WorkOrganizations');
 
   constructor(
     private screenSizeSrv: ScreensizeService,
     private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private messagesSrv: MessagesService,
     private statisticSrv: StatisticsService,
     private loadingSrv: LoadingService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private dropdownsDataSrv: DropdownsDataService
   ) {}
 
   ngOnInit() {

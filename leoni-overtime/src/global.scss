@@ -87,10 +87,8 @@ p.no-data {
 .desktop {
 
   // #main-content {
-  //   --ion-toolbar-background: #304D9E;
-
+  //   --ion-toolbar-background: #2B928E;
   // }
-
 
   ion-menu {
     --width: 17rem;
@@ -117,10 +115,10 @@ p.no-data {
    }
  }
 
- ion-grid {
-  min-height: 50vh;
- }
-
 .auth-page .lds-facebook {
   top: 30vh !important;
 }
+
+ion-grid {
+  // min-height: 50vh;
+ }

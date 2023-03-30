@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, tap, throwError } from 'rxjs';
+import { DropdownsDataService } from 'src/app/shared/data-store/dropdowns-data/dropdowns-data.service';
 
-import { MessagesService } from 'src/app/shared/services/messages/messages.service';
 import { ScreensizeService } from 'src/app/shared/services/screen-size/screen-size.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-organizations',
@@ -31,26 +28,13 @@ export class OrganizationsPage implements OnInit {
     subtitle: ['requestorDepartment']
   }
 
-  organizations$ = this.http.get<{[key: string]: number | string}[]>(`${environment.apiUrl}/RequestData/DataDriven_DDL_WorkOrganizations`).pipe(
-    catchError(err => {
-      if (err.error.Message) {
-        this.messagesSrv.showErrors(err.error.Message);
-      } else if (err.status && err.statusText) {
-        const message = err.status + ' ' + err.statusText;
-        this.messagesSrv.showErrors(message);
-      } else {
-        this.messagesSrv.showErrors(err.message);
-      }
-      return throwError(() => err);
-    })
-  );
+  organizations$ = this.dropdownsDataSrv.getData('WorkOrganizations');
 
   constructor(
     private screenSizeSrv: ScreensizeService,
     private changeDetector: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private messagesSrv: MessagesService
+    private dropdownsDataSrv: DropdownsDataService
   ) {}
 
 

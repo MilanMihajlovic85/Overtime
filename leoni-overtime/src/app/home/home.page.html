@@ -10,12 +10,12 @@
   </ion-toolbar>
 </ion-header>
 
+<app-loading></app-loading>
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-grid [fixed]="true">
 
-    <app-loading></app-loading>
     <app-messages></app-messages>
 
     <ion-row>
@@ -28,7 +28,7 @@
             {{ 'btn.newRequest' | translate }}
           </ion-button>
 
-          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" routerDirection="root" [routerLink]="['/', 'requests']">
+          <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" routerDirection="root" [routerLink]="['/', 'my-requests', 'pending']">
             {{ 'btn.myRequests' | translate }}
             <ion-badge color="danger" *ngIf="counts.requests > 0">{{ counts.requests }}</ion-badge>
           </ion-button>

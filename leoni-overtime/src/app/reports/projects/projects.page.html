@@ -10,11 +10,12 @@
   </ion-toolbar>
 </ion-header>
 
+<app-loading></app-loading>
+
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-grid>
 
-    <app-loading></app-loading>
     <app-messages></app-messages>
 
     <ion-row *ngIf="showForm">
@@ -45,8 +46,8 @@
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>{{ 'project' | translate }}</mat-label>
                 <mat-select formControlName="project">
-                  <mat-option *ngFor="let project of projects$ | async" [value]="project.Value">
-                    {{ project.Description }} {{ project.Value }}
+                  <mat-option *ngFor="let project of projects$ | async" [value]="project.value">
+                    {{ project.description }} {{ project.value }}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('project')!.errors?.required">Please select project</mat-error>

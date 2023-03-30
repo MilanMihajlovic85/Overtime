@@ -3,12 +3,15 @@
     "dashboard": "Dashboard",
     "newRequest": "New Request",
     "myRequests": "My Requests",
-    "myApprovals": "My Approvals",
+    "myApprovals": "Approvals",
     "departments": "Departments",
     "organizations": "Organizations",
-    "projects": "Projects"
+    "projects": "Projects",
+    "pending": "Pending",
+    "overview": "Overview"
   },
   "menuSections": {
+    "requests": "My Requests",
     "reports": "Reports",
     "statistics": "Statistics"
   },

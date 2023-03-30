@@ -3,19 +3,19 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ 'menuSections.reports' | translate }} / {{ 'pageTitles.myRequests' | translate }}</ion-title>
+    <ion-title>{{ 'pageTitles.myRequests' | translate }} / {{ 'pageTitles.overview' | translate }}</ion-title>
     <ion-buttons *ngIf="isDesktop$ | async" slot="end">
       <app-logout></app-logout>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<app-loading></app-loading>
 
+<ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-grid>
 
-    <app-loading></app-loading>
     <app-messages></app-messages>
 
     <ion-row *ngIf="showForm">

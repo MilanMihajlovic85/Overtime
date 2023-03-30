@@ -10,11 +10,12 @@
   </ion-toolbar>
 </ion-header>
 
+<app-loading></app-loading>
+
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-grid>
 
-    <app-loading></app-loading>
     <app-messages></app-messages>
 
     <ion-row *ngIf="showForm">
@@ -44,8 +45,8 @@
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>{{ 'organization' | translate }}</mat-label>
                 <mat-select formControlName="organization">
-                  <mat-option *ngFor="let org of organizations$ | async" [value]="org.Value">
-                    {{ org.Description }}
+                  <mat-option *ngFor="let org of organizations$ | async" [value]="org.value">
+                    {{ org.description }}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('organization')!.errors?.required">Please select organization</mat-error>

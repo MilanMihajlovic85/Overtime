@@ -11,11 +11,12 @@
 </ion-header>
 
 
+<app-loading></app-loading>
+
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-grid>
 
-    <app-loading></app-loading>
 
     <ion-row *ngIf="showForm">
 
@@ -46,8 +47,8 @@
               <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>{{ 'department' | translate }}</mat-label>
                 <mat-select formControlName="department">
-                  <mat-option *ngFor="let department of departments$ | async" [value]="department.Value">
-                    {{ department.Description }}
+                  <mat-option *ngFor="let department of departments$ | async" [value]="department.value">
+                    {{ department.description }}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('department')!.errors?.required">Please select department</mat-error>

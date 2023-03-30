@@ -3,12 +3,15 @@
     "dashboard": "Početna",
     "newRequest": "Novi Zahtev",
     "myRequests": "Moji Zahtevi",
-    "myApprovals": "Moja Odobrenja",
+    "myApprovals": "Odobrenja",
     "departments": "Odeljenja",
     "organizations": "Organizacije",
-    "projects": "Projekti"
+    "projects": "Projekti",
+    "pending": "Nerešeni",
+    "overview": "Pregled"
   },
   "menuSections": {
+    "requests": "Moji Zahtevi",
     "reports": "Izveštaji",
     "statistics": "Statistika"
   },

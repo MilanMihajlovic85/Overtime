@@ -30,21 +30,21 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'requests',
+        path: 'my-requests/pending',
         loadChildren: () => import('./requests/requests.module').then( m => m.RequestsPageModule),
-        title: 'My Requests',
+        title: 'My Requests/Pending',
         canActivate: [AuthGuard],
       },
       {
         path: 'approvals',
         loadChildren: () => import('./approvals/approvals.module').then( m => m.ApprovalsPageModule),
-        title: 'My Approvals',
+        title: 'Approvals',
         canActivate: [AuthGuard],
       },
       {
-        path: 'reports/my-requests',
+        path: 'my-requests/overview',
         loadChildren: () => import('./reports/my-requests/my-requests.module').then( m => m.MyRequestsPageModule),
-        title: 'Reports/My Requests',
+        title: 'My Requests/Overview',
         canActivate: [AuthGuard],
       },
       {
