@@ -1,4 +1,4 @@
-ion-content, .table-wrapper {
+ion-content, .table-wrapper, .mat-mdc-select-pane {
   --offset-bottom: auto !important;
   --overflow: hidden;
   background: #fff;
@@ -18,8 +18,8 @@ ion-content, .table-wrapper {
   }
 
   &::-webkit-scrollbar-thumb {
-      background: rgb(75, 75, 75);
-      background-color: #8f54a0;
+      // background: rgb(75, 75, 75);
+      background-color: #ECEEFF;
       border-radius: 10px;
       border: 3px solid #ffffff;
   }
@@ -31,4 +31,15 @@ ion-content, .table-wrapper {
   .inner-scroll {
       scrollbar-width: thin;
   }
+}
+
+// Scrollbar styles for material select component
+::-webkit-scrollbar {
+  width: 8px;
+  overflow-y: scroll;
+  background: white;
+}
+::-webkit-scrollbar-thumb {
+  background: #ECEEFF;
+  border-radius: 10px;
 }

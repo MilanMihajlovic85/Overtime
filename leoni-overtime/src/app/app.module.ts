@@ -20,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { HttpResponseInterceptorProvider } from './shared/interceptors/response.interceptor';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   providers: [
     DatePipe,
     ApiKeyHttpInterceptorProvider,
+    HttpResponseInterceptorProvider,
     MessagesService,
     { provide: MAT_DATE_LOCALE, useValue: 'sr-Latn' },
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },

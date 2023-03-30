@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -34,7 +34,7 @@ export class ApiKeyHttpInterceptor implements HttpInterceptor {
 
                 return next.handle(clone);
             })
-        );
+      );
 
     }
 }
