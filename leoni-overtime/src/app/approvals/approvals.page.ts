@@ -26,7 +26,7 @@ export class ApprovalsPage implements OnInit {
   approvalsData = new MatTableDataSource<RequestModel>([]);
 
   buttons: {[key: string]: any} = {
-    updateStatus: { modal: 'updateStatus', icon: 'checklist', color: 'primary', mobileIcon: 'create', mobileColor: 'secondary', tooltip: 'btn.updateStatus' }
+    updateStatus: { modal: 'updateStatus', icon: 'task', color: 'primary', mobileIcon: 'create', mobileColor: 'secondary', tooltip: 'btn.updateStatus' }
   };
 
   desktopSchema = {

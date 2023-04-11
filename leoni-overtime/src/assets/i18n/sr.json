@@ -60,7 +60,7 @@
   "errors": {
     "projectRequired": "ID projekta je obavezan",
     "reasonRequired": "Molimo vas unesite razlog za podnošenje zahteva",
-    "startTimeRequired": "Početno vreme jeobavezno",
+    "startTimeRequired": "Početno vreme je obavezno",
     "endTimeRequired": "Vreme završetka je obavezno",
     "wrongId": "Pogrešan ID"
   },

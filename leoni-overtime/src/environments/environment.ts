@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   // apiUrl: 'http://localhost:2078/API',
   apiUrl: 'http://trening.vdsystem.rs:8004/API',
-  hubUrl: 'http://trening.vdsystem.rs:8004/API/SignalR'
+  hubUrl: 'http://trening.vdsystem.rs:92/signalr'
 };
 
 /*

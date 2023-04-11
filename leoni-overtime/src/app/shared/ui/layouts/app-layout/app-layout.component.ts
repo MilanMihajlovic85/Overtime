@@ -39,7 +39,10 @@ export class AppLayoutComponent  implements OnInit {
       this.previousAuthState = !!user;
 
       if (!!user) {
+
         this.signalrSrv.createConnection(user.apiKey);
+        // this.signalrSrv.signalRObservable(user.apiKey).subscribe(d => console.log(d));
+
         // this.idle.watch();
       } else {
         // this.idle.stop();
@@ -48,7 +51,9 @@ export class AppLayoutComponent  implements OnInit {
     })
   );
 
-  counts$ = this.signalrSrv.reqAppCount$;
+  counts$ = this.signalrSrv.reqAppCount.pipe(
+    // tap(d => console.log('counts: ', d))
+  );
 
 
   constructor(
@@ -76,6 +81,7 @@ export class AppLayoutComponent  implements OnInit {
       }
 
     });
+
    }
 
   ngOnInit() {

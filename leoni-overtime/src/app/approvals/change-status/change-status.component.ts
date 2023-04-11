@@ -26,9 +26,6 @@ export class ChangeStatusComponent  implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.request);
-
-
     this.form = this.formBuilder.group(
       {
         status: ['', {

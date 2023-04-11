@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1680199105577,
+  "timestamp": 1680999970920,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -63,7 +63,7 @@
         "/6560.17d4736f2b397bba.js",
         "/657.72404a09ada6fce9.js",
         "/6587.502855ba1806ba6e.js",
-        "/6838.a7e129f599f11494.js",
+        "/6838.d0fd9a3386d22ed1.js",
         "/7206.9182abdea16b2b2e.js",
         "/7434.7fc8eb65dc6f79b9.js",
         "/7544.f9522a6c65b67087.js",
@@ -86,12 +86,12 @@
         "/9958.46730eb95bd3ef12.js",
         "/common.3e204f235bae8122.js",
         "/index.html",
-        "/main.0905e0e62ff91705.js",
+        "/main.9cbbf7698d595407.js",
         "/manifest.webmanifest",
         "/polyfills-core-js.20e9fb5568c66479.js",
         "/polyfills-dom.3a5e3168052f1fc5.js",
         "/polyfills.fc6fad8ce607b49d.js",
-        "/runtime.e7472181157b6867.js",
+        "/runtime.8acaa18c6d6fc861.js",
         "/styles.e0dafc7d321e9184.css"
       ],
       "patterns": []
@@ -217,7 +217,7 @@
     "/6560.17d4736f2b397bba.js": "7462d0b44bbea24554f706efc809d95a0aec3149",
     "/657.72404a09ada6fce9.js": "15e2882425dcb48e0c1410b8e05752c64ea50365",
     "/6587.502855ba1806ba6e.js": "e4a9cf3105730923746ed742c07bdc24fbb263f9",
-    "/6838.a7e129f599f11494.js": "eafef4ed6f75d294e639edbfbbe863b7091d8c99",
+    "/6838.d0fd9a3386d22ed1.js": "883f92adb06f4def69a2d78e051ab8c867c52467",
     "/7206.9182abdea16b2b2e.js": "f8cd27d6df84fd1c8cf29db637dfdc967be2ba2d",
     "/7434.7fc8eb65dc6f79b9.js": "e76903562ed162c40a237eb3324757f5b5a078ed",
     "/7544.f9522a6c65b67087.js": "282b6f0eb16056e54f6d5c75ff1429eadffa62bb",
@@ -241,7 +241,7 @@
     "/assets/Leoni_Msg.jpg": "d8d431da9fdefcd1ff304c3844c7a833ab49ce37",
     "/assets/i18n/data-typings.d.ts": "94855f8978dfdf319ce4990de49fe0cc76d06c40",
     "/assets/i18n/en.json": "2618ef01ba036e2ce590521a504c9fd9c08860b1",
-    "/assets/i18n/sr.json": "1cf26a9c6f3b7901a140c686e6b8a6ffaa53d87d",
+    "/assets/i18n/sr.json": "8aeeaeea3dced113952a0ba1d0813f99cd08039f",
     "/assets/icon/favicon.ico": "52bb7f65f1b62277d37b04c0f74354cff5f0ee15",
     "/assets/icon/favicon.png": "7798b8e0eb61d7375c245af78bbf5c916932bf13",
     "/assets/icons/android-icon-144x144.png": "02c4af258e40942fe9defce4f0b33094538359ee",
@@ -272,13 +272,13 @@
     "/assets/icons/ms-icon-70x70.png": "ef5e7f113c4c7ada663589a47c882888a3acc9b0",
     "/assets/shapes.svg": "5413e95adabcb2cb639970051f55e0ddb64ace53",
     "/common.3e204f235bae8122.js": "4626829c05bcf285eafd8811f738b32952dd2f5e",
-    "/index.html": "c248ad5a1f6e4efe9d3480209a5e81eefd70cb5b",
-    "/main.0905e0e62ff91705.js": "4e1291e3582ed811ab215a3372efa66208e6fc2f",
+    "/index.html": "aace22f8688d089d744187176dc1da6c68b98bab",
+    "/main.9cbbf7698d595407.js": "5e25a168ccaef69e082c8ffa7cb88735fbd1cec3",
     "/manifest.webmanifest": "62708944772bace3816ada90b84ee7a2cb045ec2",
     "/polyfills-core-js.20e9fb5568c66479.js": "7b2237821e79690f9dd2dac0b8a3b9ec6c229b76",
     "/polyfills-dom.3a5e3168052f1fc5.js": "50f6ff473a0568bffb8a9d412d7efaced2d36137",
     "/polyfills.fc6fad8ce607b49d.js": "29ecdc4392e1398b433f3838f08631c7ce701c6d",
-    "/runtime.e7472181157b6867.js": "eb33f401d211c0219366cb91d95bc8240d2790ea",
+    "/runtime.8acaa18c6d6fc861.js": "f70508e0c2cadaab1c10f5dff54307da7c82d37f",
     "/styles.e0dafc7d321e9184.css": "14d5964ab719767b9571b3469c6b38791d0d8c2b"
   },
   "navigationUrls": [

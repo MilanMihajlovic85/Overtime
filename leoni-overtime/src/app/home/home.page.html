@@ -30,12 +30,12 @@
 
           <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" routerDirection="root" [routerLink]="['/', 'my-requests', 'pending']">
             {{ 'btn.myRequests' | translate }}
-            <ion-badge color="danger" *ngIf="counts.requests > 0">{{ counts.requests }}</ion-badge>
+            <ion-badge color="secondary" *ngIf="counts.requests > 0">{{ counts.requests }}</ion-badge>
           </ion-button>
 
           <ion-button class="dashboard-buttons" fill="outline" color="light" fill="solid" routerDirection="root" [routerLink]="['/', 'approvals']">
             {{ 'btn.myApprovals' | translate }}
-            <ion-badge color="danger" *ngIf="counts.approvals > 0">{{ counts.approvals }}</ion-badge>
+            <ion-badge color="secondary" *ngIf="counts.approvals > 0">{{ counts.approvals }}</ion-badge>
           </ion-button>
 
         </div>

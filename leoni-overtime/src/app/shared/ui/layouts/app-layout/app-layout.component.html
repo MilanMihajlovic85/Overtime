@@ -28,7 +28,7 @@
             <ion-label>
               {{ 'pageTitles.myApprovals' | translate }}
               <ng-container *ngIf="counts$ | async as counts">
-                <ion-badge color="danger" *ngIf="counts.approvals > 0">
+                <ion-badge color="secondary" *ngIf="counts.approvals > 0">
                   {{ counts.approvals }}
                 </ion-badge>
               </ng-container>
@@ -48,7 +48,7 @@
             <ion-label>
               {{ 'pageTitles.pending' | translate }}
               <ng-container *ngIf="counts$ | async as counts">
-                <ion-badge color="danger" *ngIf="counts.requests > 0">
+                <ion-badge color="secondary" *ngIf="counts.requests > 0">
                   {{ counts.requests }}
                 </ion-badge>
               </ng-container>
