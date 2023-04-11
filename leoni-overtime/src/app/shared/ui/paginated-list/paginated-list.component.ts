@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
 import { ReportsService } from '../../data-store/reports/reports.service';
 import { RequestModel } from '../../data-store/request/request.model';
 import { I18nService } from '../../services/i18n/i18n.service';
 import { LoadingService } from '../../services/loading/loading.service';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-paginated-list',
@@ -41,6 +42,8 @@ export class PaginatedListComponent  implements OnInit {
   dataSource: {[key: string]: string | number}[] = [];
   value = '';
 
+  showList = true;
+
   constructor(
     private datePipe: DatePipe,
     private i18n: I18nService,
@@ -50,7 +53,7 @@ export class PaginatedListComponent  implements OnInit {
 
   ngOnInit() {
 
-    this.getElements(false, "");
+    // this.getElements(false, "");
 
     if ('create' in this.buttons) {
       this.isCreateBtn = true;
@@ -87,6 +90,19 @@ export class PaginatedListComponent  implements OnInit {
 
 
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    // console.log(changes.searchData.currentValue);
+
+    this.searchData = changes.searchData.currentValue;
+
+    this.page_number = 1;
+
+    this.getElements(false, "");
+
+  }
+
 
   getElements(isFirstLoad: boolean, event: any) {
 
@@ -127,14 +143,15 @@ export class PaginatedListComponent  implements OnInit {
 
     reports$.subscribe((resData: any) => {
 
-      if (!this.elements) this.elements = []
+      if (!isFirstLoad) this.elements = [];
 
       for (let i = 0; i < resData.length; i++) {
         this.elements.push(resData[i]);
       }
 
-      if (isFirstLoad)
-        event.target!.complete();
+      if (isFirstLoad) {
+        (event as InfiniteScrollCustomEvent).target!.complete();
+      }
 
       this.page_number++;
 
@@ -146,7 +163,6 @@ export class PaginatedListComponent  implements OnInit {
   doInfinite(event: Event) {
 
     this.getElements(true, event);
-
 
   }
 

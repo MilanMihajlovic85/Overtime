@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { combineLatest, map, Observable, startWith, switchMap, take } from 'rxjs';
@@ -192,6 +192,9 @@ export class PaginatedTableComponent  implements OnInit {
     url = `${url}/${startDate}/${endDate}/${this.paginator.pageIndex + 1}/${this.paginator.pageSize}`;
 
     // url = '?_page=' + (this.paginator.pageIndex + 1) + '&_limit=' + this.paginator.pageSize;
+
+    console.log(url);
+
 
     return url;
 

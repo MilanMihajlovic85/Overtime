@@ -26,6 +26,9 @@ export class MyRequestsPage implements OnInit {
     subtitle: ['requestorForWO']
   }
 
+  items: string[] = [];
+
+
   constructor(
     private formBuilder: FormBuilder,
     private screenSizeSrv: ScreensizeService,
@@ -33,6 +36,10 @@ export class MyRequestsPage implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    for (let i = 1; i < 51; i++) {
+      this.items.push(`Item ${i}`);
+    }
 
     this.form = this.formBuilder.group(
       {
