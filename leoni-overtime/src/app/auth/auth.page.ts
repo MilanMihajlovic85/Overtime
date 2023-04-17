@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
@@ -18,8 +18,11 @@ import { AuthService } from './auth.service';
 })
 export class AuthPage implements OnInit {
 
-  checked = true;
-  languageSelected!: string;
+  @ViewChildren("forms") private forms!: QueryList<ElementRef>;
+  @ViewChildren('inputs') inputs!: QueryList<ElementRef>;
+
+
+  language!: string;
   readyToLogin = false;
 
   focusIsSet!: boolean;
@@ -31,16 +34,25 @@ export class AuthPage implements OnInit {
     private messagesSrv: MessagesService,
     private router: Router,
     private translate: TranslateService,
-    private i18n: I18nService
+    private i18n: I18nService,
+    private changeDetector: ChangeDetectorRef
   ) {
     i18n.language().subscribe(language => {
-      this.checked = language === 'en';
       translate.use(language);
-      this.languageSelected = language;
+      this.language = language;
     });
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+
+    this.inputs.changes.subscribe((d) => {
+      this.inputs.first.nativeElement.focus();
+      this.changeDetector.detectChanges();
+    });
+
   }
 
   onPreLoginFormSubmit(form: NgForm) {
@@ -69,8 +81,12 @@ export class AuthPage implements OnInit {
         })
       )
     ).subscribe((msg) => {
+
       this.readyToLogin = true;
       this.messagesSrv.deleteErrors();
+
+      this.inputs.last.nativeElement.focus();
+
       // this.messagesSrv.showErrors(msg.split("...")[1]);
     });
 
@@ -105,15 +121,12 @@ export class AuthPage implements OnInit {
 
   }
 
-  changeLanguage() {
+  changeLanguage(lng: string) {
 
-    this.checked = !this.checked;
+    this.language = lng;
 
-    const language = this.checked ? 'en' : 'sr';
-
-    this.i18n.setLanguage(language);
-    this.translate.use(language)
-
+    this.i18n.setLanguage(lng);
+    this.translate.use(lng)
 
   }
 

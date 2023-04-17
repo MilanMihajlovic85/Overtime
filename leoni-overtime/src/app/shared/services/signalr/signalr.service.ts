@@ -29,35 +29,35 @@ export class SignalrService {
 
   async createConnection(apiKey: string) {
 
-    if (!this.platform.is('desktop')) {
-      await this.localNotificationSrv.setNotifications();
-    }
+    // if (!this.platform.is('desktop')) {
+    //   await this.localNotificationSrv.setNotifications();
+    // }
 
-    this.connection = new HubConnectionBuilder()
-    .withUrl(environment.hubUrl + "?ApiKey=" + apiKey)
-    .withAutomaticReconnect()
-    .build();
+    // this.connection = new HubConnectionBuilder()
+    // .withUrl(environment.hubUrl + "?ApiKey=" + apiKey)
+    // .withAutomaticReconnect()
+    // .build();
 
-    this.connection.start()
-      .catch((error: any) => {
-        // console.log(error);
-        this.messagesSrv.showErrors(error);
-    });
+    // this.connection.start()
+    //   .catch((error: any) => {
+    //     // console.log(error);
+    //     this.messagesSrv.showErrors(error);
+    // });
 
-    this.connection.on('notify', (count: string) => {
+    // this.connection.on('notify', (count: string) => {
 
-      const data = JSON.parse(count);
+    //   const data = JSON.parse(count);
 
-      console.table(data)
+    //   console.table(data)
 
-      const currentValues = this.reqAppCount$.getValue();
-      // const appDiff = count.NumberOfApprovals - currentValues.approvals;
+    //   const currentValues = this.reqAppCount$.getValue();
+    //   // const appDiff = count.NumberOfApprovals - currentValues.approvals;
 
-      if (!this.platform.is('desktop')) this.localNotificationSrv.presentNotifications();
+    //   if (!this.platform.is('desktop')) this.localNotificationSrv.presentNotifications();
 
-      this.reqAppCount$.next({approvals: data.NumberOfApprovals, requests: data.NumberOfRequests});
+    //   this.reqAppCount$.next({approvals: data.NumberOfApprovals, requests: data.NumberOfRequests});
 
-    });
+    // });
 
     // setInterval(() => {
     //   const currentValues = this.reqAppCount.getValue();

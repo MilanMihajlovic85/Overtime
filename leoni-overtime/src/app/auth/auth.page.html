@@ -1,48 +1,69 @@
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true" class="ion-padding-top">
   <app-loading></app-loading>
-  <ion-grid class="auth-page">
+  <ion-grid class="ion-padding auth-page">
+    <ion-row>
+      <ion-col size="12" size-md="6" push-md="3" size-lg="4" push-lg="4" size-xl="3" push-xl="4.5" size-xxl="2.5" push-xxl="4.75">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158 37.74" fill="#0f3b89"><path d="M0 37.14h25.05v-8.18H10.3V.59H0v36.55m55.01-22.66H41.23V8.57h14.63V.59H30.92v36.55h25.74v-8.02H41.23v-6.73h13.78v-7.91m25.63 23.26c11.78 0 19.18-7.48 19.18-19.25C99.82 8.73 93.56 0 81.21 0 69.42 0 62.14 8.46 62.14 19.09c0 10.14 6.55 18.65 18.45 18.65zm.36-7.76c-5 0-8-4.61-8-11.11 0-6.34 3-11.11 8-11.11s7.91 4.77 7.91 11.06c0 6.61-2.9 11.17-7.91 11.17zm34.28 7.16v-9c0-5.91-.11-11.44-.4-16.37h.23A145.88 145.88 0 0 0 121.6 25l6.49 12.15h10.82V.59h-9.39v8.63a131.74 131.74 0 0 0 .8 15.4h-.17a129.71 129.71 0 0 0-6-12.79L118 .59h-12.11v36.55zM147.7.59v36.55H158V.59h-10.3"/></svg>
+        <div class="switch">
+          <ul>
+            <li [ngClass]="{'selected': language === 'en'}" (click)="changeLanguage('en')">en</li>
+            <li [ngClass]="{'selected': language === 'sr'}" (click)="changeLanguage('sr')">sr</li>
+          </ul>
+        </div>
+      </ion-col>
+    </ion-row>
     <ion-row class="ion-align-items-center">
       <ion-col size="12" size-md="6" push-md="3" size-lg="4" push-lg="4" size-xl="3" push-xl="4.5" size-xxl="2.5" push-xxl="4.75">
 
-        <svg *ngIf="platform.is('desktop')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158 37.74" fill="#0f3b89"><path d="M0 37.14h25.05v-8.18H10.3V.59H0v36.55m55.01-22.66H41.23V8.57h14.63V.59H30.92v36.55h25.74v-8.02H41.23v-6.73h13.78v-7.91m25.63 23.26c11.78 0 19.18-7.48 19.18-19.25C99.82 8.73 93.56 0 81.21 0 69.42 0 62.14 8.46 62.14 19.09c0 10.14 6.55 18.65 18.45 18.65zm.36-7.76c-5 0-8-4.61-8-11.11 0-6.34 3-11.11 8-11.11s7.91 4.77 7.91 11.06c0 6.61-2.9 11.17-7.91 11.17zm34.28 7.16v-9c0-5.91-.11-11.44-.4-16.37h.23A145.88 145.88 0 0 0 121.6 25l6.49 12.15h10.82V.59h-9.39v8.63a131.74 131.74 0 0 0 .8 15.4h-.17a129.71 129.71 0 0 0-6-12.79L118 .59h-12.11v36.55zM147.7.59v36.55H158V.59h-10.3"/></svg>
+        <h1>Overtime</h1>
 
         <app-messages></app-messages>
 
         <form *ngIf="!readyToLogin" #pf="ngForm" (ngSubmit)="onPreLoginFormSubmit(pf)">
-          <ion-item fill="outline">
-            <ion-label position="floating">{{ 'labels.employeeId' | translate }}</ion-label>
-            <ion-input
+
+          <mat-form-field appearance="fill" hideRequiredMarker="true">
+            <input
+              #inputs
               type="text"
+              matInput
+              [ngClass]="{'error': !employeeIdCtrl.valid && employeeIdCtrl.touched}"
               ngModel
               name="employeeId"
+              placeholder="{{ 'labels.employeeId' | translate }}"
               required
               minlength="1"
               text
               inputmode="numeric"
               #employeeIdCtrl="ngModel"
             >
-            </ion-input>
-          </ion-item>
-          <ion-button type="submit" expand="block" [disabled]="!pf.valid">{{ 'btn.sendEmployeeId' | translate }}</ion-button>
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+
+          <ion-button color="medium" type="submit" expand="block">{{ 'btn.sendEmployeeId' | translate }}</ion-button>
         </form>
 
         <ng-container *ngIf="readyToLogin">
+
           <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-            <ion-item fill="outline">
-              <ion-label position="floating">{{ 'labels.smsCode' | translate }}</ion-label>
-              <ion-input
+
+            <mat-form-field appearance="fill" hideRequiredMarker="true">
+              <input
+                #inputs
                 type="text"
+                matInput
+                [ngClass]="{'error': !codeCtrl.valid && codeCtrl.touched}"
                 ngModel
                 name="code"
+                placeholder="{{ 'labels.smsCode' | translate }}"
                 required
                 minlength="4"
                 text
                 inputmode="numeric"
                 #codeCtrl="ngModel"
               >
-              </ion-input>
-            </ion-item>
-            <ion-button type="submit" expand="block" [disabled]="!f.valid">{{ 'btn.login' | translate }}</ion-button>
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <ion-button color="medium" type="submit" expand="block">{{ 'btn.login' | translate }}</ion-button>
           </form>
 
           <ion-button class="resendCode" fill="clear" expand="block" size="small" (click)="readyToLogin = false">
@@ -51,17 +72,11 @@
           </ion-button>
 
         </ng-container>
+
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>
-
-<div class="footer">
-  <div class="switch">
-    <input [checked]="checked" (change)="changeLanguage()" id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox">
-    <label for="language-toggle"></label>
-    <span class="on">EN</span>
-    <span class="off">SR</span>
+  <div class="footer">
+    <p>&copy; 2023 Powered by VDSystem</p>
   </div>
-  <p>&copy; 2023 Powered by VDSystem</p>
-</div>
+</ion-content>
