@@ -18,7 +18,6 @@ import { AuthService } from './auth.service';
 })
 export class AuthPage implements OnInit {
 
-  @ViewChildren("forms") private forms!: QueryList<ElementRef>;
   @ViewChildren('inputs') inputs!: QueryList<ElementRef>;
 
 

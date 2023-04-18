@@ -2,8 +2,15 @@ ion-grid {
   height: 90vh;
 }
 
-ion-row:first-child {
-  margin-bottom: 13vh;
+ion-row {
+
+  &:first-child {
+    margin-bottom: 13vh;
+  }
+
+  &.ios {
+    margin-top: 2rem;
+  }
 }
 
 ion-col {
@@ -114,7 +121,7 @@ ion-button.resendCode {
   }
 
   svg {
-    width: 40%8;
+    width: 40%;
   }
 
   .footer {
