@@ -1,8 +1,8 @@
 ion-badge {
   position: absolute;
   font-size: 8pt;
-  right: -16px;
-  top: -3px;
+  right: -20px;
+  top: -7px;
 }
 
 .requests-buttons {
@@ -20,4 +20,5 @@ ion-button {
 /* Setting Overflow Visible */
 ion-button.dashboard-buttons::part(native) {
   overflow: visible;
+  --border-width: 1px;
 }

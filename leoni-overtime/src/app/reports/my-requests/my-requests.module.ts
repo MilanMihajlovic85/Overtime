@@ -20,6 +20,7 @@ import { LoadingModule } from 'src/app/shared/ui/loading/loading.module';
 import { PaginatedListModule } from 'src/app/shared/ui/paginated-list/paginated-list.module';
 import { PaginatedTableModule } from 'src/app/shared/ui/paginated-table/paginated-table.module';
 import { LogoutModule } from 'src/app/shared/ui/logout/logout.module';
+import { AccountModule } from 'src/app/shared/ui/account/account.module';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { LogoutModule } from 'src/app/shared/ui/logout/logout.module';
     TranslateModule,
     LoadingModule,
     MessagesModule,
-    LogoutModule
+    LogoutModule,
+    AccountModule
   ],
   declarations: [MyRequestsPage]
 })

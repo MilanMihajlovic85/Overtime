@@ -5,6 +5,7 @@
     </ion-buttons>
     <ion-title>{{ 'pageTitles.myRequests' | translate }} / {{ 'pageTitles.overview' | translate }}</ion-title>
     <ion-buttons *ngIf="isDesktop$ | async" slot="end">
+      <app-account></app-account>
       <app-logout></app-logout>
     </ion-buttons>
   </ion-toolbar>
@@ -20,14 +21,14 @@
 
     <ion-row *ngIf="showForm">
 
-      <ion-col size="12" size-md="8" offset-md="2" size-lg="7" offset-lg="2.5" size-xl="5" offset-xl="0">
+      <ion-col size="12" size-md="8" offset-md="2" size-lg="5.5" offset-lg="3.25" size-xl="3.75" offset-xl="0">
 
 
         <form [formGroup]="form" class="filter-form">
 
           <ion-row>
             <ion-col size="10">
-              <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+              <mat-form-field class="small" appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>Period</mat-label>
                 <mat-date-range-input [rangePicker]="picker" calendarLabel="Kalendar">
                   <input matStartDate formControlName="startDate" placeholder="{{ 'startTime' | translate }}">
@@ -42,7 +43,7 @@
               </mat-form-field>
             </ion-col>
             <ion-col size="2">
-              <ion-button fill="solid" color="secondary" (click)="onFormSubmit()" [disabled]="!form.valid">
+              <ion-button fill="outline" color="secondary" (click)="onFormSubmit()" [disabled]="!form.valid">
                 <ion-icon slot="icon-only" [ios]="'search-outline'" [md]="'search-sharp'"></ion-icon>
               </ion-button>
             </ion-col>

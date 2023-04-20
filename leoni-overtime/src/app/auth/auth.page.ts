@@ -120,6 +120,13 @@ export class AuthPage implements OnInit {
 
   }
 
+  resendCode() {
+
+    this.readyToLogin = false
+    this.messagesSrv.deleteErrors();
+
+  }
+
   changeLanguage(lng: string) {
 
     this.language = lng;

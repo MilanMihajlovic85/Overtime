@@ -84,18 +84,6 @@ p.no-data {
   color: #A9AABC;
 }
 
-.desktop {
-
-  // #main-content {
-  //   --ion-toolbar-background: #2B928E;
-  // }
-
-  ion-menu {
-    --width: 17rem;
-  }
-
-
-}
 
 .change-status-modal {
 
@@ -117,4 +105,38 @@ p.no-data {
 
 .auth-page .lds-facebook {
   top: 30vh !important;
+}
+
+.desktop {
+
+  // #main-content {
+  //   --ion-toolbar-background: #2B928E;
+  // }
+
+  ion-menu {
+    --width: 17rem;
+  }
+
+  ion-menu ion-toolbar {
+    margin-bottom: 0.75rem;
+  }
+
+  ion-menu ion-list ion-list-header {
+    color: #bbb !important;
+  }
+
+  ion-toolbar {
+    --min-height: 48px;
+
+  }
+
+  // .search-print {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   align-items: baseline;
+  //   justify-content: space-between;
+  //   margin-top: 0;
+  //   padding: 0 0.6rem;
+  // }
+
 }

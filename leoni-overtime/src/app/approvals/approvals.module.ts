@@ -16,6 +16,7 @@ import { LogoutModule } from '../shared/ui/logout/logout.module';
 import { TableModule } from '../shared/ui/table/table.module';
 import { ChangeStatusComponent } from './change-status/change-status.component';
 import { MatInputModule } from '@angular/material/input';
+import { AccountModule } from '../shared/ui/account/account.module';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { MatInputModule } from '@angular/material/input';
     LogoutModule,
     ReactiveFormsModule,
     MatRadioModule,
-    MatInputModule
+    MatInputModule,
+    AccountModule
   ],
   declarations: [ApprovalsPage, ChangeStatusComponent]
 })

@@ -21,6 +21,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpResponseInterceptorProvider } from './shared/interceptors/response.interceptor';
+import { AccountModule } from './shared/ui/account/account.module';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { HttpResponseInterceptorProvider } from './shared/interceptors/response.
     HttpClientModule,
     LoadingModule,
     MessagesModule,
+    AccountModule,
     NgIdleKeepaliveModule.forRoot(),
     TranslateModule.forRoot(),
     MatNativeDateModule,

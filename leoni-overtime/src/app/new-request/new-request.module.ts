@@ -17,6 +17,7 @@ import { LoadingModule } from '../shared/ui/loading/loading.module';
 import { MessagesModule } from '../shared/ui/messages/messages.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { LogoutModule } from '../shared/ui/logout/logout.module';
+import { AccountModule } from '../shared/ui/account/account.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { LogoutModule } from '../shared/ui/logout/logout.module';
     LoadingModule,
     MessagesModule,
     TranslateModule,
-    LogoutModule
+    LogoutModule,
+    AccountModule
   ],
   declarations: [NewRequestPage],
   providers: [

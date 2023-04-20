@@ -1,0 +1,24 @@
+ion-icon {
+    margin-left: 5px;
+    margin-right: 10px;
+    color: #323232 !important;
+  }
+
+ion-item {
+    --background: transparent;
+    --color: #323232;
+    margin: 1rem 0 0;
+    
+    &.isDesktop {
+        
+        font-size: 0.9rem;
+        margin: 0;
+
+        --color: var(--ion-color-primary-contrast);
+
+        ion-icon {
+            color: var(--ion-color-primary-contrast) !important;
+        }
+    }
+
+}

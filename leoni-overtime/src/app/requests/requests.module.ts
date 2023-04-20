@@ -15,6 +15,7 @@ import { LoadingModule } from '../shared/ui/loading/loading.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { LogoutModule } from '../shared/ui/logout/logout.module';
 import { TableModule } from '../shared/ui/table/table.module';
+import { AccountModule } from '../shared/ui/account/account.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { TableModule } from '../shared/ui/table/table.module';
     LoadingModule,
     MessagesModule,
     TranslateModule,
-    LogoutModule
+    LogoutModule,
+    AccountModule
   ],
   declarations: [RequestsPage]
 })

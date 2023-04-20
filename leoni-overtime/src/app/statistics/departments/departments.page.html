@@ -5,6 +5,7 @@
     </ion-buttons>
     <ion-title>{{ 'menuSections.statistics' | translate }} / {{ 'pageTitles.departments' | translate }}</ion-title>
     <ion-buttons *ngIf="isDesktop$ | async" slot="end">
+      <app-account></app-account>
       <app-logout></app-logout>
     </ion-buttons>
   </ion-toolbar>
@@ -20,7 +21,7 @@
 
     <ion-row *ngIf="showForm">
 
-      <ion-col size="12" size-md="8" offset-md="2" size-lg="8.5" offset-lg="1.5" size-xl="8" offset-xl="0">
+      <ion-col size="12" size-md="8" offset-md="2" size-lg="8.5" offset-lg="1.5" size-xl="6.5" offset-xl="0">
 
         <app-messages></app-messages>
 
@@ -29,7 +30,7 @@
           <ion-row>
 
             <ion-col size="12" size-lg="5.5">
-              <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+              <mat-form-field class="small" appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>Period</mat-label>
                 <mat-date-range-input [rangePicker]="picker" calendarLabel="Kalendar">
                   <input matStartDate formControlName="startDate" placeholder="{{ 'startTime' | translate }}">
@@ -44,7 +45,7 @@
             </ion-col>
 
             <ion-col size="10" size-lg="5">
-              <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+              <mat-form-field class="small" appearance="outline" floatLabel="always" hideRequiredMarker="true">
                 <mat-label>{{ 'department' | translate }}</mat-label>
                 <mat-select formControlName="department">
                   <mat-option *ngFor="let department of departments$ | async" [value]="department.value">
@@ -55,8 +56,8 @@
               </mat-form-field>
             </ion-col>
 
-            <ion-col size="2" size-lg="1.5">
-              <ion-button fill="solid" color="secondary" (click)="onFormSubmit()" [disabled]="!form.valid">
+            <ion-col size="2" size-lg="1.25">
+              <ion-button fill="outline" color="secondary" (click)="onFormSubmit()" [disabled]="!form.valid">
                 <ion-icon slot="icon-only" [ios]="'search-outline'" [md]="'search-sharp'"></ion-icon>
               </ion-button>
             </ion-col>

@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { TableModule } from 'src/app/shared/ui/table/table.module';
 import { LogoutModule } from 'src/app/shared/ui/logout/logout.module';
+import { AccountModule } from 'src/app/shared/ui/account/account.module';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { LogoutModule } from 'src/app/shared/ui/logout/logout.module';
     MatSelectModule,
     LoadingModule,
     MessagesModule,
-    LogoutModule
+    LogoutModule,
+    AccountModule
   ],
   declarations: [DepartmentsPage]
 })

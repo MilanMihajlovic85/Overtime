@@ -5,12 +5,16 @@
     </ion-buttons>
     <ion-title>{{ 'pageTitles.newRequest' | translate }}</ion-title>
     <ion-buttons *ngIf="isDesktop$ | async; else formSubmit" slot="end">
+      <app-account></app-account>
       <app-logout></app-logout>
     </ion-buttons>
     <ng-template #formSubmit>
       <ion-buttons slot="end">
         <ion-button (click)="onFormSubmit()" [disabled]="!form.valid">
-          <ion-icon slot="icon-only" [ios]="'checkmark-outline'" [md]="'checkmark-sharp'"></ion-icon>
+          <ion-icon *ngIf="!platform.is('ios'); else btnText" slot="icon-only" [ios]="'checkmark-outline'" [md]="'checkmark-sharp'"></ion-icon>
+          <ng-template #btnText>
+            <span>Save</span>
+          </ng-template>
         </ion-button>
       </ion-buttons>
     </ng-template>
@@ -25,7 +29,7 @@
     <ion-row>
 
 
-      <ion-col size="12" size-md="6" push-md="3" size-lg="7" push-lg="2.5" size-xl="5" push-xl="3.5">
+      <ion-col size="12" size-md="6" push-md="3" size-lg="7" push-lg="2.5" size-xl="4" push-xl="4">
 
 
         <form [formGroup]="form">

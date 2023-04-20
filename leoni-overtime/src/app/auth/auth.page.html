@@ -66,7 +66,7 @@
             <ion-button color="medium" type="submit" expand="block">{{ 'btn.login' | translate }}</ion-button>
           </form>
 
-          <ion-button class="resendCode" fill="clear" expand="block" size="small" (click)="readyToLogin = false">
+          <ion-button class="resendCode" fill="clear" expand="block" size="small" (click)="resendCode()">
             <ion-icon slot="start" [ios]="'arrow-back-outline'" [md]="'arrow-back-sharp'"></ion-icon>
             {{ 'btn.resendId' | translate }}
           </ion-button>

@@ -5,6 +5,7 @@
     </ion-buttons>
     <ion-title>{{ 'pageTitles.myApprovals' | translate }}</ion-title>
     <ion-buttons *ngIf="isDesktop$ | async" slot="end">
+      <app-account></app-account>
       <app-logout></app-logout>
     </ion-buttons>
   </ion-toolbar>
