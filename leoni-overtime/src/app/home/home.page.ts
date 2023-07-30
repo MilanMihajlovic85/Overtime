@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
 
     this.http.get('http://trening.vdsystem.rs:92/api/SginalRconnections').subscribe(resData => {
 
-      console.table(resData);
+      // console.log(resData);
 
 
     });

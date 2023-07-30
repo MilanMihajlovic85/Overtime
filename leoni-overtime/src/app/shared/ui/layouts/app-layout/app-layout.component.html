@@ -13,119 +13,122 @@
     
     <ion-content class="side-menu">
 
-      <app-account *ngIf="!isDesktop"></app-account>
+      <ng-container *ngIf="user$ | async as user">
+        <app-account *ngIf="!isDesktop"></app-account>
       
-      <ion-list class="inbox-list">
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'dashboard']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'grid-outline'" [md]="'grid-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.dashboard' | translate }}</ion-label>
+        <ion-list class="inbox-list">
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'dashboard']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'grid-outline'" [md]="'grid-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.dashboard' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'approvals']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'help-circle-outline'" [md]="'help-circle-sharp'"></ion-icon>
+              <!-- <ion-label>My Approvals <span *ngIf="counts$ | async as counts">({{ counts.approvals }})</span></ion-label> -->
+              <ion-label>
+                {{ 'pageTitles.myApprovals' | translate }}
+              </ion-label>
+              <ng-container *ngIf="counts$ | async as counts">
+                <ion-badge color="tertiary" slot="end" *ngIf="counts.approvals > 0">
+                  {{ counts.approvals }}
+                </ion-badge>
+              </ng-container>
+            </ion-item>
+          </ion-menu-toggle>
+  
+        </ion-list>
+  
+        <ion-list class="labels-list">
+          <ion-list-header>{{ 'menuSections.requests' | translate }}</ion-list-header>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'my-requests', 'pending']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'file-tray-full-outline'" [md]="'file-tray-full-sharp'"></ion-icon>
+              <!-- <ion-label>My Requests <span *ngIf="counts$ | async as counts">({{ counts.requests }})</span></ion-label> -->
+              <ion-label>
+                {{ 'pageTitles.pending' | translate }}
+              </ion-label>
+              <ng-container *ngIf="counts$ | async as counts">
+                <ion-badge color="tertiary" slot="end" *ngIf="counts.requests > 0">
+                  {{ counts.requests }}
+                </ion-badge>
+              </ng-container>
+            </ion-item>
+          </ion-menu-toggle>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'new-request']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'add-circle-outline'" [md]="'add-circle-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.newRequest' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'my-requests', 'overview']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'file-tray-stacked-outline'" [md]="'file-tray-stacked-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.overview' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+        </ion-list>
+  
+        <ion-list class="labels-list">
+          <ion-list-header>{{ 'menuSections.reports' | translate }}</ion-list-header>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'reports', 'departments']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'business-outline'" [md]="'business-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.departments' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'reports', 'organizations']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'list-circle-outline'" [md]="'list-circle-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.organizations' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'reports', 'projects']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'albums-outline'" [md]="'albums-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.projects' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+        </ion-list>
+  
+        <ion-list id="labels-list">
+          <ion-list-header>{{ 'menuSections.statistics' | translate }}</ion-list-header>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'statistics', 'departments']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'business-outline'" [md]="'business-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.departments' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/', 'statistics', 'organizations']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="'list-circle-outline'" [md]="'list-circle-sharp'"></ion-icon>
+              <ion-label>{{ 'pageTitles.organizations' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+  
+        </ion-list>
+  
+        <ion-menu-toggle *ngIf="!isDesktop" auto-hide="false">
+          <ion-item class="logout-item" lines="none" (click)="onLogout()" detail="false">
+            <ion-icon aria-hidden="true" slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
+            <ion-label>{{ 'btn.logout' | translate }}</ion-label>
           </ion-item>
         </ion-menu-toggle>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'approvals']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'help-circle-outline'" [md]="'help-circle-sharp'"></ion-icon>
-            <!-- <ion-label>My Approvals <span *ngIf="counts$ | async as counts">({{ counts.approvals }})</span></ion-label> -->
-            <ion-label>
-              {{ 'pageTitles.myApprovals' | translate }}
-            </ion-label>
-            <ng-container *ngIf="counts$ | async as counts">
-              <ion-badge color="tertiary" slot="end" *ngIf="counts.approvals > 0">
-                {{ counts.approvals }}
-              </ion-badge>
-            </ng-container>
-          </ion-item>
-        </ion-menu-toggle>
-
-      </ion-list>
-
-      <ion-list class="labels-list">
-        <ion-list-header>{{ 'menuSections.requests' | translate }}</ion-list-header>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'my-requests', 'pending']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'file-tray-full-outline'" [md]="'file-tray-full-sharp'"></ion-icon>
-            <!-- <ion-label>My Requests <span *ngIf="counts$ | async as counts">({{ counts.requests }})</span></ion-label> -->
-            <ion-label>
-              {{ 'pageTitles.pending' | translate }}
-            </ion-label>
-            <ng-container *ngIf="counts$ | async as counts">
-              <ion-badge color="tertiary" slot="end" *ngIf="counts.requests > 0">
-                {{ counts.requests }}
-              </ion-badge>
-            </ng-container>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'new-request']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'add-circle-outline'" [md]="'add-circle-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.newRequest' | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'my-requests', 'overview']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'file-tray-stacked-outline'" [md]="'file-tray-stacked-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.overview' | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-      </ion-list>
-
-      <ion-list class="labels-list">
-        <ion-list-header>{{ 'menuSections.reports' | translate }}</ion-list-header>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'reports', 'departments']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'business-outline'" [md]="'business-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.departments' | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'reports', 'organizations']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'list-circle-outline'" [md]="'list-circle-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.organizations' | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'reports', 'projects']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'albums-outline'" [md]="'albums-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.projects' | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-      </ion-list>
-
-      <ion-list id="labels-list">
-        <ion-list-header>{{ 'menuSections.statistics' | translate }}</ion-list-header>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'statistics', 'departments']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'business-outline'" [md]="'business-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.departments' | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-        <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="['/', 'statistics', 'organizations']" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon aria-hidden="true" slot="start" [ios]="'list-circle-outline'" [md]="'list-circle-sharp'"></ion-icon>
-            <ion-label>{{ 'pageTitles.organizations' | translate }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-      </ion-list>
-
-      <ion-menu-toggle *ngIf="!isDesktop" auto-hide="false">
-        <ion-item class="logout-item" lines="none" (click)="onLogout()" detail="false">
-          <ion-icon aria-hidden="true" slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
-          <ion-label>{{ 'btn.logout' | translate }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
+  
+      </ng-container>
 
     </ion-content>
   </ion-menu>

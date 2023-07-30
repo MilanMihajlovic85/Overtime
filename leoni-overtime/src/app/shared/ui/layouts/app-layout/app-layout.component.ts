@@ -36,24 +36,21 @@ export class AppLayoutComponent  implements OnInit {
         this.router.navigateByUrl('/login');
       }
 
-      this.previousAuthState = !!user;
+      this.previousAuthState = !!user;      
 
       if (!!user) {
 
         this.signalrSrv.createConnection(user.apiKey);
-        // this.signalrSrv.signalRObservable(user.apiKey).subscribe(d => console.log(d));
 
-        // this.idle.watch();
+        this.idle.watch();
       } else {
-        // this.idle.stop();
+        this.idle.stop();
       }
 
     })
   );
 
-  counts$ = this.signalrSrv.reqAppCount.pipe(
-    // tap(d => console.log('counts: ', d))
-  );
+  counts$ = this.signalrSrv.reqAppCount;
 
 
   constructor(
@@ -95,6 +92,7 @@ export class AppLayoutComponent  implements OnInit {
       this.isDesktop = !(res.matches || isMob);
 
     });
+
   }
 
   /**
